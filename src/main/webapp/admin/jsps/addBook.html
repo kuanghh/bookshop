@@ -1,0 +1,91 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>添加书本信息</title>
+<style type="text/css">
+body {
+	margin-left: 3px;
+	margin-top: 0px;
+	margin-right: 3px;
+	margin-bottom: 0px;
+}
+.STYLE1 {
+	color: #e1e2e3;
+	font-size: 12px;
+}
+.STYLE19 {
+	color: #344b50;
+	font-size: 12px;
+}
+form{
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+   <!-- 顶层模板 -->
+   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+   <tr>
+    <td height="30">
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="24" bgcolor="#353c44"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="6%" height="19" valign="bottom"><div align="center"><img src="../images/tb.gif" width="14" height="14" /></div></td>
+                <td width="94%" valign="bottom"><span class="STYLE1"> 添加图书分类</span></td>
+              </tr>
+     </table>
+    </td>
+    <td><div align="right"><span class="STYLE1"><input type="checkbox" name="checkbox11" id="checkbox11" />
+              全选      &nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" /> 添加   &nbsp; <img src="../images/del.gif" width="10" height="10" /> 删除    &nbsp;&nbsp;<img src="../images/edit.gif" width="10" height="10" /> 编辑   &nbsp;</span><span class="STYLE1"> &nbsp;</span></div></td>
+          </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    </td>
+    </tr>
+    </table>
+    
+    <!-- 提交表单 -->
+    <form action="" method="post" enctype="multipart/form-data">
+    	<table width="500px;" class="form_table" align="center">
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">商品名称：</td>
+    		<td><input type="text" name="book.bookName" style="width:300px" ></td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">会员价：</td>
+    		<td><input type="text" name="book.memberPrice" style="width:300px" ></td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">折扣价：</td>
+    		<td><input type="text" name="book.disPrice" style="width:300px" ></td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">图片路径：</td>
+    		<td><input type="file" name="picImg" style="width:300px" ></td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">商品类别：</td>
+    		<td>
+				<select name="book.bookCategoryId">
+					<option value="-1">请选择</option>
+					<!-- 类别数据 -->
+				</select>
+			</td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#FFFFFF" class="STYLE19">描述：</td>
+    		<td><textarea rows="4" cols="40" name="book.description" style="width:300px"></textarea></td>
+    	</tr>
+    	
+    	<tr>
+    		<td></td><td><input type="submit" value="保存"></td>
+    	</tr>
+    	</table>
+    </form>
+</body>
+</html>
