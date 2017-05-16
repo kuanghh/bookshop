@@ -1,13 +1,15 @@
 package com.khh.web.domain;
 
-public class PersonRole {
+import java.io.Serializable;
+
+public class PersonRole implements Serializable {
     private String id;
 
     private String personId;
 
     private String roleId;
 
-    private Byte isValid;
+    private boolean isValid;
 
     public String getId() {
         return id;
@@ -33,11 +35,11 @@ public class PersonRole {
         this.roleId = roleId == null ? null : roleId.trim();
     }
 
-    public Byte getIsValid() {
+    public boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Byte isValid) {
+    public void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
 }

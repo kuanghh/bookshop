@@ -1,6 +1,8 @@
 package com.khh.web.domain;
 
-public class Permission {
+import java.io.Serializable;
+
+public class Permission implements Serializable {
     private String id;
 
     private String name;
@@ -9,7 +11,7 @@ public class Permission {
 
     private String sign;
 
-    private Byte isValid;
+    private boolean isValid;
 
     public String getId() {
         return id;
@@ -43,11 +45,11 @@ public class Permission {
         this.sign = sign == null ? null : sign.trim();
     }
 
-    public Byte getIsValid() {
+    public boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Byte isValid) {
+    public void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
 }

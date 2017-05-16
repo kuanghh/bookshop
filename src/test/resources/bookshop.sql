@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/15 9:24:44                            */
+/* Created on:     2017/5/15 10:55:43                           */
 /*==============================================================*/
 
 
@@ -22,13 +22,13 @@ drop table if exists t_person;
 
 drop table if exists t_person_role;
 
+drop table if exists t_role;
+
 drop table if exists t_role_permission;
 
 drop table if exists t_shop;
 
 drop table if exists t_user;
-
-drop table if exists t_role;
 
 /*==============================================================*/
 /* Table: t_admin                                               */
@@ -37,6 +37,7 @@ create table t_admin
 (
    id                   varchar(32) not null comment '唯一标识',
    name                 varchar(50) not null comment '名字',
+   is_valid             tinyint not null comment '是否有效',
    primary key (id)
 );
 
@@ -155,6 +156,19 @@ create table t_person_role
 );
 
 /*==============================================================*/
+/* Table: t_role                                                */
+/*==============================================================*/
+create table t_role
+(
+   id                   varchar(32) not null comment '唯一标识',
+   name                 varchar(50) not null comment '角色名字',
+   description          varchar(80) not null comment '角色描述',
+   sign                 varchar(20) not null comment '角色标识',
+   is_valid             tinyint not null comment '数据是否有效',
+   primary key (id)
+);
+
+/*==============================================================*/
 /* Table: t_role_permission                                     */
 /*==============================================================*/
 create table t_role_permission
@@ -193,19 +207,6 @@ create table t_user
    birthday             timestamp not null comment '出生年月日',
    address              varchar(200) not null comment '收货地址',
    create_time          timestamp not null comment '注册时间',
-   is_valid             tinyint not null comment '数据是否有效',
-   primary key (id)
-);
-
-/*==============================================================*/
-/* Table: t_role                                                   */
-/*==============================================================*/
-create table t_role
-(
-   id                   varchar(32) not null comment '唯一标识',
-   name                 varchar(50) not null comment '角色名字',
-   description          varchar(80) not null comment '角色描述',
-   sign                 varchar(20) not null comment '角色标识',
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)
 );

@@ -1,6 +1,10 @@
 package com.khh.web.utils;
 
 
+import com.khh.web.domain.Person;
+import com.khh.web.service.interface_.PersonService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
  * Created by 951087952@qq.com on 2017/4/18.
  * 为系统弄一个管理员
@@ -9,7 +13,14 @@ public class InitUtils {
 
 
     public static void main(String[] args) {
-        System.out.println(System.getProperty("java.io.tmpdir"));//C:\Users\ADMINI~1.PC-\AppData\Local\Temp\
+//        System.out.println(System.getProperty("java.io.tmpdir"));//C:\Users\ADMINI~1.PC-\AppData\Local\Temp\
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        PersonService personService = (PersonService) context.getBean("personService");
+        Person person = new Person("123456");
+        person.setAccount("haohua");
+        Person p = personService.findForLogin(person);
+        System.out.println(p.toString());
     }
 //
 //    public static void initUser(){

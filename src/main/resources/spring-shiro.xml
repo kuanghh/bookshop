@@ -36,15 +36,17 @@
 		<property name="sessionDAO" ref="sessionDAO"/>
 	</bean>
 
-	<!-- 注册realm -->
-	<bean id="NameSecurityRealm" class="com.khh.web.security.NamePasswordRealm" />
+	<!-- 注册 3种 认证管理器 realm -->
+	<bean id="AccountSecurityRealm" class="com.khh.web.security.AccountPasswordRealm" />
 	<bean id="EmailSecurityRealm" class="com.khh.web.security.EmailPasswordRealm" />
+	<bean id="PhoneSecurityRealm" class="com.khh.web.security.PhonePasswordRealm" />
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realms">
 			<list>
-				<ref bean="NameSecurityRealm"/>
+				<ref bean="AccountSecurityRealm"/>
 				<ref bean="EmailSecurityRealm"/>
+				<ref bean="PhoneSecurityRealm"/>
 			</list>
 		</property>
 		<!-- cacheManager,集合spring缓存工厂 -->

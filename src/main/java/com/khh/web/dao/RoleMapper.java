@@ -1,17 +1,50 @@
 package com.khh.web.dao;
 
+import com.khh.common.bean.RoleBean;
 import com.khh.web.domain.Role;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleMapper {
-    int deleteByPrimaryKey(String id);
+    /**
+     * 添加
+     * @param role
+     * @return
+     */
+    int insert(Role role);
 
-    int insert(Role record);
+    /**
+     * 更新
+     * @param role
+     * @return
+     */
+    int update(Role role);
 
-    int insertSelective(Role record);
+    /**
+     * 根据id查询(查询有效或无效数据)
+     * @param id
+     * @return
+     */
+    Role findById(@Param(value = "id")String id, @Param(value = "isValid") boolean isValid);
 
-    Role selectByPrimaryKey(String id);
+    /**
+     * 根据id返回角色的详细信息(只查询有效数据)
+     * @param id
+     * @return
+     */
+    RoleBean findDetailById(String id);
 
-    int updateByPrimaryKeySelective(Role record);
+    /**
+     * 根据人Id查询所有角色信息(只查询有效数据)
+     * @param id
+     * @return
+     */
+    List<Role> findAllByPersonId(String id);
 
-    int updateByPrimaryKey(Role record);
+    /**
+     * 返回所有详细的角色信息(只查询有效数据)
+     * @return
+     */
+    List<RoleBean> findAllWithDetail();
 }

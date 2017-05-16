@@ -1,6 +1,5 @@
 package com.khh.web.security;
 
-
 import com.khh.common.constant_.PersonLogin;
 import com.khh.web.domain.Person;
 import com.khh.web.service.interface_.PermissionService;
@@ -13,11 +12,12 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 /**
  * Created by 951087952@qq.com on 2017/4/17.
- * 邮箱-密码  认证管理器
+ * 帐号-密码  认证管理器
  */
-public class EmailPasswordRealm extends AuthorizingRealm {
+public class AccountPasswordRealm extends AuthorizingRealm {
 
     @Autowired
     private PersonService personService;
@@ -30,7 +30,7 @@ public class EmailPasswordRealm extends AuthorizingRealm {
 
     @Override
     public String getName() {
-        return "EmailSecurityRealm";
+        return "AccountSecurityRealm";
     }
 
     //支持什么类型的token
@@ -46,6 +46,7 @@ public class EmailPasswordRealm extends AuthorizingRealm {
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+
         return authorizationInfo;
     }
 
@@ -56,17 +57,17 @@ public class EmailPasswordRealm extends AuthorizingRealm {
      * @throws AuthenticationException
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String email = String.valueOf(token.getPrincipal());
+        String account = String.valueOf(token.getPrincipal());
         String password = new String((char[]) token.getCredentials());
         //通过数据库进行验证
         Person p = new Person(password);
-        p.setEmail(email);
+        p.setAccount(account);
         final Person person = personService.findForLogin(p);
         if(person == null){
-            throw new AuthenticationException("邮箱或密码错误");
+            throw new AuthenticationException("用户名或密码错误");
         }
         PersonLogin.set(person);
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(email,password,getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(account,password,getName());
         return authenticationInfo;
     }
 }

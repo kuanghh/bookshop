@@ -1,17 +1,41 @@
 package com.khh.web.dao;
 
 import com.khh.web.domain.RolePermission;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RolePermissionMapper {
-    int deleteByPrimaryKey(String id);
-
+    /**
+     * 增加
+     * @param record
+     * @return
+     */
     int insert(RolePermission record);
 
-    int insertSelective(RolePermission record);
+    /**
+     * 批量增加
+     * @param list
+     * @return
+     */
+    int insertAll(@Param(value = "list") List<RolePermission> list);
 
-    RolePermission selectByPrimaryKey(String id);
+    /**
+     * 根据角色查找
+     * @return
+     */
+    List<RolePermission> findByRoleId(@Param(value = "roleId")String id);
 
-    int updateByPrimaryKeySelective(RolePermission record);
+    /**
+     * 更改为有效或者无效
+     * @param
+     */
+    void update(@Param(value = "rp")RolePermission rp,@Param(value = "isValid") int isValid);
 
-    int updateByPrimaryKey(RolePermission record);
+    /**
+     * 批量更改为有效或无效
+     * @param rps
+     * @param isValid
+     */
+    void updateAll(@Param(value = "list")List<RolePermission> rps,@Param(value = "isValid")boolean isValid);
 }

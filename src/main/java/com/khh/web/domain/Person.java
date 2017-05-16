@@ -1,6 +1,10 @@
 package com.khh.web.domain;
 
-public class Person {
+import com.khh.web.utils.CodeUtils;
+
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private String id;
 
     private String account;
@@ -11,7 +15,15 @@ public class Person {
 
     private String password;
 
-    private Byte isValid;
+    private boolean isValid;
+
+    public Person(){
+        this.id = CodeUtils.getUUID();
+    }
+    public Person(String password){
+        this.password = password;
+    }
+
 
     public String getId() {
         return id;
@@ -53,11 +65,23 @@ public class Person {
         this.password = password == null ? null : password.trim();
     }
 
-    public Byte getIsValid() {
+    public boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Byte isValid) {
+    public void setIsValid(boolean isValid) {
         this.isValid = isValid;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id='" + id + '\'' +
+                ", account='" + account + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", isValid=" + isValid +
+                '}';
     }
 }

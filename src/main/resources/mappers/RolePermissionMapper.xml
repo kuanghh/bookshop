@@ -1,82 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.khh.web.dao.RolePermissionMapper" >
-  <resultMap id="BaseResultMap" type="com.khh.web.domain.RolePermission" >
+  <resultMap id="RolePermissionResultMap" type="com.khh.web.domain.RolePermission" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="permission_id" property="permissionId" jdbcType="VARCHAR" />
-    <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+    <result column="is_valid" property="isValid"  />
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, role_id, permission_id, is_valid
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_role_permission
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from t_role_permission
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
+
   <insert id="insert" parameterType="com.khh.web.domain.RolePermission" >
-    insert into t_role_permission (id, role_id, permission_id, 
-      is_valid)
-    values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}, 
-      #{isValid,jdbcType=TINYINT})
+    insert into t_role_permission (id,role_id, permission_id, is_valid)
+    values (#{id},#{roleId}, #{permissionId}, #{isValid})
   </insert>
-  <insert id="insertSelective" parameterType="com.khh.web.domain.RolePermission" >
-    insert into t_role_permission
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="roleId != null" >
-        role_id,
-      </if>
-      <if test="permissionId != null" >
-        permission_id,
-      </if>
-      <if test="isValid != null" >
-        is_valid,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null" >
-        #{permissionId,jdbcType=VARCHAR},
-      </if>
-      <if test="isValid != null" >
-        #{isValid,jdbcType=TINYINT},
-      </if>
-    </trim>
+
+  <insert id="insertAll" parameterType="java.util.List" >
+    insert into t_role_permission (id,role_id, permission_id, is_valid)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id} , #{item.roleId}, #{item.permissionId}, #{item.isValid})
+    </foreach>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.khh.web.domain.RolePermission" >
-    update t_role_permission
-    <set >
-      <if test="roleId != null" >
-        role_id = #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null" >
-        permission_id = #{permissionId,jdbcType=VARCHAR},
-      </if>
-      <if test="isValid != null" >
-        is_valid = #{isValid,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
+
+  <select id="findByRoleId" resultMap="RolePermissionResultMap">
+    select * from t_role_permission where role_id=#{roleId}
+  </select>
+
+  <update id="update" >
+    UPDATE t_role_permission
+    set is_valid = #{isValid}
+    where
+    role_id = #{rp.roleId} and permission_id = #{rp.permissionId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.khh.web.domain.RolePermission" >
-    update t_role_permission
-    set role_id = #{roleId,jdbcType=VARCHAR},
-      permission_id = #{permissionId,jdbcType=VARCHAR},
-      is_valid = #{isValid,jdbcType=TINYINT}
-    where id = #{id,jdbcType=VARCHAR}
+
+  <update id="updateAll">
+    UPDATE t_role_permission
+    SET
+    <if test="isValid">is_valid = 1</if>
+    <if test="!isValid">is_valid = 0</if>
+    where
+    id in (
+    <foreach collection="list" item="item" separator=",">
+      #{item.id}
+    </foreach>
+    )
   </update>
 </mapper>

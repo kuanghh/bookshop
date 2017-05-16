@@ -3,15 +3,26 @@ package com.khh.web.dao;
 import com.khh.web.domain.Person;
 
 public interface PersonMapper {
-    int deleteByPrimaryKey(String id);
 
-    int insert(Person record);
+    /**
+     * 添加新成员
+     * @param person
+     * @return
+     */
+    int insert(Person person);
 
-    int insertSelective(Person record);
+    /**
+     * 更新成员
+     * @param person
+     * @return
+     */
+    int update(Person person);
 
-    Person selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(Person record);
-
-    int updateByPrimaryKey(Person record);
+    /**
+     * 通过  邮箱-密码 或 帐号-密码 或  电话号码-密码 进行查询登录（只查询有效信息）
+     * @param person
+     * @return
+     */
+    Person findForLogin(Person person);
 }
