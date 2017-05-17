@@ -1,0 +1,78 @@
+<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>后台登录</title>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="后台登录" />
+<!--Google Fonts-->
+<!--<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+--><!--Google Fonts-->
+
+	<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+<script type="text/javascript">
+
+	$(function () {
+		$("input[name='login']").click(function () {
+			/**
+			 * 获取用户输入的信息
+			 * @type {any}
+			 */
+			var info = $("#info").val();
+			var password = $("#password").val();
+
+			var url = projectUrl + "/index/login.action";
+			var data = {'account':info,'email':info,'phone':info,'password':password};
+			$.post(url,data,function (json) {
+				var code = json.code;
+				if(code == 2000){
+					window.location = projectUrl + "/admin/index.html";
+				}else if(code == 5000){
+					alert(json.message);
+				}
+			});
+		})
+
+	})
+</script>
+<body>
+<!--header start here-->
+<div class="login-form">
+			<div class="top-login">
+				<span><img src="images/group.png" alt=""/></span>
+			</div>
+			<h1>登录</h1>
+			<div class="login-top">
+			<form>
+				<div class="login-ic">
+					<i ></i>
+					<input id="info" type="text" onFocus="this.value = '';" value="请使用帐号或邮箱或手机号码登录"  />
+					<div class="clear"> </div>
+				</div>
+				<div class="login-ic">
+					<i class="icon"></i>
+					<input id="password" type="password" onFocus="this.value = '';" value="密码" />
+					<div class="clear"> </div>
+				</div>
+			
+				<div class="log-bwn">
+					<input name="login" type="button"  value="Login" >
+				</div>
+			</form>
+			</div>
+			<p class="copy">© 2016 xxxxxxxxxxx  <a href="http://www.mycodes.net/" target="_blank">图书商城</a></p>
+</div>		
+<!--header start here-->
+</body>
+</html>

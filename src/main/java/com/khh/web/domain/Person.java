@@ -15,7 +15,8 @@ public class Person implements Serializable {
 
     private String password;
 
-    private boolean isValid;
+    //默认为有效
+    private boolean isValid = true;
 
     public Person(){
         this.id = CodeUtils.getUUID();

@@ -25,4 +25,25 @@ public interface PersonMapper {
      * @return
      */
     Person findForLogin(Person person);
+
+    /**
+     * 通过邮件查询用户（只查询有效信息）
+     * @param email
+     * @return
+     */
+    Person findByEmail(String email);
+
+    /**
+     * 通过帐号查询用户（只查询有效信息）
+     * @param account
+     * @return
+     */
+    Person findByAccount(String account);
+
+    /**
+     * 通过手机号码查询用户（只查询有效信息）
+     * @param phone
+     * @return
+     */
+    Person findByPhone(String phone);
 }

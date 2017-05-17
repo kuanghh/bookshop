@@ -8,7 +8,7 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager"/>
 		<!-- 没有登录认证的用户请求将跳转到此地址进行认证 -->
-		<property name="loginUrl" value="/html/login.html"/>
+		<property name="loginUrl" value="/terminal/login.html"/>
 		<!-- -->
 		<property name="successUrl" value="/index.jsp"/>
 		<!-- 没有权限默认跳转的页面-->
@@ -16,7 +16,11 @@
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- 登录页允许访问 -->
-				/html/login.html = anon
+				/admin/login.html = anon
+				/terminal/login.html = anon
+				<!-- 登录注册允许访问 -->
+				/*/login.action = anon
+				/*/register.action = anon
 				<!-- 其他资源需要认证 -->
 				/*.action = authc
 			</value>

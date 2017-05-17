@@ -1,5 +1,8 @@
 package com.khh.web.security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by 951087952@qq.com on 2017/4/17.
  */
@@ -8,66 +11,43 @@ public class PermissionSign {
     private PermissionSign(){}
 
     /**
-     * 用户新增权限 标识
+     * 普通用户所拥有的权限标识
      */
-    public static final String USER_CREATE = "user:create";
+    public static final String USER_All = "user:*";
 
     /**
-     * 用户删除权限 标识
+     * 店铺商家所拥有的权限标识
      */
-    public static final String USER_DELETE = "user:delete";
+    public static final String SHOP_All = "shop:*";
 
     /**
-     * 用户修改权限 标识
+     * 超级管理员所拥有的权限标识
      */
-    public static final String USER_UPDATE = "user:update";
+    public static final String ADMIN_ALL = "admin:*";
 
     /**
-     * 查看用户权限 标识
+     * 管理普通用户的权限标识
      */
-    public static final String USER_READ = "user:read";
+    public static final String USER_MANAGER = "user:manager";
 
     /**
-     * 角色新增权限 标识
+     * 管理店铺信息的权限标识
      */
-    public static final String ROLE_CREATE = "role:create";
+    public static final String SHOP_MANAGER = "shop:manager";
+
+
 
     /**
-     * 角色删除权限 标识
+     * 存放所有权限的map
      */
-    public static final String ROLE_DELETE = "role:delete";
+    public static final Map<String,Object> PERMISSSION_MAP = new HashMap<String,Object>();
 
-    /**
-     * 角色修改权限 标识
-     */
-    public static final String ROLE_UPDATE = "role:update";
-
-    /**
-     * 查看角色权限 标识
-     */
-    public static final String ROLE_READ = "role:read";
-
-    /**
-     * 查看权限  的权限标识
-     */
-    public static final String PERMISSION_READALL = "permission:readALL";
-
-
-//    /**
-//     * 存放所有权限的map
-//     */
-//    public static final Map<String,Object> PERMISSSION_MAP = new HashMap<String,Object>();
-//
-//    static{
-//        PERMISSSION_MAP.put("用户新增",USER_CREATE);
-//        PERMISSSION_MAP.put("用户删除",USER_DELETE);
-//        PERMISSSION_MAP.put("用户修改",USER_UPDATE);
-//        PERMISSSION_MAP.put("查看用户",USER_READ);
-//        PERMISSSION_MAP.put("角色新增",ROLE_CREATE);
-//        PERMISSSION_MAP.put("角色删除",ROLE_DELETE);
-//        PERMISSSION_MAP.put("角色修改",ROLE_UPDATE);
-//        PERMISSSION_MAP.put("查看角色",ROLE_READ);
-//        PERMISSSION_MAP.put("查看权限",PERMISSION_READALL);
-//    }
+    static{
+        PERMISSSION_MAP.put("所有用户权限",USER_All);
+        PERMISSSION_MAP.put("所有商家权限",SHOP_All);
+        PERMISSSION_MAP.put("用户管理权限",USER_MANAGER);
+        PERMISSSION_MAP.put("商家管理权限",SHOP_MANAGER);
+        PERMISSSION_MAP.put("所有管理员权限",ADMIN_ALL);
+    }
 
 }

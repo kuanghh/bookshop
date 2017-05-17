@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/15 10:55:43                           */
+/* Created on:     2017/5/17 15:20:52                           */
 /*==============================================================*/
 
 
@@ -192,7 +192,7 @@ create table t_shop
    address              varchar(50) not null comment '联系地址',
    create_time          timestamp not null comment '注册时间',
    authentication_time  timestamp not null comment '认证时间',
-   state                tinyint not null comment '(0：否，1：是)',
+   state                int not null comment '(0：否，1：是)',
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)
 );
@@ -205,7 +205,7 @@ create table t_user
    id                   varchar(32) not null comment '唯一标识',
    name                 varchar(50) not null comment '姓名',
    birthday             timestamp not null comment '出生年月日',
-   address              varchar(200) not null comment '收货地址',
+   address              varchar(200) comment '收货地址',
    create_time          timestamp not null comment '注册时间',
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)

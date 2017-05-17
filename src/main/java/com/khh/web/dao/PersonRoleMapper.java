@@ -4,5 +4,10 @@ import com.khh.web.domain.PersonRole;
 
 public interface PersonRoleMapper {
 
-
+    /**
+     * 增
+     * @param userRole
+     * @return
+     */
+    int insert(PersonRole userRole);
 }

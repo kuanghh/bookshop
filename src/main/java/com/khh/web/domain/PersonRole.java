@@ -1,5 +1,7 @@
 package com.khh.web.domain;
 
+import com.khh.web.utils.CodeUtils;
+
 import java.io.Serializable;
 
 public class PersonRole implements Serializable {
@@ -9,7 +11,16 @@ public class PersonRole implements Serializable {
 
     private String roleId;
 
-    private boolean isValid;
+    //默认有效
+    private boolean isValid = true;
+
+    public PersonRole(){this.id = CodeUtils.getUUID();}
+
+    public PersonRole(String personId, String roleId) {
+        this();
+        this.personId = personId;
+        this.roleId = roleId;
+    }
 
     public String getId() {
         return id;

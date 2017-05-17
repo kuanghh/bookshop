@@ -87,4 +87,8 @@
     where r.is_valid = 1 and p.is_valid = 1
   </select>
 
+  <select id="findBySign" resultMap="RoleResultMap">
+    SELECT * from t_role where  sign = #{sign} and is_valid = 1
+  </select>
+
 </mapper>

@@ -8,5 +8,9 @@
     <result column="is_valid" property="isValid" />
   </resultMap>
 
+  <insert id="insert"  parameterType="com.khh.web.domain.PersonRole">
+    insert into t_person_role(id,person_id,role_id,is_valid)
+    value(#{id},#{personId},#{roleId},#{isValid})
+  </insert>
   
 </mapper>

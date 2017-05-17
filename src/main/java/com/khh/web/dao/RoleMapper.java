@@ -47,4 +47,11 @@ public interface RoleMapper {
      * @return
      */
     List<RoleBean> findAllWithDetail();
+
+    /**
+     * 通过角色标识查询角色信息(只查询有效数据)
+     * @param sign
+     * @return
+     */
+    Role findBySign(String sign);
 }

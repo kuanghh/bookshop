@@ -54,15 +54,15 @@ body {
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="21" class="STYLE7"><img src="../images/main_13.gif" width="19" height="14"/></td>
-			<td width="35" class="STYLE7"><div align="center">首页</div></td>
+			<td width="35" class="STYLE7"><div align="center"></div></td>
             <td width="21" class="STYLE7"><img src="../images/main_15.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center">后退</div></td>
+            <td width="35" class="STYLE7"><div align="center"></div></td>
             <td width="21" class="STYLE7"><img src="../images/main_17.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center">前进</div></td>
+            <td width="35" class="STYLE7"><div align="center"></div></td>
             <td width="21" class="STYLE7"><img src="../images/main_19.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center">刷新</div></td>
+            <td width="35" class="STYLE7"><div align="center"</div></td>
             <td width="21" class="STYLE7"><img src="../images/main_21.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center">帮助</div></td>
+            <td width="35" class="STYLE7"><div align="center"></div></td>
             <td>&nbsp;</td>
           </tr>
         </table></td>
@@ -72,7 +72,6 @@ body {
             <td width="75%">
             <div align="center">
 	            <span class="STYLE7" id="showtime">
-	                                           服务器时间：2013-07-10 14:35:56
 	            </span>
             </div>
             </td>
@@ -110,54 +109,54 @@ body {
   </tr>
 </table>
 
-<!-- 显示系统的服务器时间 -->
-<script type="text/javascript">
-   // 1. 创建XMLHttpRequest对象
-   var xmlHttp;
-   function ajaxFunction() {
-		try {
-			// Firefox, Opera 8.0+, Safari
-			xmlHttp = new XMLHttpRequest();
-		} catch (e) {
-			// Internet Explorer
-			try {
-				xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-			} catch (e) {
-				try {
-					xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-				} catch (e) {
-					alert("您的浏览器不支持AJAX！");
-					return false;
-				}
-			}
-		}
-   }
-   // 3. 写发送请求的函数
-   function getDate(){
-      // 获取发送请求的对象
-      ajaxFunction();
-      // 监听请求发送的状态 0 ~ 4
-      xmlHttp.onreadystatechange = showDate;
-      // 发送请求
-      xmlHttp.open("POST","${pageContext.request.contextPath}/date",true);
-      xmlHttp.setRequestHeader("content-type","application/x-www-form-urlencoded");
-      xmlHttp.send("method=getServerDateTime");
-   }
-   // 2. 触发事件
-   window.setInterval("getDate()",1000);
-   
-   // 4. 编写监听函数
-   function showDate(){
-      // 请求码判断
-      if( xmlHttp.readyState == 4 ){
-         // 相应码判断 
-         if( xmlHttp.status == 200 ){
-            // 获取服务器返回的数据
-            var sp = window.document.getElementById("showtime");
-            sp.innerHTML = "服务器时间："+xmlHttp.responseText;
-         }
-      }
-   }
-</script>
+<!--&lt;!&ndash; 显示系统的服务器时间 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+   <!--// 1. 创建XMLHttpRequest对象-->
+   <!--var xmlHttp;-->
+   <!--function ajaxFunction() {-->
+		<!--try {-->
+			<!--// Firefox, Opera 8.0+, Safari-->
+			<!--xmlHttp = new XMLHttpRequest();-->
+		<!--} catch (e) {-->
+			<!--// Internet Explorer-->
+			<!--try {-->
+				<!--xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");-->
+			<!--} catch (e) {-->
+				<!--try {-->
+					<!--xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");-->
+				<!--} catch (e) {-->
+					<!--alert("您的浏览器不支持AJAX！");-->
+					<!--return false;-->
+				<!--}-->
+			<!--}-->
+		<!--}-->
+   <!--}-->
+   <!--// 3. 写发送请求的函数-->
+   <!--function getDate(){-->
+      <!--// 获取发送请求的对象-->
+      <!--ajaxFunction();-->
+      <!--// 监听请求发送的状态 0 ~ 4-->
+      <!--xmlHttp.onreadystatechange = showDate;-->
+      <!--// 发送请求-->
+      <!--xmlHttp.open("POST","${pageContext.request.contextPath}/date",true);-->
+      <!--xmlHttp.setRequestHeader("content-type","application/x-www-form-urlencoded");-->
+      <!--xmlHttp.send("method=getServerDateTime");-->
+   <!--}-->
+   <!--// 2. 触发事件-->
+   <!--window.setInterval("getDate()",1000);-->
+   <!---->
+   <!--// 4. 编写监听函数-->
+   <!--function showDate(){-->
+      <!--// 请求码判断-->
+      <!--if( xmlHttp.readyState == 4 ){-->
+         <!--// 相应码判断 -->
+         <!--if( xmlHttp.status == 200 ){-->
+            <!--// 获取服务器返回的数据-->
+            <!--var sp = window.document.getElementById("showtime");-->
+            <!--sp.innerHTML = "服务器时间："+xmlHttp.responseText;-->
+         <!--}-->
+      <!--}-->
+   <!--}-->
+<!--</script>-->
 </body>
 </html>

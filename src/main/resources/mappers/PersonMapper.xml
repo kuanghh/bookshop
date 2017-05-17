@@ -58,4 +58,19 @@
       </if>
   </select>
 
+  <select id="findByEmail" resultMap="PersonResultMap">
+    select * from t_person
+    where email = #{email}
+  </select>
+
+  <select id="findByAccount"  resultMap="PersonResultMap">
+    select * from t_person
+    where account = #{account}
+  </select>
+
+  <select id="findByPhone"  resultMap="PersonResultMap">
+    select * from t_person
+    where phone = #{phone}
+  </select>
+
 </mapper>

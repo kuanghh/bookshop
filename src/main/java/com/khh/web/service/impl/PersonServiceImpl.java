@@ -17,7 +17,27 @@ public class PersonServiceImpl implements PersonService{
     private PersonMapper personMapper;
 
     @Override
+    public int insert(Person person) {
+        return personMapper.insert(person);
+    }
+
+    @Override
     public Person findForLogin(Person person) {
         return personMapper.findForLogin(person);
+    }
+
+    @Override
+    public Person findByEmail(String email) {
+        return personMapper.findByEmail(email);
+    }
+
+    @Override
+    public Person findByAccount(String account) {
+        return personMapper.findByAccount(account);
+    }
+
+    @Override
+    public Person findByPhone(String phone) {
+        return personMapper.findByPhone(phone);
     }
 }

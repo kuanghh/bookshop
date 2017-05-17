@@ -1,5 +1,7 @@
 package com.khh.web.domain;
 
+import com.khh.web.utils.CodeUtils;
+
 import java.io.Serializable;
 
 public class RolePermission implements Serializable {
@@ -10,6 +12,8 @@ public class RolePermission implements Serializable {
     private String permissionId;
 
     private boolean isValid;
+
+    public RolePermission(){this.id = CodeUtils.getUUID();}
 
     public String getId() {
         return id;

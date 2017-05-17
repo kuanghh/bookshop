@@ -1,5 +1,6 @@
 package com.khh.web.controller;
 
+import com.khh.common.base.BaseController;
 import com.khh.common.bean.LoginBean;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.constant_.Const;
@@ -25,8 +26,8 @@ import javax.validation.Valid;
  * 登录控制器
  */
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/index")
+public class LoginController extends BaseController{
 
     @Resource
     private PersonService personService;

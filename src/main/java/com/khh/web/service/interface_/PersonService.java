@@ -8,9 +8,39 @@ import com.khh.web.domain.Person;
 public interface PersonService {
 
     /**
+     * 增加新成员
+     * @param person
+     * @return
+     */
+    int insert(Person person);
+
+    /**
      * 通过  邮箱-密码 或 帐号-密码 或  电话号码-密码 进行查询登录
      * @param person
      * @return
      */
     Person findForLogin(Person person);
+
+    /**
+     * 通过邮件查询用户
+     * @param email
+     * @return
+     */
+    Person findByEmail(String email);
+
+    /**
+     * 通过帐号查询用户
+     * @param account
+     * @return
+     */
+    Person findByAccount(String account);
+
+    /**
+     * 通过手机号码查询用户
+     * @param phone
+     * @return
+     */
+    Person findByPhone(String phone);
+
+
 }
