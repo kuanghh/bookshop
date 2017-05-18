@@ -9,6 +9,14 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="is_valid" property="isValid" />
   </resultMap>
+
+  <resultMap id="UserRegisterBeanResultMap" type="com.khh.common.bean.UserRegisterBean" extends="UserResultMap">
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="add_Column_List" >
     id, name, birthday, address, create_time, is_valid
   </sql>
@@ -17,5 +25,39 @@
     insert into t_user(<include refid="add_Column_List"/> )
     value(#{id},#{name},#{birthday},#{address},#{createTime},#{isValid})
   </insert>
+
+  <select id="findAllBean" resultMap="UserRegisterBeanResultMap">
+    select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
+          u.name as name , u.create_time as create_time
+    from t_user u,t_person p
+    where
+    u.id = p.id and p.is_valid = 1
+  </select>
+
+  <select id="findCountWithKey" parameterType="java.util.Map" resultType="int">
+    select count(*) from t_user u,t_person p
+    where u.id = p.id and p.is_valid = 1 and
+    <foreach item="k" collection="keyMap.keys" separator="and" >
+      <if test="null != keyMap[k]">
+        ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+      </if>
+    </foreach>
+  </select>
+
+  <select id="findBeanInPage" parameterType="com.khh.common.bean.PagerBean" resultMap="UserRegisterBeanResultMap">
+    select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
+          u.name as name , u.create_time as create_time
+    from t_user u,t_person p
+    where
+    u.id = p.id and p.is_valid = 1 and
+
+    <foreach item="k" collection="keyMap.keys" separator="and" >
+      <if test="null != keyMap[k]">
+        ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+      </if>
+    </foreach>
+
+    limit #{start},#{pageSize}
+  </select>
 
 </mapper>

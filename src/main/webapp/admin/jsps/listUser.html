@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>所有用户信息列表</title>
+<style type="text/css">
+body {
+	margin-left: 3px;
+	margin-top: 0px;
+	margin-right: 3px;
+	margin-bottom: 0px;
+}
+.STYLE1 {
+	color: #e1e2e3;
+	font-size: 12px;
+}
+.STYLE6 {
+    color: #000000; 
+    font-size: 12px; 
+    }
+.STYLE10 {
+    color: #000000; 
+    font-size: 12px; 
+    }
+.STYLE19 {
+	color: #344b50;
+	font-size: 12px;
+}
+.STYLE21{
+	font-size: 12px;
+	color: #3b6375;
+}
+.STYLE22{
+	font-size: 12px;
+	color: #3b6375;
+}
+.LINKSTYLE{
+    color: #ffffff;
+	font-size: 12px;
+	text-decoration: none;
+	margin-right:5px
+}
+a{
+   text-decoration: none;
+}
+</style>
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+
+</head>
+
+<body>
+<script type="text/javascript" >
+    $(function () {
+        var pageNo = 1;
+        var url = projectUrl + "/user/findInPageAndKey.action";
+
+
+        var data = {"pageNo":pageNo};
+        $.post(url,data,function(databack){
+            var code = databack.code;
+            if(code == 5000){
+                alert(databack.message);
+            }else{
+
+            }
+
+        });
+    })
+
+</script>
+<!-- 页面头部信息处理 -->
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="24" bgcolor="#353c44"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="6%" height="19" valign="bottom"><div align="center"><img src="../images/tb.gif" width="14" height="14" /></div></td>
+                <td width="94%" valign="bottom"><span class="STYLE1"> 用户信息列表</span></td>
+              </tr>
+            </table></td>
+            <!-- 主要分担的是界面的工具栏  -->
+            <td>
+              <div align="right"><span class="STYLE1">
+              <input type="checkbox" name="checkbox11" id="checkbox11" />  
+                  <a href="#" onclick="selectAll();" class="LINKSTYLE">**</a> &nbsp;&nbsp;
+              <img src="../images/add.gif" width="10" height="10" />
+                  <a href="#" onclick="add();" class="LINKSTYLE">**</a> &nbsp;
+              <img src="../images/del.gif" width="10" height="10" />
+                  <a href="#" onclick="del();"  class="LINKSTYLE">**</a> &nbsp;&nbsp;
+              <img src="../images/edit.gif" width="10" height="10" />
+                  <a href="#" onclick="update();"  class="LINKSTYLE">**</a> &nbsp;</span>
+              <span class="STYLE1"> &nbsp;</span></div>
+           </td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>
+        <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" onmouseover="changeto();"  onmouseout="changeback();">
+          <!-- 列表头 -->
+          <tr>
+            <td width="4%" height="20" bgcolor="d3eaef" class="STYLE10"><div align="center">
+              <input type="checkbox" name="checkbox" id="checkbox" />
+            </div></td>
+            <td width="4%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户序号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户帐号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户姓名</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">邮箱</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">手机号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">注册时间</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">操作</span></div></td>
+          </tr>
+
+          <!-- 在这里循环回来的图书分类列表数据 -->
+                 <!-- 显示数据 -->
+         <tr>
+            <td height="20" bgcolor="#FFFFFF">
+                <div align="center"><input type="checkbox" name="checkbox2" id="checkbox2" /></div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE6">
+                <div align="center">${ b.bookId }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center">${ b.bookName }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center">${ b.description }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center">${ b.memberPrice }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center">${ b.disPrice }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center">${ b.createTime }</div>
+            </td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19">
+                <div align="center" class="STYLE21"><a href="">编辑</a><a href="">删除</a>
+            </div>
+            </td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+  
+  <!-- 分页条处理 -->
+
+</table>
+
+
+
+
+</body>
+</html>

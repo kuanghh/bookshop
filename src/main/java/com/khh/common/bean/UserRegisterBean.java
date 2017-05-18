@@ -37,6 +37,9 @@ public class UserRegisterBean implements Serializable{
     //用户出生时间
     private String birthday;
 
+    private Date createTime;
+
+
     public UserRegisterBean(){this.id = CodeUtils.getUUID();}
 
     public String getId() {
@@ -94,4 +97,13 @@ public class UserRegisterBean implements Serializable{
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
 }

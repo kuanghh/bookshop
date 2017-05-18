@@ -24,6 +24,17 @@ public class ShopController {
     private ShopService shopService;
 
     /**
+     * 登录UI
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/loginUI" ,method = RequestMethod.GET)
+    public String goToLogin() throws Exception{
+
+        return "redirect:/admin/login.html";
+    }
+
+    /**
      * 注册
      * @param
      * @return
