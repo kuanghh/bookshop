@@ -1,6 +1,7 @@
 package com.khh.web.dao;
 
 import com.khh.web.domain.Person;
+import org.apache.ibatis.annotations.Param;
 
 public interface PersonMapper {
 

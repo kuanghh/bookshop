@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.khh.web.dao.ShopMapper" >
-  <resultMap id="BaseResultMap" type="com.khh.web.domain.Shop" >
+  <resultMap id="ShopResultMap" type="com.khh.web.domain.Shop" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="own_name" property="ownName" jdbcType="VARCHAR" />
@@ -9,12 +9,17 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="authentication_time" property="authenticationTime" jdbcType="TIMESTAMP" />
-    <result column="state" property="state" jdbcType="INT" />
+    <result column="state" property="state" />
     <result column="is_valid" property="isValid"  />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="add_Column_List" >
     id, shop_name, own_name, own_id_card, address, create_time, authentication_time, 
     state, is_valid
   </sql>
+
+  <insert id="insert" parameterType="com.khh.web.domain.Shop">
+    insert into t_shop(<include refid="add_Column_List" />)
+    value(#{id},#{shopName},#{ownName},#{ownIdCard},#{address},#{createTime},#{authenticationTime},#{state},#{isValid})
+  </insert>
 
 </mapper>

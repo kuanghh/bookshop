@@ -1,3 +1,5 @@
+package com.khh.test;
+
 import com.khh.web.domain.*;
 import com.khh.web.security.PermissionSign;
 import com.khh.web.security.RoleSign;

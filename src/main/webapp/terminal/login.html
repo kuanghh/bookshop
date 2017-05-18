@@ -5,7 +5,39 @@
 	<meta author="none">
 	<title>登录 - 图书商城 - Thousands Find</title>
 	<link rel="stylesheet" type="text/css" href="style/register-login.css">
+	<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
 </head>
+<script type="text/javascript">
+
+	$(function () {
+		$("#button").click(function () {
+			/**
+			 * 获取用户输入的信息
+			 * @type {any}
+			 */
+			var email = $("#email").val();
+			var password = $("#password").val();
+
+			var url = projectUrl + "/index/login.action";
+			var data = {'account':email,'email':email,'phone':email,'password':password};
+			$.post(url,data,function (json) {
+				var code = json.code;
+				if(code == 2000){
+					if(json.data.role == "simple_user"){
+						window.location = projectUrl + "/terminal/index.html";
+					}else{
+						alert("商家或管理员请从后台登录");
+						window.location = projectUrl + "/admin/login.html";
+					}
+				}else if(code == 5000){
+					alert(json.message);
+				}
+			});
+		})
+
+	})
+</script>
 <body>
 <div id="box"></div>
 <div class="cent-box">
@@ -35,7 +67,7 @@
 		</div>
 
 		<div class="button">
-			<button type="submit" class="login-btn register-btn" id="button">登录</button>
+			<button type="button"  class="login-btn register-btn" id="button">登录</button>
 		</div>
 
 		<div class="remember clearfix">

@@ -1,5 +1,6 @@
 package com.khh.web.service.impl;
 
+import com.khh.common.bean.UserRegisterBean;
 import com.khh.web.dao.PersonMapper;
 import com.khh.web.domain.Person;
 import com.khh.web.service.interface_.PersonService;
@@ -40,4 +41,5 @@ public class PersonServiceImpl implements PersonService{
     public Person findByPhone(String phone) {
         return personMapper.findByPhone(phone);
     }
+
 }

@@ -3,22 +3,31 @@ package com.khh.common.bean;
 import com.khh.web.utils.CodeUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * Created by 951087952@qq.com on 2017/5/17.
- * 普通用户注册bean
+ * Created by Administrator on 2017/5/18.
  */
-public class UserRegisterBean implements Serializable{
+public class ShopRegisterBean {
 
     //唯一标识
     private String id ;
 
-    //用户名字
-    private String name;
+    //店铺名字
+    @NotEmpty
+    private String shopName;
 
-    //用户帐号
+    //店铺拥有者的名字
+    @NotEmpty
+    private String ownName;
+
+    //店铺拥有者的身份证号
+    @NotEmpty
+    private String ownIdCard;
+
+    //店铺具体地址
+    @NotEmpty
+    private String address;
+
+    //商家帐号
     @NotEmpty
     private String account;
 
@@ -34,10 +43,8 @@ public class UserRegisterBean implements Serializable{
     @NotEmpty
     private String password;
 
-    //用户出生时间
-    private String birthday;
 
-    public UserRegisterBean(){this.id = CodeUtils.getUUID();}
+    public ShopRegisterBean(){this.id = CodeUtils.getUUID();}
 
     public String getId() {
         return id;
@@ -47,12 +54,36 @@ public class UserRegisterBean implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getOwnName() {
+        return ownName;
+    }
+
+    public void setOwnName(String ownName) {
+        this.ownName = ownName;
+    }
+
+    public String getOwnIdCard() {
+        return ownIdCard;
+    }
+
+    public void setOwnIdCard(String ownIdCard) {
+        this.ownIdCard = ownIdCard;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getAccount() {
@@ -85,13 +116,5 @@ public class UserRegisterBean implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 }

@@ -19,6 +19,10 @@ public class Shop extends Person implements Serializable {
 
     private int state;
 
+    public static final int ENABLE = 1;
+    public static final int DISABLE = 0;
+
+
     public Shop(){super();}
 
 

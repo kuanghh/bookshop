@@ -6,6 +6,8 @@ import com.khh.common.bean.ResponseBean;
 import com.khh.common.constant_.Const;
 import com.khh.common.constant_.PersonLogin;
 import com.khh.web.domain.Person;
+import com.khh.web.domain.Role;
+import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.PersonService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -79,8 +81,10 @@ public class LoginController extends BaseController{
          * 对象放入Thread中的成员变量threadLocals中，那么这个对象是永远不会被回收的，所以为了避免浪费java堆内存，则需要
          * 调用Context.remove();
          */
+        if(subject.hasRole(RoleSign.SIMPLEUSER)){
+            responseBean.setData("role",RoleSign.SIMPLEUSER);
+        }
         PersonLogin.remove();
-
         responseBean.setSuccessResponse("登录成功");
         return responseBean;
     }

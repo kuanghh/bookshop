@@ -35,9 +35,9 @@ drop table if exists t_user;
 /*==============================================================*/
 create table t_admin
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(50) not null comment 'Ãû×Ö',
-   is_valid             tinyint not null comment 'ÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(50) not null comment 'ï¿½ï¿½ï¿½ï¿½',
+   is_valid             tinyint not null comment 'ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -46,12 +46,12 @@ create table t_admin
 /*==============================================================*/
 create table t_cart
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   update_time          timestamp not null comment '×îºó¸üÐÂµÄÊ±¼ä',
-   num                  int not null comment 'ÉÌÆ·ÊýÁ¿',
-   goods_id             varchar(32) not null comment 'ÉÌÆ·id',
-   user_id              varchar(32) not null comment 'Âò¼Òid',
-   is_valid             tinyint not null comment 'ÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   update_time          timestamp not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ê±ï¿½ï¿½',
+   num                  int not null comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½',
+   goods_id             varchar(32) not null comment 'ï¿½ï¿½Æ·id',
+   user_id              varchar(32) not null comment 'ï¿½ï¿½ï¿½id',
+   is_valid             tinyint not null comment 'ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -60,9 +60,9 @@ create table t_cart
 /*==============================================================*/
 create table t_category
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(50) not null comment 'Î¨Ò»±êÊ¶',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(50) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -71,10 +71,10 @@ create table t_category
 /*==============================================================*/
 create table t_category_goods
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   category_id          varchar(32) not null comment 'ÉÌÆ·Àà±ðid',
-   goods_id             varchar(32) not null comment 'ÉÌÆ·id',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   category_id          varchar(32) not null comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½id',
+   goods_id             varchar(32) not null comment 'ï¿½ï¿½Æ·id',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -83,18 +83,18 @@ create table t_category_goods
 /*==============================================================*/
 create table t_goods
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(50) not null comment 'ÉÌÆ·Ãû³Æ',
-   price                double not null comment 'ÉÌÆ·µ¥¼Û',
-   promotinal_price     double not null comment '´ÙÏú¼Û¸ñ',
-   num                  int not null comment '¿â´æ',
-   description          varchar(50) comment 'ÉÌÆ·ÃèÊö',
-   create_time          timestamp not null comment 'ÉÏÏßÈÕÆÚ',
-   pictures             varchar(65535) not null comment 'ÉÌÆ·Í¼Æ¬',
-   postFree             double not null comment 'ÓÊ·Ñ',
-   state                tinyint not null comment '(1£ºÉÏ¼Ü£¬0£ºÏÂ¼Ü)',
-   shop_id              varchar(32) not null comment 'µêÆÌid',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(50) not null comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½',
+   price                double not null comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½',
+   promotinal_price     double not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½',
+   num                  int not null comment 'ï¿½ï¿½ï¿½',
+   description          varchar(50) comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½',
+   create_time          timestamp not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   pictures             varchar(65535) not null comment 'ï¿½ï¿½Æ·Í¼Æ¬',
+   postFree             double not null comment 'ï¿½Ê·ï¿½',
+   state                tinyint not null comment '(1ï¿½ï¿½ï¿½Ï¼Ü£ï¿½0ï¿½ï¿½ï¿½Â¼ï¿½)',
+   shop_id              varchar(32) not null comment 'ï¿½ï¿½ï¿½ï¿½id',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -103,16 +103,16 @@ create table t_goods
 /*==============================================================*/
 create table t_orders
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   serial               varchar(15) not null comment '¶©µ¥±àºÅ',
-   create_time          timestamp not null comment '´´½¨Ê±¼ä',
-   num                  int not null comment 'ÉÌÆ·¸öÊý',
-   total_price          double not null comment '×Ü¼Û',
-   goods_id             varchar(32) not null comment 'ÉÌÆ·id',
-   shop_id              varchar(32) not null comment 'µêÆÌid',
-   user_id              varchar(32) not null comment 'Âò¼Òid',
-   state                tinyint not null comment 'ÊÇ·ñ´¦Àí(0:Î´·¢»õ£¬1£ºÒÑ·¢»õ)',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   serial               varchar(15) not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   create_time          timestamp not null comment 'ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½',
+   num                  int not null comment 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½',
+   total_price          double not null comment 'ï¿½Ü¼ï¿½',
+   goods_id             varchar(32) not null comment 'ï¿½ï¿½Æ·id',
+   shop_id              varchar(32) not null comment 'ï¿½ï¿½ï¿½ï¿½id',
+   user_id              varchar(32) not null comment 'ï¿½ï¿½ï¿½id',
+   state                tinyint not null comment 'ï¿½Ç·ï¿½ï¿½ï¿½(0:Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½)',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -121,11 +121,11 @@ create table t_orders
 /*==============================================================*/
 create table t_permission
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(20) not null comment 'È¨ÏÞÃû³Æ',
-   description          varchar(50) not null comment 'È¨ÏÞÃèÊö',
-   sign                 varchar(20) not null comment 'È¨ÏÞ±êÊ¶',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(20) not null comment 'È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   description          varchar(50) not null comment 'È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   sign                 varchar(20) not null comment 'È¨ï¿½Þ±ï¿½Ê¶',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -134,12 +134,12 @@ create table t_permission
 /*==============================================================*/
 create table t_person
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   account              varchar(50) not null comment 'µÇÂ¼ÕÊºÅ',
-   email                varchar(50) not null comment 'ÓÊÏä',
-   phone                varchar(13) not null comment 'µç»°ºÅÂë',
-   password             varchar(20) not null comment 'µÇÂ¼ÃÜÂë',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   account              varchar(50) not null comment 'ï¿½ï¿½Â¼ï¿½Êºï¿½',
+   email                varchar(50) not null comment 'ï¿½ï¿½ï¿½ï¿½',
+   phone                varchar(13) not null comment 'ï¿½ç»°ï¿½ï¿½ï¿½ï¿½',
+   password             varchar(20) not null comment 'ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -148,10 +148,10 @@ create table t_person
 /*==============================================================*/
 create table t_person_role
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   person_id            varchar(32) not null comment 'ÈËµÄÎ¨Ò»±êÊ¶',
-   role_id              varchar(32) not null comment '½ÇÉ«µÄÎ¨Ò»±êÊ¶',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   person_id            varchar(32) not null comment 'ï¿½Ëµï¿½Î¨Ò»ï¿½ï¿½Ê¶',
+   role_id              varchar(32) not null comment 'ï¿½ï¿½É«ï¿½ï¿½Î¨Ò»ï¿½ï¿½Ê¶',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -160,11 +160,11 @@ create table t_person_role
 /*==============================================================*/
 create table t_role
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(50) not null comment '½ÇÉ«Ãû×Ö',
-   description          varchar(80) not null comment '½ÇÉ«ÃèÊö',
-   sign                 varchar(20) not null comment '½ÇÉ«±êÊ¶',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(50) not null comment 'ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½',
+   description          varchar(80) not null comment 'ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½',
+   sign                 varchar(20) not null comment 'ï¿½ï¿½É«ï¿½ï¿½Ê¶',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -173,10 +173,10 @@ create table t_role
 /*==============================================================*/
 create table t_role_permission
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   role_id              varchar(32) not null comment '½ÇÉ«id',
-   permission_id        varchar(32) not null comment 'È¨ÏÞid',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   role_id              varchar(32) not null comment 'ï¿½ï¿½É«id',
+   permission_id        varchar(32) not null comment 'È¨ï¿½ï¿½id',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -185,15 +185,15 @@ create table t_role_permission
 /*==============================================================*/
 create table t_shop
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   shop_name            varchar(50) not null comment 'µêÆÌÃû³Æ',
-   own_name             varchar(50) not null comment 'µêÖ÷Ãû×Ö',
-   own_id_card          varchar(18) not null comment 'µêÖ÷Éí·ÝÖ¤',
-   address              varchar(50) not null comment 'ÁªÏµµØÖ·',
-   create_time          timestamp not null comment '×¢²áÊ±¼ä',
-   authentication_time  timestamp not null comment 'ÈÏÖ¤Ê±¼ä',
-   state                int not null comment '(0£º·ñ£¬1£ºÊÇ)',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   shop_name            varchar(50) not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   own_name             varchar(50) not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   own_id_card          varchar(18) not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤',
+   address              varchar(50) not null comment 'ï¿½ï¿½Ïµï¿½ï¿½Ö·',
+   create_time          timestamp  comment '×¢ï¿½ï¿½Ê±ï¿½ï¿½',
+   authentication_time  timestamp  comment 'ï¿½ï¿½Ö¤Ê±ï¿½ï¿½',
+   state                int not null comment '(0ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½)',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 
@@ -202,12 +202,12 @@ create table t_shop
 /*==============================================================*/
 create table t_user
 (
-   id                   varchar(32) not null comment 'Î¨Ò»±êÊ¶',
-   name                 varchar(50) not null comment 'ÐÕÃû',
-   birthday             timestamp not null comment '³öÉúÄêÔÂÈÕ',
-   address              varchar(200) comment 'ÊÕ»õµØÖ·',
-   create_time          timestamp not null comment '×¢²áÊ±¼ä',
-   is_valid             tinyint not null comment 'Êý¾ÝÊÇ·ñÓÐÐ§',
+   id                   varchar(32) not null comment 'Î¨Ò»ï¿½ï¿½Ê¶',
+   name                 varchar(50) not null comment 'ï¿½ï¿½ï¿½ï¿½',
+   birthday             timestamp not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+   address              varchar(200) comment 'ï¿½Õ»ï¿½ï¿½ï¿½Ö·',
+   create_time          timestamp not null comment '×¢ï¿½ï¿½Ê±ï¿½ï¿½',
+   is_valid             tinyint not null comment 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§',
    primary key (id)
 );
 

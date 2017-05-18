@@ -19,8 +19,8 @@
 				/admin/login.html = anon
 				/terminal/login.html = anon
 				<!-- 登录注册允许访问 -->
-				/*/login.action = anon
-				/*/register.action = anon
+				<!--/*/login.action = anon-->
+				<!--/*/register.action = anon-->
 				<!-- 其他资源需要认证 -->
 				/*.action = authc
 			</value>

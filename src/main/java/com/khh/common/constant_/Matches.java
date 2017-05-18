@@ -12,7 +12,7 @@ public class Matches {
     final public static String PASSWORDPATTERN = "^[a-zA-Z0-9]{6,20}$";
 
     public static void main(String[] args) {
-        String str = "1234567";
+        String str = "123456";
         boolean matches = str.matches(PASSWORDPATTERN);
         System.out.println(matches);
     }

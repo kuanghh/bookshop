@@ -1,5 +1,6 @@
 package com.khh.web.service.interface_;
 
+import com.khh.common.bean.UserRegisterBean;
 import com.khh.web.domain.Person;
 
 /**
