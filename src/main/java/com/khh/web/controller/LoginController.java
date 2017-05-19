@@ -81,9 +81,6 @@ public class LoginController extends BaseController{
          * 对象放入Thread中的成员变量threadLocals中，那么这个对象是永远不会被回收的，所以为了避免浪费java堆内存，则需要
          * 调用Context.remove();
          */
-        if(subject.hasRole(RoleSign.SIMPLEUSER)){
-            responseBean.setData("role",RoleSign.SIMPLEUSER);
-        }
         PersonLogin.remove();
         responseBean.setSuccessResponse("登录成功");
         return responseBean;
@@ -115,4 +112,28 @@ public class LoginController extends BaseController{
         responseBean.setSuccessResponse("注销成功");
         return responseBean;
     }
+
+    /**
+     * 获取当前角色
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getRole" ,method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseBean getRole(HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        Subject subject = SecurityUtils.getSubject();
+
+        if(subject.hasRole(RoleSign.SYSTEMADMIN)){
+            responseBean.setData("role",RoleSign.SYSTEMADMIN);
+        }else if(subject.hasRole(RoleSign.SHOP)){
+            responseBean.setData("role",RoleSign.SHOP);
+        }else if(subject.hasRole(RoleSign.SIMPLEUSER)){
+            responseBean.setData("role",RoleSign.SIMPLEUSER);
+        }
+        responseBean.setSuccessResponse("获取成功");
+        return responseBean;
+    }
+
 }

@@ -34,12 +34,15 @@ form{
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="6%" height="19" valign="bottom"><div align="center"><img src="../images/tb.gif" width="14" height="14" /></div></td>
-                <td width="94%" valign="bottom"><span class="STYLE1"> 添加图书分类</span></td>
+                <td width="94%" valign="bottom"><span class="STYLE1"> 添加图书</span></td>
               </tr>
      </table>
     </td>
     <td><div align="right"><span class="STYLE1"><input type="checkbox" name="checkbox11" id="checkbox11" />
-              全选      &nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" /> 添加   &nbsp; <img src="../images/del.gif" width="10" height="10" /> 删除    &nbsp;&nbsp;<img src="../images/edit.gif" width="10" height="10" /> 编辑   &nbsp;</span><span class="STYLE1"> &nbsp;</span></div></td>
+                   &nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" />
+		   &nbsp; <img src="../images/del.gif" width="10" height="10" />
+		    &nbsp;&nbsp;<img src="../images/edit.gif" width="10" height="10" />
+		   &nbsp;</span><span class="STYLE1"> &nbsp;</span></div></td>
           </tr>
     </table>
     </td>
@@ -53,17 +56,25 @@ form{
     <form action="" method="post" enctype="multipart/form-data">
     	<table width="500px;" class="form_table" align="center">
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">商品名称：</td>
-    		<td><input type="text" name="book.bookName" style="width:300px" ></td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">书本名称：</td>
+    		<td><input type="text" name="name" style="width:300px" ></td>
     	</tr>
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">会员价：</td>
-    		<td><input type="text" name="book.memberPrice" style="width:300px" ></td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">书本价格：</td>
+    		<td><input type="text" name="price" style="width:300px" ></td>
     	</tr>
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">折扣价：</td>
-    		<td><input type="text" name="book.disPrice" style="width:300px" ></td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">促销价格：</td>
+    		<td><input type="text" name="promotinalPrice" style="width:300px" ></td>
     	</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" class="STYLE19">库存：</td>
+			<td><input type="text" name="num" style="width:300px" ></td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" class="STYLE19">邮费：</td>
+			<td><input type="text" name="postfree" style="width:300px" ></td>
+		</tr>
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">图片路径：</td>
     		<td><input type="file" name="picImg" style="width:300px" ></td>
@@ -71,7 +82,7 @@ form{
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">商品类别：</td>
     		<td>
-				<select name="book.bookCategoryId">
+				<select name="categoryId">
 					<option value="-1">请选择</option>
 					<!-- 类别数据 -->
 				</select>
@@ -79,7 +90,7 @@ form{
     	</tr>
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">描述：</td>
-    		<td><textarea rows="4" cols="40" name="book.description" style="width:300px"></textarea></td>
+    		<td><textarea rows="4" cols="40" name="description" style="width:300px"></textarea></td>
     	</tr>
     	
     	<tr>

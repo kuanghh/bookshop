@@ -49,60 +49,87 @@ body {
 
 	<script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="../../js/common.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			var u = projectUrl + "/index/getRole.action";
+			var d = {};
+			$.get(u,d,function (j) {
+				if(j.data.role == "shop_user"){
+					$("#adminInfo").css("display","none");
+					$("#shopInfo").css("display","inline");
+				}else if(j.data.role == "sys_admin"){
+					$("#adminInfo").css("display","inline");
+					$("#shopInfo").css("display","none");
+				}
+			});
+		})
+	</script>
+
 </head>
 
 <body>
-<!-- 菜单 -->
-<div class="style3">分类信息管理</div>
-<div>
-	<div>
-	<img src="../images/main_40.gif" class="style2">
-	<a href="../jsps/addCategory.html" target="center_right" class="style1">添加图书分类</a>
-	</div>
-	<div>
-	<img src="../images/main_46.gif" class="style2">
-	<a href="../jsps/listCategory.html" target="center_right" class="style1">查看图书分类</a>
-	</div>
-</div>
+	<!-- 菜单 -->
+	<div id="adminInfo" style="display: none">
+		<div class="style3">分类信息管理</div>
+		<div>
+			<div>
+				<img src="../images/main_40.gif" class="style2">
+				<a href="../jsps/addCategory.html" target="center_right" class="style1">添加图书分类</a>
+			</div>
+			<div>
+				<img src="../images/main_46.gif" class="style2">
+				<a href="../jsps/listCategory.html" target="center_right" class="style1">查看图书分类</a>
+			</div>
+		</div>
 
-<div class="style3 style5">用户信息管理</div>
-<div>
-	<div>
-		<img src="../images/main_46.gif" class="style2">
-		<a href="../jsps/listUser.html" target="center_right" class="style1">查看所有用户</a>
-	</div>
-</div>
+		<div class="style3 style5">用户信息管理</div>
+		<div>
+			<div>
+				<img src="../images/main_46.gif" class="style2">
+				<a href="../jsps/listUser.html" target="center_right" class="style1">查看所有用户</a>
+			</div>
+		</div>
 
-<div class="style3 style5">店铺信息管理</div>
-<div>
-	<div>
-		<img src="../images/main_46.gif" class="style2">
-		<a href="../jsps/listShop.html" target="center_right" class="style1">查看所有店铺</a>
+		<div class="style3 style5">店铺信息管理</div>
+		<div>
+			<div>
+				<img src="../images/main_46.gif" class="style2">
+				<a href="../jsps/listShop.html" target="center_right" class="style1">查看所有店铺</a>
+			</div>
+		</div>
 	</div>
-</div>
-
-<div class="style3 style5">图书信息管理</div>
-<div>
-	<div>
-	<img src="../images/main_40.gif" class="style2">
-	<a href="" target="center_right" class="style1">添加图书信息</a>
+	<div id="shopInfo" style="display: none">
+		<div class="style3 style5">图书信息管理</div>
+		<div>
+			<div>
+			<img src="../images/main_40.gif" class="style2">
+			<a href="../jsps/addBook.html" target="center_right" class="style1">添加图书信息</a>
+			</div>
+			<div>
+			<img src="../images/main_46.gif" class="style2">
+			<a href="" target="center_right" class="style1">查看图书信息</a>
+			</div>
+		</div>
+		<div class="style3 style5">订单信息管理</div>
+		<div>
+			<div>
+			<img src="../images/main_40.gif" class="style2">
+			<a href="" target="center_right" class="style1">查看待处理订单</a>
+			</div>
+			<div>
+			<img src="../images/main_46.gif" class="style2">
+			<a href="" target="center_right" class="style1">查看已发货订单</a>
+			</div>
+		</div>
+		<div class="style3 style5">店铺管理</div>
+		<div>
+			<div>
+				<img src="../images/main_40.gif" class="style2">
+				<a href="" target="center_right" class="style1">本店铺信息</a>
+			</div>
+		</div>
 	</div>
-	<div>
-	<img src="../images/main_46.gif" class="style2">
-	<a href="" target="center_right" class="style1">查看图书信息</a>
-	</div>
-</div>
-<div class="style3 style5">订单信息管理</div>
-<div>
-	<div>
-	<img src="../images/main_40.gif" class="style2">
-	<a href="" target="center_right" class="style1">查看待处理订单</a>
-	</div>
-	<div>
-	<img src="../images/main_46.gif" class="style2">
-	<a href="" target="center_right" class="style1">查看以发货订单</a>
-	</div>
-</div>
 
 <div class="style4">版本：2012 v1.1</div>
 </body>

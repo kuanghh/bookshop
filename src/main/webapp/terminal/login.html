@@ -24,12 +24,16 @@
 			$.post(url,data,function (json) {
 				var code = json.code;
 				if(code == 2000){
-					if(json.data.role == "simple_user"){
-						window.location = projectUrl + "/terminal/index.html";
-					}else{
-						alert("商家或管理员请从后台登录");
-						window.location = projectUrl + "/admin/login.html";
-					}
+					var u = projectUrl + "/index/getRole.action";
+					var d = {};
+					$.get(u,d,function (j) {
+						if(j.data.role == "simple_user"){
+							window.location = projectUrl + "/terminal/index.html";
+						}else{
+							alert("商家或管理员请从后台登录");
+							window.location = projectUrl + "/admin/login.html";
+						}
+					});
 				}else if(code == 5000){
 					alert(json.message);
 				}
