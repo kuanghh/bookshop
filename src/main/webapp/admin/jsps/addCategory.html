@@ -22,7 +22,28 @@ form{
   margin-top: 40px;
 }
 </style>
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#addButton").click(function(){
+                var name = $("#name").val();
+                var url = projectUrl + "/category/insert.action";
+                var data = {"name" : name}
+                $.post(url,data,function (databack) {
+                    alert(databack.message)
+                    if(databack.code == 2000){
+                        $("#name").val("");
+                    }
+                })
+            })
+        })
+
+    </script>
+
 </head>
+
 <body>
    <!-- 顶层模板 -->
    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -40,7 +61,10 @@ form{
      </table>
     </td>
     <td><div align="right"><span class="STYLE1"><input type="checkbox" name="checkbox11" id="checkbox11" />
-              全选      &nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" /> 添加   &nbsp; <img src="../images/del.gif" width="10" height="10" /> 删除    &nbsp;&nbsp;<img src="${pageContext.request.contextPath }/back/images/edit.gif" width="10" height="10" /> 编辑   &nbsp;</span><span class="STYLE1"> &nbsp;</span></div></td>
+                    &nbsp;&nbsp;<img src="../images/add.gif" width="10" height="10" />
+                   &nbsp; <img src="../images/del.gif" width="10" height="10" />
+                    &nbsp;&nbsp;<img src="../images/edit.gif" width="10" height="10" />
+                   &nbsp;</span><span class="STYLE1"> &nbsp;</span></div></td>
           </tr>
     </table>
     </td>
@@ -55,14 +79,10 @@ form{
     	<table width="500px;" class="form_table" align="center">
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">分类名称：</td>
-    		<td><input type="text" name="categoryName" style="width:300px" ></td>
+    		<td><input type="text" id="name" name="name" ></td>
     	</tr>
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">分类描述：</td>
-    		<td><textarea rows="4" cols="40" name="remarks" style="width:300px"></textarea></td>
-    	</tr>
-    	<tr>
-    		<td></td><td><input type="submit" value="保存"></td>
+    		<td></td><td><input id="addButton" type="button" value="添加"></td>
     	</tr>
     	</table>
     </form>

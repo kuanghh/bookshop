@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.khh.web.dao.CategoryMapper" >
+  <resultMap id="CategoryResultMap" type="com.khh.web.domain.Category" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_valid" property="isValid" />
+  </resultMap>
+
+
+
+  <sql id="add_Column_List" >
+    id, name, is_valid
+  </sql>
+
+  <insert id="insert" parameterType="com.khh.web.domain.Category">
+    insert into t_category(<include refid="add_Column_List"/>)
+    value (#{id},#{name},#{isValid})
+  </insert>
+
+  <update id="deleteById" >
+    update t_category set is_valid = 0 where id = #{id}
+  </update>
+
+  <select id="findNameIsExist" resultType="int">
+    select count(*) from t_category where name = #{name} and is_valid = 1
+  </select>
+
+  <select id="findAll" resultType="com.khh.common.bean.CategoryBean">
+    select id,name from t_category where is_valid = 1;
+  </select>
+
+</mapper>
