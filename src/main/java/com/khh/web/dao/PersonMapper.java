@@ -13,6 +13,13 @@ public interface PersonMapper {
     int insert(Person person);
 
     /**
+     * 根据Id删除  这里是假删除
+     * @param id
+     * @return
+     */
+    int deleteById(String id);
+
+    /**
      * 更新成员
      * @param person
      * @return
@@ -47,4 +54,6 @@ public interface PersonMapper {
      * @return
      */
     Person findByPhone(String phone);
+
+
 }

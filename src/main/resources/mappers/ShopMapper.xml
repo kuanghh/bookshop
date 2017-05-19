@@ -12,6 +12,15 @@
     <result column="state" property="state" />
     <result column="is_valid" property="isValid"  />
   </resultMap>
+
+  <resultMap id="ShopResultBeanMap" type="com.khh.common.bean.ShopRegisterBean" extends="ShopResultMap">
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+
+
   <sql id="add_Column_List" >
     id, shop_name, own_name, own_id_card, address, create_time, authentication_time, 
     state, is_valid
@@ -21,5 +30,71 @@
     insert into t_shop(<include refid="add_Column_List" />)
     value(#{id},#{shopName},#{ownName},#{ownIdCard},#{address},#{createTime},#{authenticationTime},#{state},#{isValid})
   </insert>
+
+  <update id="deleteById" >
+    update t_shop set is_valid = 0 where id = #{id}
+  </update>
+
+  <update id="update" parameterType="com.khh.web.domain.Shop" >
+    update t_shop
+    set
+    id = id,
+    <if test="shopName != null">
+      shop_name = #{shopName},
+    </if>
+    <if test="ownName != null">
+      own_name = #{ownName},
+    </if>
+    <if test="ownIdCard != null">
+      own_id_card = #{ownIdCard},
+    </if>
+    <if test="address != null">
+      address = #{address},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime},
+    </if>
+    <if test="authenticationTime != null">
+      authentication_time = #{authenticationTime},
+    </if>
+    <if test="state != null">
+      state = #{state},
+    </if>
+    <if test="isValid != null">
+      is_valid = #{isValid},
+    </if>
+    id =id
+    where
+    id = #{id} and is_valid = 1
+  </update>
+
+  <select id="findCountWithKey" parameterType="java.util.Map" resultType="int">
+    select count(*) from t_shop s,t_person p
+    where s.id = p.id and p.is_valid = 1
+    <if test="!keyMap.isEmpty()" >
+      <foreach item="k" collection="keyMap.keys" separator="and" open="and" close="" >
+        <if test="null != keyMap[k]">
+          ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+        </if>
+      </foreach>
+    </if>
+  </select>
+
+  <select id="findBeanInPage" parameterType="com.khh.common.bean.PagerBean" resultMap="ShopResultBeanMap">
+    select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
+    s.shop_name as shop_name , s.create_time as create_time,s.own_name as own_name,s.own_id_card as own_id_card,
+    s.address as address , s.create_time as create_time ,s.authentication_time as authentication_time,s.state as state
+    from t_shop s,t_person p
+    where
+    s.id = p.id and p.is_valid = 1
+    <if test="!keyMap.isEmpty()" >
+      <foreach item="k" collection="keyMap.keys" separator="and" open="and" close="" >
+        <if test="null != keyMap[k]">
+          ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+        </if>
+      </foreach>
+    </if>
+    limit #{start},#{pageSize}
+  </select>
 
 </mapper>

@@ -60,21 +60,21 @@ a{
          */
         function getInfo(no){
             var pageNo = no;
-            var url = projectUrl + "/back/user/findInPageAndKey.action";
+            var url = projectUrl + "/back/shop/findInPageAndKey.action";
             var data = {"pageNo":pageNo};
             $.get(url,data,function(databack){
                 var code = databack.code;
                 if(code == 5000){
                     alert(databack.message);
                 }else if(code == 2000){
-                    var users = databack.data.page.data;  //获取所有用户，这里是一个json数组
+                    var shops = databack.data.page.data;  //获取所有用户，这里是一个json数组
                     /**
                      * 每次初始化之前，都需要把之前的记录清空
                      */
                     $("tr").remove(".infoClass");
                     $("div").remove(".pagebar");
 
-                    initPage(users);
+                    initPage(shops);
                     intiPageBar(databack);
                 }
             },"json")
@@ -83,10 +83,10 @@ a{
         /**
          * 初始化当前页数信息
          */
-        function initPage(users){
+        function initPage(shops){
             /**开始初始化当前页数信息 **/
 
-            for(var i = 0; i < users.length; i++){
+            for(var i = 0; i < shops.length; i++){
                 var $td1 = $("<td height='20' bgcolor='#FFFFFF'></td>");
                 var $div1 = $("<div align='center'></div>");
                 var $checkbox = $("<input type='checkbox' name='cbox' class='cbox' />");
@@ -100,36 +100,42 @@ a{
 
                 var $td3 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div3 = $("<div align='center'></div>");
-                $div3.text(users[i].account);
+                $div3.text(shops[i].account);
                 $td3.append($div3);
 
                 var $td4 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div4 = $("<div align='center'></div>");
-                $div4.text(users[i].name);
+                $div4.text(shops[i].shopName);
                 $td4.append($div4);
 
                 var $td5 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div5 = $("<div align='center'></div>");
-                $div5.text(users[i].email);
+                $div5.text(shops[i].ownName);
                 $td5.append($div5);
 
                 var $td6 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div6 = $("<div align='center'></div>");
-                $div6.text(users[i].phone);
+                $div6.text(shops[i].address);
                 $td6.append($div6);
 
                 var $td7 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div7 = $("<div align='center'></div>");
-                $div7.text(strToDate(users[i].createTime));
+                $div7.text(strToDate(shops[i].createTime));
                 $td7.append($div7);
 
                 var $td8 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div8 = $("<div align='center' class='STYLE21'></div>");
-//                var $a1 = $("<a href=''>查看</a>");
-                var $a2 = $("<a href='javascript:void(0)' onclick=\"deleteUser('" + users[i].id + "')\">删除</a>");
-//                var $p = $("<span>|</span>");
-//                $div8.append($a1);
-//                $div8.append($p);
+                var node ;
+                if(shops[i].state == 0){    //商铺尚未认证
+                    node = $("<a href='javascript:void(0)' onclick=\"authen('" + shops[i].id + "')\">认证</a>")
+                }else if(shops[i].state == 1){   //商铺已经认证
+                  node = $("<span style='color: #666666'>已经认证</span>")
+                }
+
+                var $a2 = $("<a href='javascript:void(0)' onclick=\"deleteShop('" + shops[i].id + "')\">删除</a>");
+
+                $div8.append(node);
+                $div8.append("<span style='margin-right: 2px;margin-left: 2px'>|</span>");
                 $div8.append($a2);
                 $td8.append($div8);
 
@@ -212,8 +218,11 @@ a{
             return $("<a href='javascript:void(0)' onclick='getInfo("+ key + ")'>" + value + "</a>");
         }
 
-        function deleteUser(uid){
-            var delUrl = projectUrl + "/back/user/deleteById.action";
+        /**
+         *  删除
+         */
+        function deleteShop(uid){
+            var delUrl = projectUrl + "/back/shop/deleteById.action";
             var data = {"id":uid};
             $.post(delUrl,data,function(databack){
                 var code = databack.code;
@@ -226,6 +235,24 @@ a{
                 }
 
             },"json");
+        }
+
+        /**
+         *
+         */
+        function authen(sid){
+          var authUrl = projectUrl + "/back/shop/authen.action";
+          var data = {"id":sid};
+          $.post(authUrl,data,function (databack) {
+            var code = databack.code;
+            if(code == 2000){
+              alert(databack.message);
+              //两秒之后刷新页面
+              setTimeout(pageflush(),2000);
+            }else{
+              alert(databack.message);
+            }
+          })
         }
 
         /**
@@ -277,10 +304,10 @@ a{
               <input type="checkbox" name="checkbox" id="checkbox" />
             </div></td>
             <td width="4%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">序号</span></div></td>
-            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户帐号</span></div></td>
-            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户姓名</span></div></td>
-            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">邮箱</span></div></td>
-            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">手机号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">店铺帐号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">店铺名字</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">店铺老板</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">店铺地址</span></div></td>
             <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">注册时间</span></div></td>
             <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">操作</span></div></td>
           </tr>

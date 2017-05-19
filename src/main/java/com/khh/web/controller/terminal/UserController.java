@@ -25,9 +25,9 @@ import java.util.Map;
 
 /**
  * Created by 951087952@qq.com on 2017/5/17.
- * 普通用户控制器
+ * 前台普通用户控制器
  */
-@Controller
+@Controller(value = "fontUserController")
 @RequestMapping("/user")
 public class UserController extends BaseController{
 
@@ -39,7 +39,7 @@ public class UserController extends BaseController{
 
 
     /**
-     * 登录UI
+     * 跳转登录UI
      * @return
      * @throws Exception
      */
@@ -63,7 +63,7 @@ public class UserController extends BaseController{
 
     /**
      * 注册
-     * @param
+     * @param registerBean result
      * @return
      * @throws Exception
      */
@@ -86,55 +86,5 @@ public class UserController extends BaseController{
         return responseBean;
     }
 
-
-
-    /**
-     * 获取全部用户
-     * @param
-     * @return
-     * @throws Exception
-     */
-    @RequiresRoles(value = RoleSign.SYSTEMADMIN)
-    @RequestMapping(value = "/getAll" ,method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseBean getAll() throws Exception{
-        ResponseBean responseBean = new ResponseBean();
-
-        List<UserRegisterBean> list = userService.findAllBean();
-        if(list == null){
-            responseBean.setErrorResponse("获取失败");
-        }
-        responseBean.setData("list",list);
-        responseBean.setSuccessResponse("获取成功");
-        return responseBean;
-    }
-
-    /**
-     * 根据关键字，分页获取用户
-     * @param
-     * @return
-     * @throws Exception
-     */
-    @RequiresRoles(value = RoleSign.SYSTEMADMIN)
-    @RequestMapping(value = "/findInPageAndKey" ,method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseBean findInPageAndKey(PagerBean pagerBean,@RequestParam Map<String,String> map) throws Exception{
-        ResponseBean responseBean = new ResponseBean();
-        //如果提交数据有关键字则....
-        if(map != null && !map.isEmpty()){
-            if(map.containsKey("pageNo")){
-                map.remove("pageNo");
-            }
-            pagerBean.setKeyMap(map);
-        }
-        if(!userService.findInPageAndKey(pagerBean)){
-            responseBean.setErrorResponse("获取失败");
-            return responseBean;
-        }
-
-        responseBean.setData("page",pagerBean);
-        responseBean.setSuccessResponse("获取成功");
-        return responseBean;
-    }
 
 }

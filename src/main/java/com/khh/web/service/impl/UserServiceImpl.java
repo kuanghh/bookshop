@@ -93,4 +93,16 @@ public class UserServiceImpl implements UserService{
         pagerBean.setData(list);
         return true;
     }
+
+    @Override
+    public boolean deleteById(String id) {
+
+        if(personMapper.deleteById(id) == 0){
+            return false;
+        }
+        if(userMapper.deleteById(id) == 0){
+            return false;
+        }
+        return true;
+    }
 }

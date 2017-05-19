@@ -20,6 +20,10 @@
     )
   </insert>
 
+  <update id="deleteById" >
+    update t_person set is_valid = 0 where id = #{id}
+  </update>
+
   <update id="update" parameterType="com.khh.web.domain.Person" >
     update t_person
     set
@@ -30,10 +34,10 @@
     <if test="password != null">
       password = #{password},
     </if>
-    <if test="phone">
+    <if test="phone != null">
       phone = #{phone},
     </if>
-    <if test="email">
+    <if test="email != null">
       email = #{email},
     </if>
     <if test="isValid != null">

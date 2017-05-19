@@ -25,4 +25,10 @@ public interface UserService {
      * @return
      */
     boolean findInPageAndKey(PagerBean<UserRegisterBean> pagerBean);
+
+    /**
+     * 根据Id删除用户
+     * @return
+     */
+    boolean deleteById(String id);
 }

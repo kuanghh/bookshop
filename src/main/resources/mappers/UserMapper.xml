@@ -26,6 +26,10 @@
     value(#{id},#{name},#{birthday},#{address},#{createTime},#{isValid})
   </insert>
 
+  <update id="deleteById" >
+    update t_user set is_valid = 0 where id = #{id}
+  </update>
+
   <select id="findAllBean" resultMap="UserRegisterBeanResultMap">
     select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
           u.name as name , u.create_time as create_time
@@ -36,12 +40,14 @@
 
   <select id="findCountWithKey" parameterType="java.util.Map" resultType="int">
     select count(*) from t_user u,t_person p
-    where u.id = p.id and p.is_valid = 1 and
-    <foreach item="k" collection="keyMap.keys" separator="and" >
-      <if test="null != keyMap[k]">
-        ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
-      </if>
-    </foreach>
+    where u.id = p.id and p.is_valid = 1
+    <if test="!keyMap.isEmpty()" >
+      <foreach item="k" collection="keyMap.keys" separator="and" open="and" close="" >
+        <if test="null != keyMap[k]">
+          ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+        </if>
+      </foreach>
+    </if>
   </select>
 
   <select id="findBeanInPage" parameterType="com.khh.common.bean.PagerBean" resultMap="UserRegisterBeanResultMap">
@@ -49,14 +55,14 @@
           u.name as name , u.create_time as create_time
     from t_user u,t_person p
     where
-    u.id = p.id and p.is_valid = 1 and
-
-    <foreach item="k" collection="keyMap.keys" separator="and" >
-      <if test="null != keyMap[k]">
-        ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
-      </if>
-    </foreach>
-
+    u.id = p.id and p.is_valid = 1
+    <if test="!keyMap.isEmpty()" >
+      <foreach item="k" collection="keyMap.keys" separator="and" open="and" close="" >
+        <if test="null != keyMap[k]">
+          ${k} like '%${keyMap[k]}%' <!-- 注意写法-->
+        </if>
+      </foreach>
+    </if>
     limit #{start},#{pageSize}
   </select>
 

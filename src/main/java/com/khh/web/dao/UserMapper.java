@@ -18,6 +18,13 @@ public interface UserMapper {
     int insert(User user);
 
     /**
+     * 根据Id删除  这里是假删除
+     * @param id
+     * @return
+     */
+    int deleteById(String id);
+
+    /**
      * 获取所有有效的用户
      * @return
      */
@@ -37,4 +44,7 @@ public interface UserMapper {
      * @return
      */
     List<UserRegisterBean> findBeanInPage(PagerBean<UserRegisterBean> pagerBean);
+
+
+
 }

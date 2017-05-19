@@ -14,9 +14,9 @@ import javax.validation.Valid;
 
 /**
  * Created by Administrator on 2017/5/18.
- * 商家控制器
+ * 前台商家控制器
  */
-@Controller
+@Controller("fontShopController")
 @RequestMapping("/shop")
 public class ShopController {
 
@@ -44,7 +44,6 @@ public class ShopController {
     @ResponseBody
     public ResponseBean register(@Valid ShopRegisterBean shopRegisterBean, BindingResult result) throws Exception{
         ResponseBean responseBean = new ResponseBean();
-        System.out.println("商家进行注册");
         //信息验证
         if(result.hasErrors()){
             responseBean.setErrorResponse(result.getFieldError().getDefaultMessage());

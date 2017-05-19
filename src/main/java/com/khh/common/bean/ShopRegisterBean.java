@@ -3,6 +3,8 @@ package com.khh.common.bean;
 import com.khh.web.utils.CodeUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2017/5/18.
  */
@@ -43,6 +45,13 @@ public class ShopRegisterBean {
     @NotEmpty
     private String password;
 
+
+
+    private int state;
+
+    private Date createTime;
+
+    private Date authenticationTime;
 
     public ShopRegisterBean(){this.id = CodeUtils.getUUID();}
 
@@ -116,5 +125,29 @@ public class ShopRegisterBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getAuthenticationTime() {
+        return authenticationTime;
+    }
+
+    public void setAuthenticationTime(Date authenticationTime) {
+        this.authenticationTime = authenticationTime;
     }
 }
