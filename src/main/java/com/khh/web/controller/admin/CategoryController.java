@@ -53,7 +53,7 @@ public class CategoryController extends BaseController{
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = RoleSign.SYSTEMADMIN)
+    @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/getAll" ,method = RequestMethod.GET)
     @ResponseBody
     public ResponseBean getAll() throws Exception{

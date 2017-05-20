@@ -21,6 +21,47 @@ form{
   margin-top: 40px;
 }
 </style>
+	<script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			initAllCategory();
+
+		});
+
+		/**
+		 * 添加图片按钮
+		 */
+		function addPic(){
+			var $tr =  $("<tr id='picTr'> <td bgcolor='FFFFFF' class='STYLE19'>图片</td> <td><input class='picfile' type='file' name='files' style='width:300px' /></td> </tr>");
+			$("#addPic").after($tr);
+		}
+
+		/**
+		 * 初始化所有图片分类信息
+		 */
+		function initAllCategory(){
+			var url = projectUrl + "/category/getAll.action";
+			var data = {}
+			var categorys = "";
+			$.get(url,data,function (databack) {
+				if(databack.code == 2000){
+					categorys = databack.data.list;
+				}else{
+					alert(databack.message);
+					return;
+				}
+			});
+
+			var $select = $("#categoryId");
+			for(var i = 0; i < categorys.length; i++){
+				var $option = $("<option value='" + categorys[i].id + "'>"+ categorys[i].name+"</option>");
+				$select.append($option);
+			}
+
+		}
+	</script>
 </head>
 <body>
    <!-- 顶层模板 -->
@@ -75,14 +116,23 @@ form{
 			<td bgcolor="#FFFFFF" class="STYLE19">邮费：</td>
 			<td><input type="text" name="postfree" style="width:300px" ></td>
 		</tr>
-    	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">图片路径：</td>
-    		<td><input type="file" name="picImg" style="width:300px" ></td>
+		<tr id="addPic">
+			<td bgcolor="#FFFFFF" class="STYLE19">
+				<a href="javascript:void(0);" onclick="addPic()">添加图片</a>
+			</td>
+		</tr>
+
+    	<tr id='picTr'>
+    		<td bgcolor='FFFFFF' class='STYLE19'>图片</td>
+    		<td><input class='picfile' type='file' name='files' style='width:300px' /></td>
     	</tr>
+
+
+
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">商品类别：</td>
     		<td>
-				<select name="categoryId">
+				<select id="categoryId" name="categoryId">
 					<option value="-1">请选择</option>
 					<!-- 类别数据 -->
 				</select>
@@ -94,7 +144,7 @@ form{
     	</tr>
     	
     	<tr>
-    		<td></td><td><input type="submit" value="保存"></td>
+    		<td></td><td><input id="upload" type="button" value="增加"></td>
     	</tr>
     	</table>
     </form>
