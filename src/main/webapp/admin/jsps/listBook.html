@@ -1,14 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>所有图书列表</title>
+<title>所有用户信息列表</title>
 <style type="text/css">
 body {
 	margin-left: 3px;
 	margin-top: 0px;
 	margin-right: 3px;
 	margin-bottom: 0px;
+
 }
 .STYLE1 {
 	color: #e1e2e3;
@@ -26,10 +27,11 @@ body {
 	color: #344b50;
 	font-size: 12px;
 }
-.STYLE21,.STYLE22 {
+.STYLE21{
 	font-size: 12px;
 	color: #3b6375;
-} {
+}
+.STYLE22{
 	font-size: 12px;
 	color: #3b6375;
 }
@@ -43,11 +45,198 @@ a{
    text-decoration: none;
 }
 </style>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery/jquery-1.10.2.min.js">
-</script>
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
 
 </head>
+
 <body>
+<script type="text/javascript" >
+    $(function () {
+            getInfo(1);
+        });
+
+        /**
+         * 获取当前页所有用户的信息
+         */
+//        function getInfo(no){
+//            var pageNo = no;
+//            var url = projectUrl + "/back/user/findInPageAndKey.action";
+//            var data = {"pageNo":pageNo};
+//            $.get(url,data,function(databack){
+//                var code = databack.code;
+//                if(code == 5000){
+//                    alert(databack.message);
+//                }else if(code == 2000){
+//                    var users = databack.data.page.data;  //获取所有用户，这里是一个json数组
+//                    /**
+//                     * 每次初始化之前，都需要把之前的记录清空
+//                     */
+//                    $("tr").remove(".infoClass");
+//                    $("div").remove(".pagebar");
+//
+//                    initPage(users);
+//                    intiPageBar(databack);
+//                }
+//            },"json")
+//        }
+
+        /**
+         * 初始化当前页数信息
+         */
+//        function initPage(users){
+//            /**开始初始化当前页数信息 **/
+//
+//            for(var i = 0; i < users.length; i++){
+//                var $td1 = $("<td height='20' bgcolor='#FFFFFF'></td>");
+//                var $div1 = $("<div align='center'></div>");
+//                var $checkbox = $("<input type='checkbox' name='cbox' class='cbox' />");
+//                $div1.append($checkbox);
+//                $td1.append($div1);
+//
+//                var $td2 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div2 = $("<div align='center'></div>");
+//                $div2.text(i+1);
+//                $td2.append($div2);
+//
+//                var $td3 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div3 = $("<div align='center'></div>");
+//                $div3.text(users[i].account);
+//                $td3.append($div3);
+//
+//                var $td4 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div4 = $("<div align='center'></div>");
+//                $div4.text(users[i].name);
+//                $td4.append($div4);
+//
+//                var $td5 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div5 = $("<div align='center'></div>");
+//                $div5.text(users[i].email);
+//                $td5.append($div5);
+//
+//                var $td6 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div6 = $("<div align='center'></div>");
+//                $div6.text(users[i].phone);
+//                $td6.append($div6);
+//
+//                var $td7 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div7 = $("<div align='center'></div>");
+//                $div7.text(strToDate(users[i].createTime));
+//                $td7.append($div7);
+//
+//                var $td8 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
+//                var $div8 = $("<div align='center' class='STYLE21'></div>");
+////                var $a1 = $("<a href=''>查看</a>");
+//                var $a2 = $("<a href='javascript:void(0)' onclick=\"deleteUser('" + users[i].id + "')\">删除</a>");
+////                var $p = $("<span>|</span>");
+////                $div8.append($a1);
+////                $div8.append($p);
+//                $div8.append($a2);
+//                $td8.append($div8);
+//
+//                var $tr = $("<tr class='infoClass'></tr>");
+//                $tr.append($td1);
+//                $tr.append($td2);
+//                $tr.append($td3);
+//                $tr.append($td4);
+//                $tr.append($td5);
+//                $tr.append($td6);
+//                $tr.append($td7);
+//                $tr.append($td8);
+//
+//                $("#tab").append($tr);
+//            }
+//            /**初始化当前页数信息完毕**/
+//        }
+//
+//        /**
+//         * 初始化分页工具栏
+//         */
+//        function intiPageBar(databack){
+//            /**初始化分页条**/
+//            var pNo = databack.data.page.pageNo; //当前页数
+//
+//            var $pageDiv = $("<div class='pagebar'></div>");
+//            var $nowPage = $("<div>"+ "当前第" + pNo + "页" +"</div>");
+//            $pageDiv.append($nowPage);
+//            var pageCount = databack.data.page.pageCount; //一用有多少页
+//            var barSize = 5;                         //工具条中分页的数目
+//
+//            //判断总页数是否小于等于工具条中分页的数目
+//            if(pageCount <= barSize){
+//                for(var y = 1; y <= pageCount; y++){
+//                    var $a3 = createAPageNode(y,y);
+//                    $pageDiv.append($a3);
+//                }
+//            }else{//如果大于
+//
+//                //判断是否第一页,是否最后一页
+//                if(pNo == 1){ //第一页
+//                    for(var j = pNo; j < barSize + pNo; j++){
+//                        var $a4 = createAPageNode(j,j)
+//                        $pageDiv.append($a4);
+//                    }
+//                    //添加 下一页按钮
+//                    var $anext = createAPageNode(pNo + 1,"下一页");
+//                    $pageDiv.append($anext);
+//                }else if(pNo == pageCount){//最后一页
+//                    //添加上一页按钮
+//                    var $apre = createAPageNode(pNo-1,"上一页");
+//                    $pageDiv.append($apre);
+//                    for(var z = pageCount-barSize+1; z <= pageCount; z++){
+//                        var $a5 = createAPageNode(z,z);
+//                        $pageDiv.append($a5);
+//                    }
+//                }else{
+//                    //添加上一页按钮
+//                    var $apre1 = createAPageNode(pNo-1,"上一页");
+//                    $pageDiv.append($apre1);
+//
+//                    for(var w = pNo; w < barSize+pNo; w++){
+//                        var $a6 = createAPageNode(w,w);
+//                        $pageDiv.append($a6);
+//                    }
+//
+//                    //添加 下一页按钮
+//                    var $anext1 = createAPageNode(pNo + 1,"下一页");
+//                    $pageDiv.append($anext1);
+//                }
+//            }
+//            $("#ifoTd").append($pageDiv);
+//        }
+//
+//
+//        /**
+//         * 创建一个分页a标签
+//         */
+//        function createAPageNode(key,value) {
+//            return $("<a href='javascript:void(0)' onclick='getInfo("+ key + ")'>" + value + "</a>");
+//        }
+//
+//        function deleteUser(uid){
+//            var delUrl = projectUrl + "/back/user/deleteById.action";
+//            var data = {"id":uid};
+//            $.post(delUrl,data,function(databack){
+//                var code = databack.code;
+//                if(code == 2000){
+//                    alert(databack.message);
+//                    //两秒之后刷新页面
+//                    setTimeout(pageflush(),2000);
+//                }else{
+//                    alert(databack.message);
+//                }
+//
+//            },"json");
+//        }
+//
+//        /**
+//         * 刷新当前页面
+//         */
+//        function pageflush(){
+//            history.go(0);
+//        }
+
+</script>
 <!-- 页面头部信息处理 -->
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
@@ -57,21 +246,21 @@ a{
           <tr>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="6%" height="19" valign="bottom"><div align="center"><img src="${pageContext.request.contextPath }/font/images/tb.gif" width="14" height="14" /></div></td>
-                <td width="94%" valign="bottom"><span class="STYLE1"> 图书信息列表</span></td>
+                <td width="6%" height="19" valign="bottom"><div align="center"><img src="../images/tb.gif" width="14" height="14" /></div></td>
+                <td width="94%" valign="bottom"><span class="STYLE1"> 用户信息列表</span></td>
               </tr>
             </table></td>
             <!-- 主要分担的是界面的工具栏  -->
             <td>
               <div align="right"><span class="STYLE1">
               <input type="checkbox" name="checkbox11" id="checkbox11" />  
-                  <a href="#" onclick="selectAll();" class="LINKSTYLE">全选</a> &nbsp;&nbsp;
-              <img src="/BookStore/images/add.gif" width="10" height="10" /> 
-                  <a href="#" onclick="add();" class="LINKSTYLE">添加</a> &nbsp; 
-              <img src="/BookStore/images/del.gif" width="10" height="10" /> 
-                  <a href="#" onclick="del();"  class="LINKSTYLE">删除</a> &nbsp;&nbsp;
-              <img src="/BookStore/images/edit.gif" width="10" height="10" /> 
-                  <a href="#" onclick="update();"  class="LINKSTYLE">编辑</a> &nbsp;</span>
+                  <a href="#" onclick="selectAll();" class="LINKSTYLE">**</a> &nbsp;&nbsp;
+              <img src="../images/add.gif" width="10" height="10" />
+                  <a href="#" onclick="add();" class="LINKSTYLE">**</a> &nbsp;
+              <img src="../images/del.gif" width="10" height="10" />
+                  <a href="#" onclick="del();"  class="LINKSTYLE">**</a> &nbsp;&nbsp;
+              <img src="../images/edit.gif" width="10" height="10" />
+                  <a href="#" onclick="update();"  class="LINKSTYLE">**</a> &nbsp;</span>
               <span class="STYLE1"> &nbsp;</span></div>
            </td>
           </tr>
@@ -80,107 +269,63 @@ a{
     </table></td>
   </tr>
   <tr>
-    <td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" onmouseover="changeto();"  onmouseout="changeback();">
-      <!-- 列表头 -->
-      <tr>
-        <td width="4%" height="20" bgcolor="d3eaef" class="STYLE10"><div align="center">
-          <input type="checkbox" name="checkbox" id="checkbox" />
-        </div></td>
-        <td width="30%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">图书编号</span></div></td>
-        <td width="15%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">图书名</span></div></td>
-        <td width="15%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">图书描述</span></div></td>
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">会员价</span></div></td>
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">折扣价</span></div></td>    
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">时间</span></div></td>                
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">图书分类操作</span></div></td>
-      </tr>
-      
-      <!-- 在这里循环回来的图书分类列表数据 -->
-      <c:choose>
-         <c:when test="${ not empty pageBean.items }">
-             <!-- 显示数据 -->
-             <c:forEach items="${pageBean.items}" var="b" varStatus="vs">
-                 <tr>
-			        <td height="20" bgcolor="#FFFFFF"><div align="center">
-			          <input type="checkbox" name="checkbox2" id="checkbox2" />
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="center"><span class="STYLE19">
-			       		${ b.bookId }
-			        </span></div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">
-			        	${ b.bookName }
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">
-			        	${ b.description }
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">
-			        	${ b.memberPrice }
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">
-			        	${ b.disPrice }
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">
-			        	${ b.createTime }
-			        </div></td>
-			        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21">
-			          <a href="${pageContext.request.contextPath}/book/editUI.action?id=${b.bookId}">编辑</a>
-			          <a href="${pageContext.request.contextPath}/book/delete.action?id=${b.bookId}">删除</a>
-			        </div></td>
-			      </tr>
-             </c:forEach>
-         </c:when>
-         <c:otherwise>
-             <!-- 合并单元格，提示没有数据 -->
-                <tr>
-                   <td colspan="5">
-                      <font color="red"><div align="center" class="STYLE21">
-                                                 	对不起，目前还没有图书分类列表信息...
-                      </div></font>
-                   </td>
-                </tr>
-         </c:otherwise>
-      </c:choose>
-    </table></td>
+    <td id="ifoTd">
+        <table id="tab" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce"
+               onmouseover=""  onmouseout="" >
+          <!-- 列表头 -->
+          <tr>
+            <td width="4%" height="20" bgcolor="d3eaef" class="STYLE10"><div align="center">
+              <input type="checkbox" name="checkbox" id="checkbox" />
+            </div></td>
+            <td width="4%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">序号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户帐号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">用户姓名</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">邮箱</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">手机号</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">注册时间</span></div></td>
+            <td width="16%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">操作</span></div></td>
+          </tr>
+
+          <!-- 在这里循环回来的图书分类列表数据 -->
+                 <!-- 显示数据 -->
+         <!--<tr>-->
+            <!--<td height="20" bgcolor="#FFFFFF">-->
+                <!--<div align="center"><input type="checkbox" name="cbox" class="cbox"/></div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE6">-->
+                <!--<div align="center">${ b.bookId }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center">${ b.bookName }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center">${ b.description }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center">${ b.memberPrice }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center">${ b.disPrice }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center">${ b.createTime }</div>-->
+            <!--</td>-->
+            <!--<td height="20" bgcolor="#FFFFFF" class="STYLE19">-->
+                <!--<div align="center" class="STYLE21"><a href="">编辑</a><a href="">删除</a></div>-->
+            <!--</td>-->
+          <!--</tr>-->
+
+
+        </table>
+    </td>
   </tr>
   
   <!-- 分页条处理 -->
-	<c:if test="${ not empty pageBean.items }">
-<form id="changePageForms" method="post" action="" >
-  <tr>
-    <td height="30">
-    <jsp:include page="/common/page.jsp"></jsp:include>
-    </td>
-  </tr>
-</form>
-	</c:if>
+
 </table>
 
-<script type="text/javascript">
-	var url = "${pageContext.request.contextPath}/book/listUI.action";
-</script>
 
-<!-- <script type="text/javascript">
-	function goPage(pageNo){
-		url += "?currentPage=" + pageNo;
-		var $forms = $("#changePageForms");
-		$forms.attr("controller",url);
-		$forms.submit();
-	}
-</script> -->
 
-<script type="text/javascript">
-  function selectAll(){
-     alert("selected");
-  }
-  function add(){
-     alert("add");
-  }
-  function del(){
-     alert("delete");
-  }
-  function update(){
-     alert("update");
-  }
-</script> 
+
 </body>
 </html>
