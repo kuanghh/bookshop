@@ -3,6 +3,7 @@ package com.khh.web.dao;
 import com.khh.common.bean.GoodsBean;
 import com.khh.common.bean.PagerBean;
 import com.khh.web.domain.Goods;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -21,16 +22,16 @@ public interface GoodsMapper {
 
     /**
      *根据关键字，商铺id，获取一共有多少条商品记录(只查询有效记录)
-     * @param keyMap
+     * @param
      * @return
      */
-    int findCountWithKeyAndShopId(Map<String, String> keyMap,String shopId);
+    int findCountWithKeyAndShopId(@Param("g") Goods goods);
 
     /**
-     * 根据关键字，商铺id，获取所有商品记录(只查询有效记录)
-     * @param pagerBean
-     * @param shopId
+     * 根据商品名称，类别id，商铺id，获取所有商品记录(只查询有效记录)(默认按时间排序)
+     * @param
+     * @param
      * @return
      */
-    List<GoodsBean> findBeanInPageWithKeyAndShopId(PagerBean<GoodsBean> pagerBean, String shopId);
+    List<Goods> findBeanInPageWithKeyAndShopId(@Param("start") int start,@Param("size") int size ,@Param("g")Goods goods);
 }

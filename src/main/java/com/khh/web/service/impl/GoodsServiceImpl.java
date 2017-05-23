@@ -69,10 +69,13 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public boolean findInPageByKey(PagerBean<GoodsBean> pagerBean, String shopId) {
+    public boolean findInPageByKey(PagerBean<GoodsBean> pagerBean) {
+
+        GoodsBean key = pagerBean.getT();
+        Goods goods = key.vo2Domain();
 
         //先获取有多少条记录数
-        int totalCount = goodsMapper.findCountWithKeyAndShopId(pagerBean.getKeyMap(),shopId);
+        int totalCount = goodsMapper.findCountWithKeyAndShopId(goods);
         pagerBean.setTotalCount(totalCount);
 
         //获取总页数
@@ -85,12 +88,17 @@ public class GoodsServiceImpl implements GoodsService{
         int start = (pagerBean.getPageNo()-1) * pagerBean.getPageSize();
         pagerBean.setStart(start);
         //查询
-        List<GoodsBean> list = goodsMapper.findBeanInPageWithKeyAndShopId(pagerBean,shopId);
+        List<Goods> list = goodsMapper.findBeanInPageWithKeyAndShopId(start,pagerBean.getPageSize(),goods);
         if(list == null){
             return false;
         }
 
-        pagerBean.setData(list);
+        List<GoodsBean> goodsBeanList = new ArrayList<>();
+        for(Goods g : list){
+            goodsBeanList.add(g.domain2Vo());
+        }
+
+        pagerBean.setData(goodsBeanList);
         return true;
     }
 }

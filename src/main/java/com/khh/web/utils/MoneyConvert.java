@@ -20,4 +20,14 @@ public class MoneyConvert {
         return multiply.longValue();
     }
 
+
+    /**
+     * 把金钱放小100倍，保存到元，但精确到分
+     */
+    public static String moneyLongToStr(Long money){
+        BigDecimal bigDecimal = BigDecimal.valueOf(money);
+        BigDecimal divide = bigDecimal.divide(BigDecimal.valueOf(100L));
+        return divide.toString();
+    }
+
 }

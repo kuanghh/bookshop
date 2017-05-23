@@ -2,6 +2,7 @@ package com.khh.common.bean;
 
 import com.khh.web.domain.Goods;
 import com.khh.web.utils.CodeUtils;
+import com.khh.web.utils.MoneyConvert;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -163,5 +164,22 @@ public class GoodsBean implements Serializable{
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+
+    public Goods vo2Domain(){
+        Goods goods = new Goods();
+        if(this.id != null) goods.setId(this.id);
+        if(this.name != null) goods.setName(this.name);
+        if(this.price != null) goods.setPrice(MoneyConvert.moneyStrToLong(price));
+        if(this.promotinalPrice != null) goods.setPromotinalPrice(MoneyConvert.moneyStrToLong(promotinalPrice));
+        if(this.num != 0) goods.setNum(num);
+        if(this.description != null)goods.setDescription(this.description);
+        if(this.createTime != null) goods.setCreateTime(this.createTime);
+        if(this.pictures != null)goods.setPictures(this.pictures);
+        if(this.postfree != null)goods.setPostfree(MoneyConvert.moneyStrToLong(this.postfree));
+        if(this.shopId != null)goods.setShopId(this.shopId);
+        if(this.categoryId != null)goods.setCategoryId(this.categoryId);
+        return goods;
     }
 }

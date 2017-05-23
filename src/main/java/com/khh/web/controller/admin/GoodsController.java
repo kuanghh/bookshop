@@ -58,19 +58,23 @@ public class GoodsController extends BaseController{
     @RequiresRoles(value = RoleSign.SHOP)
     @ResponseBody
     @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.GET)
-    public ResponseBean findInPageByKey(HttpSession session, PagerBean<GoodsBean> pagerBean, @RequestParam Map<String,String> map) throws Exception{
+    public ResponseBean findInPageByKey(HttpSession session, PagerBean<GoodsBean> pagerBean,GoodsBean key) throws Exception{
         ResponseBean responseBean = new ResponseBean();
         //如果提交数据有关键字则....
-        if(map != null && !map.isEmpty()){
-            if(map.containsKey("pageNo")){
-                map.remove("pageNo");
-            }
-            pagerBean.setKeyMap(map);
-        }
+//        if(map != null && !map.isEmpty()){
+//            if(map.containsKey("pageNo")){
+//                map.remove("pageNo");
+//            }
+//            pagerBean.setKeyMap(map);
+//        }
 
         //获取当前商家的id
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
-        if(!goodsService.findInPageByKey(pagerBean,person.getId())){
+        key.setShopId(person.getId());
+        if(key != null){
+            pagerBean.setT(key);
+        }
+        if(!goodsService.findInPageByKey(pagerBean)){
             responseBean.setErrorResponse("获取失败");
             return responseBean;
         }

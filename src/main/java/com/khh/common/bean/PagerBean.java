@@ -26,6 +26,9 @@ public class PagerBean<T> implements Serializable {
     //从哪里开始查询
     private Integer start;
 
+    //这里存放关键字
+    private T t;
+
     //关键字
     private Map<String,String> keyMap = new HashMap<>();
 
@@ -92,5 +95,13 @@ public class PagerBean<T> implements Serializable {
 
     public void setStart(Integer start) {
         this.start = start;
+    }
+
+    public T getT() {
+        return t;
+    }
+
+    public void setT(T t) {
+        this.t = t;
     }
 }

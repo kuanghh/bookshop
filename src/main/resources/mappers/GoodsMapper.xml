@@ -17,7 +17,17 @@
     <result column="is_valid" property="isValid"/>
   </resultMap>
 
-
+  <resultMap id="GoodsDetailsResultMap" type="com.khh.web.domain.Goods" extends="GoodsResultMap">
+    <association property="shop" column="shop_id" javaType="com.khh.web.domain.Shop">
+      <id column="s_shop_id" property="id" />
+      <result column="s_shop_name" property="shopName" />
+      <result column="s_shop_address" property="address" />
+    </association>
+    <association property="category" javaType="com.khh.web.domain.Category">
+      <id column="c_category_id" property="id" />
+      <result column="c_category_name" property="name"/>
+    </association>
+  </resultMap>
 
   <sql id="Base_Column_List" >
     id, name, price, promotinal_price, num, description, create_time, pictures, postFree,
@@ -172,5 +182,55 @@
     </set>
     where id = #{id}
   </update>
+
+
+  <select id="findCountWithKeyAndShopId" parameterType="com.khh.web.domain.Goods" resultType="int">
+      select count(*)
+      from t_goods g
+      where g.is_valid = 1
+        <if test="g.shopId != null">
+        and g.shop_id = #{g.shopId}
+        </if>
+        <if test="g.categoryId != null">
+        and g.category_id = #{g.categoryId}
+        </if>
+        <if test="g.name != null">
+        and g.name like '%${g.name}%'
+        </if>
+  </select>
+
+  <select id="findBeanInPageWithKeyAndShopId" resultMap="GoodsDetailsResultMap">
+  select
+    g.id as id, g.name as name,g.price as price, g.promotinal_price as promotinal_price, g.num as num, g.description as description, g.create_time as create_time,
+    g.pictures as pictures, g.postFree as postFree,g.state as state, g.shop_id as shop_id, g.category_id as category_id, g.is_valid as is_valid
+
+    <if test="g.shopId != null">
+      ,s.id as s_shop_id , s.shop_name as s_shop_name,s.address as s_shop_address
+    </if>
+    <if test="g.categoryId != null">
+      ,c.id as c_category_id , c.name as c_category_name
+    </if>
+    from t_goods g
+    <if test="g.shopId != null">
+      ,t_shop s
+    </if>
+    <if test="g.categoryId != null">
+      , t_category c
+    </if>
+    where g.is_valid = 1
+    <if test="g.shopId != null">
+      and g.shop_id = #{g.shopId} and  s.id = g.shop_id  and s.is_valid = 1
+    </if>
+    <if test="g.categoryId != null">
+      and g.category_id = #{g.categoryId} and c.id = g.category_id and c.is_valid = 1
+    </if>
+    <if test="g.name != null">
+      and g.name like '%${g.name}%'
+    </if>
+
+    order by g.create_time ASC limit #{start},#{size}
+  </select>
+
+
 
 </mapper>

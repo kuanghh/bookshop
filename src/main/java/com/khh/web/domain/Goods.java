@@ -1,5 +1,8 @@
 package com.khh.web.domain;
 
+import com.khh.common.bean.GoodsBean;
+import com.khh.web.utils.MoneyConvert;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -174,5 +177,33 @@ public class Goods implements Serializable{
 
     public void setShop(Shop shop) {
         this.shop = shop;
+    }
+
+
+    public GoodsBean domain2Vo(){
+        GoodsBean goodsBean = new GoodsBean();
+        if(this.id != null) goodsBean.setId(this.id);
+        if(this.name != null) goodsBean.setName(this.name);
+        if(this.price != 0) goodsBean.setPrice(MoneyConvert.moneyLongToStr(price));
+        if(this.promotinalPrice != 0) goodsBean.setPromotinalPrice(MoneyConvert.moneyLongToStr(promotinalPrice));
+        if(this.num != 0) goodsBean.setNum(num);
+        if(this.description != null)goodsBean.setDescription(this.description);
+        if(this.createTime != null) goodsBean.setCreateTime(this.createTime);
+        if(this.pictures != null)goodsBean.setPictures(this.pictures);
+        if(this.postfree != 0)goodsBean.setPostfree(MoneyConvert.moneyLongToStr(this.postfree));
+        if(this.shopId != null)goodsBean.setShopId(this.shopId);
+        if(this.categoryId != null)goodsBean.setCategoryId(this.categoryId);
+
+        goodsBean.setState(this.state);
+
+        if(this.shop != null){
+            goodsBean.setShopName(this.shop.getShopName());
+            goodsBean.setShopName(this.shop.getAddress());
+        }
+        if(this.category != null){
+            goodsBean.setCategoryName(this.category.getName());
+        }
+        return goodsBean;
+
     }
 }

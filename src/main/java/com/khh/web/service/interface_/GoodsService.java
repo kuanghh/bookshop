@@ -22,5 +22,5 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    boolean findInPageByKey(PagerBean<GoodsBean> pagerBean, String shopId);
+    boolean findInPageByKey(PagerBean<GoodsBean> pagerBean);
 }
