@@ -31,4 +31,18 @@ public interface ShopService {
      * @return
      */
     boolean updateForAuthen(String id);
+
+    /**
+     * 根据店主id查询当前商铺信息
+     * @param id
+     * @return
+     */
+    ShopRegisterBean findById(String id);
+
+    /**
+     * 修改店铺信息
+     * @param shopRegisterBean
+     * @return
+     */
+    boolean updateShop(ShopRegisterBean shopRegisterBean);
 }

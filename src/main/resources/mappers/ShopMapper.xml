@@ -97,4 +97,12 @@
     limit #{start},#{pageSize}
   </select>
 
+  <select id="findById" resultMap="ShopResultBeanMap">
+    select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
+    s.shop_name as shop_name , s.create_time as create_time,s.own_name as own_name,s.own_id_card as own_id_card,
+    s.address as address , s.create_time as create_time ,s.authentication_time as authentication_time,s.state as state
+    from t_shop s,t_person p
+    where s.id = p.id and p.is_valid = 1 and p.id=#{id}
+  </select>
+
 </mapper>

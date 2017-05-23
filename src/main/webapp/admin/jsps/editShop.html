@@ -26,122 +26,54 @@ form{
 
 	<script type="text/javascript">
 		$(function(){
-			//回显修改商品的信息
-			var goodsId = getIdFromURL();
-			echoGoodsInfo(goodsId);
-			$("#upload").click(function () {
-				var url = projectUrl + "/back/Goods/edit.action";
-				$("#submitForm").attr("action",url);
-				var $pic = $(".picfile");
-				for(var i = 0; i < $pic.length; i++){
-					if($pic[i].value == ""){
-						$pic[i].remove();
-					}
-				}
-				$("#submitForm").submit();
-			})
+			initInfo();
 
+			$("#upload").click(function(){
+
+				var action = projectUrl + "/back/shop/edit.action";
+				$("#submitForm").attr("action",action);
+				$("#submitForm").submit();
+			});
 		});
 
-		/**
-		 * 添加图片按钮
-		 */
-		function addPic(){
-			var $tr =  $("<tr class='picTr'> <td bgcolor='FFFFFF' class='STYLE19'>图片</td> <td><input class='picfile' type='file' name='files' style='width:300px' /></td> </tr>");
-			$("#addPic").after($tr);
-		}
-
-		/**
-		 * 初始化所有商品分类信息
-		 */
-		function initAllCategory(categoryId){
-			var url = projectUrl + "/category/getAll.action";
-			var data = {};
-			$.get(url,data,function (databack) {
-				if(databack.code == 2000){
-					var categorys = databack.data.list;
-					var $select = $("#categoryId");
-					for(var i = 0; i < categorys.length; i++){
-						var $option = null;
-						if(categorys[i].id == categoryId){
-							$option = $("<option selected='selected' value='" + categorys[i].id + "'>"+ categorys[i].name+"</option>");
-						}else{
-							$option = $("<option value='" + categorys[i].id + "'>"+ categorys[i].name+"</option>");
-						}
-						$select.append($option);
-					}
-				}else{
-					alert(databack.message);
-					return;
-				}
-			});
-		}
-
-		/**
-		 * 获取传递过来的id
-		 */
-		function getIdFromURL(){
-			var thisURL = document.URL;
-			var  getval =thisURL.split('?')[1];
-			var goodsId= getval.split("=")[1];
-			return goodsId;
-		}
-
-		/**
-		 * 回显商品信息
-		 */
-		function echoGoodsInfo(id){
-			var url = projectUrl + "/back/Goods/findById.action";
-			var data = {"id":id};
-			$.post(url,data,function (databack) {
+		function initInfo(){
+			//回显本店铺的信息
+			var url = projectUrl + "/back/shop/myShop.action";
+			$.post(url,{},function (databack) {
 				var code = databack.code;
 				if(code == 5000){
 					alert(databack.message);
 				}else{
-					var goods = databack.data.goods;
-					$("input[name='id']").val(goods.id);
-					$("input[name='name']").val(goods.name);
-					$("input[name='price']").val(goods.price);
-					$("input[name='promotinalPrice']").val(goods.promotinalPrice);
-					$("input[name='num']").val(goods.num);
-					$("input[name='postfree']").val(goods.postfree);
-					$("textarea[name='description']").val(goods.description);
-					$("input[name='createTime']").val(strToDate(goods.createTime));
-					var state = goods.state;
-					var $a = null;
-					var $stateDiv = $("#state");
-					if(state == 0){//已经下架
-						$stateDiv.html("已经下架&nbsp;&nbsp;&nbsp;&nbsp;");
-						$a = $("<a href='javascript:void(0)' onclick=\"changeState('" + id + "',1)\">上架</a>")
+					var shop = databack.data.shop;
 
-					} else if(state == 1){//上架
-						$stateDiv.html("已经上架&nbsp;&nbsp;&nbsp;&nbsp;");
-						$a = $("<a href='javascript:void(0)' onclick=\"changeState('" + id + "',0)\">下架</a>")
+					setAttrAndIsReadOnly('id',shop.id,false);
+					setAttrAndIsReadOnly('shopName',shop.shopName,false);
+					setAttrAndIsReadOnly('ownName',shop.ownName,true);
+					setAttrAndIsReadOnly('ownIdCard',shop.ownIdCard,true);
+					setAttrAndIsReadOnly('address',shop.address,false);
+					setAttrAndIsReadOnly('email',shop.email,false);
+					setAttrAndIsReadOnly('phone',shop.phone,false);
+					setAttrAndIsReadOnly('state',shop.state == 1 ? '已认证':'未认证',true);
+					setAttrAndIsReadOnly('createTime',strToDate(shop.createTime),true);
+					setAttrAndIsReadOnly('authenticationTime',strToDate(shop.authenticationTime),true);
 
-					}
-					$stateDiv.append($a);
-
-					var categoryId = goods.categoryId;
-					initAllCategory(categoryId);
-				}
-
-			})
-		}
-
-		/**
-		 *改变商品状态
-		 */
-		function changeState(uid,state){
-			var url = projectUrl + "/back/Goods/changeState.action";
-			var data = {"id":uid,"state":state};
-			$.post(url,data,function(databack){
-				var code = databack.code;
-				alert(databack.message);
-				if(code == 2000){
-					window.history.go(0);
 				}
 			});
+
 		}
+
+		function setAttrAndIsReadOnly(name,value,flag){
+			if(flag){
+				var $node = $("div[name='"+name+"']");
+				$node.html(value);
+			}else{
+				var $node = $("input[name='"+name+"']");
+				$node.val(value);
+			}
+
+
+		}
+
 	</script>
 
 
@@ -180,61 +112,43 @@ form{
     <form id="submitForm" action="" method="post" enctype="multipart/form-data">
     	<table width="500px;" class="form_table" align="center">
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">书本名称：</td>
-    		<td><input type="text" name="name" style="width:300px" ></td>
-			<td><input type="hidden" name="id" /> </td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">商铺名称：</td>
+    		<td><input type="text" name="shopName" style="width:300px" ></td>
+			<td><input type="hidden" name="id" style="width:300px" /> </td>
     	</tr>
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">书本价格：</td>
-    		<td><input type="text" name="price" style="width:300px" ></td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">店主名称：</td>
+    		<td><div type="text" name="ownName" style="width:300px" ></div></td>
     	</tr>
     	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">促销价格：</td>
-    		<td><input type="text" name="promotinalPrice" style="width:300px" ></td>
+    		<td bgcolor="#FFFFFF" class="STYLE19">店主身份证号码：</td>
+    		<td><div type="text" name="ownIdCard" style="width:300px" ></div></td>
     	</tr>
 		<tr>
-			<td bgcolor="#FFFFFF" class="STYLE19">库存：</td>
-			<td><input type="text" name="num" style="width:300px" ></td>
+			<td bgcolor="#FFFFFF" class="STYLE19">地址：</td>
+			<td><input type="text" name="address" style="width:300px" ></td>
 		</tr>
 		<tr>
-			<td bgcolor="#FFFFFF" class="STYLE19">邮费：</td>
-			<td><input type="text" name="postfree" style="width:300px" ></td>
+			<td bgcolor="#FFFFFF" class="STYLE19">邮箱：</td>
+			<td><input type="text" name="email" style="width:300px" ></td>
 		</tr>
 		<tr>
-			<td bgcolor="#FFFFFF" class="STYLE19">创建时间：</td>
-			<td><input type="text" name="createTime" readonly="readonly" style="width:300px" ></td>
+			<td bgcolor="#FFFFFF" class="STYLE19">电话号码：</td>
+			<td><input type="text" name="phone"  style="width:300px" ></td>
 		</tr>
 		<tr>
 			<td bgcolor="#FFFFFF" class="STYLE19">状态：</td>
-			<td>
-				<div id="state">
+			<td><div  name="state"  style="width:300px" ></div></td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" class="STYLE19">注册时间：</td>
+			<td><div  name="createTime"   style="width:300px" ></div></td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" class="STYLE19">认证时间：</td>
+			<td><div  name="authenticationTime"  style="width:300px" ></div></td>
+		</tr>
 
-				</div>
-			</td>
-		</tr>
-		<tr id="addPic">
-			<td bgcolor="#FFFFFF" class="STYLE19">
-				<a href="javascript:void(0);" onclick="addPic()">添加图片</a>
-			</td>
-		</tr>
-    	<tr class='picTr'>
-    		<td bgcolor='FFFFFF' class='STYLE19'>图片</td>
-    		<td><input class='picfile' type='file' name='files' style='width:300px' /></td>
-    	</tr>
-    	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">商品类别：</td>
-    		<td>
-				<select id="categoryId" name="categoryId">
-					<option value="-1">请选择</option>
-					<!-- 类别数据 -->
-				</select>
-			</td>
-    	</tr>
-    	<tr>
-    		<td bgcolor="#FFFFFF" class="STYLE19">描述：</td>
-    		<td><textarea rows="4" cols="40" name="description" style="width:300px"></textarea></td>
-    	</tr>
-    	
     	<tr>
     		<td></td><td><input id="upload" type="button" value="修改"></td>
     	</tr>

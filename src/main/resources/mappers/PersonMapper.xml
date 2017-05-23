@@ -28,7 +28,7 @@
     update t_person
     set
     id = id,
-    <if test="name != null">
+    <if test="account != null">
       account = #{account},
     </if>
     <if test="password != null">

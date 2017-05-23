@@ -108,6 +108,25 @@ public class ShopServiceImpl implements ShopService{
         shop.setId(id);
         shop.setState(Shop.ENABLE);
         shop.setAuthenticationTime(new Date());
-        return shopMapper.update(shop) == 1 ? true : false;
+        return shopMapper.update(shop) == 1 ;
+    }
+
+    @Override
+    public ShopRegisterBean findById(String id) {
+
+        return shopMapper.findById(id);
+    }
+
+
+    @Override
+    public boolean updateShop(ShopRegisterBean shopRegisterBean) {
+        //bean转domain
+        Person person = (Person) BeanUtilEx.copyProperties2(new Person(), shopRegisterBean);
+        Shop shop = (Shop) BeanUtilEx.copyProperties2(new Shop(), shopRegisterBean);
+
+        int first = personMapper.update(person);
+        int secound = shopMapper.update(shop);
+
+        return first == 1 && secound == 1;
     }
 }

@@ -46,5 +46,10 @@ public interface ShopMapper {
     List<ShopRegisterBean> findBeanInPage(PagerBean<ShopRegisterBean> pagerBean);
 
 
-
+    /**
+     * 根据店主id查询店铺
+     * @param id
+     * @return
+     */
+    ShopRegisterBean findById(String id);
 }

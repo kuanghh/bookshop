@@ -1,8 +1,11 @@
 package com.khh.web.controller.admin;
 
+import com.khh.common.base.BaseController;
 import com.khh.common.bean.PagerBean;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.bean.ShopRegisterBean;
+import com.khh.common.constant_.Const;
+import com.khh.web.domain.Person;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.ShopService;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -23,7 +27,7 @@ import java.util.Map;
  */
 @Controller("backShopController")
 @RequestMapping("/back/shop")
-public class ShopController {
+public class ShopController extends BaseController {
 
     @Resource
     private ShopService shopService;
@@ -101,5 +105,46 @@ public class ShopController {
         responseBean.setErrorResponse("认证失败");
         return responseBean;
     }
+
+    /**
+     * 回显本店铺信息
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @RequestMapping(value = "/myShop" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean myShop(HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        ShopRegisterBean shopRegisterBean = shopService.findById(person.getId());
+        if(shopRegisterBean == null){
+            responseBean.setErrorResponse("查询失败");
+            return responseBean;
+        }
+        responseBean.setData("shop",shopRegisterBean);
+        responseBean.setSuccessResponse("查询成功");
+        return responseBean;
+    }
+
+    /**
+     * 修改店铺信息
+     * @param shopRegisterBean
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
+    public String edit(ShopRegisterBean shopRegisterBean) throws Exception{
+
+        if(shopRegisterBean == null){
+            return "redircet:/error.jsp";
+        }
+        boolean success = shopService.updateShop(shopRegisterBean);
+
+        return  success ? "redirect:/admin/jsps/editShop.html" : "redirect:/error.jsp";
+    }
+
 
 }
