@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/19 16:21:07                           */
+/* Created on:     2017/5/22 14:56:19                           */
 /*==============================================================*/
 
 
@@ -85,13 +85,13 @@ create table t_goods
 (
    id                   varchar(32) not null comment '唯一标识',
    name                 varchar(50) not null comment '商品名称',
-   price                double not null comment '商品单价',
-   promotinal_price     double not null comment '促销价格',
+   price                bigint not null comment '商品单价',
+   promotinal_price     bigint not null comment '促销价格',
    num                  int not null comment '库存',
    description          varchar(50) comment '商品描述',
    create_time          timestamp not null comment '上线日期',
    pictures             varchar(500) not null comment '商品图片',
-   postFree             double not null comment '邮费',
+   postFree             bigint not null comment '邮费',
    state                int not null comment '(1：上架，0：下架)',
    shop_id              varchar(32) not null comment '店铺id',
    is_valid             tinyint not null comment '数据是否有效',
@@ -107,11 +107,11 @@ create table t_orders
    serial               varchar(15) not null comment '订单编号',
    create_time          timestamp not null comment '创建时间',
    num                  int not null comment '商品个数',
-   total_price          double not null comment '总价',
+   total_price          bigint not null comment '总价',
    goods_id             varchar(32) not null comment '商品id',
    shop_id              varchar(32) not null comment '店铺id',
    user_id              varchar(32) not null comment '买家id',
-   state                tinyint not null comment '是否处理(0:未发货，1：已发货)',
+   state                int not null comment '是否处理(0:未发货，1：已发货)',
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)
 );

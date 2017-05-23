@@ -3,8 +3,10 @@ package com.khh.web.controller.admin;
 import com.khh.common.base.BaseController;
 import com.khh.common.bean.CategoryBean;
 import com.khh.common.bean.ResponseBean;
+import com.khh.web.security.PermissionSign;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.CategoryService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +55,7 @@ public class CategoryController extends BaseController{
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = RoleSign.SHOP)
+    @RequiresPermissions(value = PermissionSign.SHOP_All)
     @RequestMapping(value = "/getAll" ,method = RequestMethod.GET)
     @ResponseBody
     public ResponseBean getAll() throws Exception{

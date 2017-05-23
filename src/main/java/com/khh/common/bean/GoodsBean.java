@@ -1,5 +1,8 @@
 package com.khh.common.bean;
 
+import com.khh.web.domain.Goods;
+import com.khh.web.utils.CodeUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,11 +13,11 @@ public class GoodsBean implements Serializable{
     //书本名称
     private String name;
     //书本价格
-    private Double price;
+    private String price;
     //促销价格
-    private Double promotinalPrice;
+    private String promotinalPrice;
     //库存
-    private Integer num;
+    private int num;
     //描述
     private String description;
     //上架时间
@@ -22,16 +25,19 @@ public class GoodsBean implements Serializable{
     //图片地址
     private String pictures;
     //邮费
-    private Double postfree;
+    private String postfree;
 
-    //是否已经下架
-    private Integer state;
+    //是否已经下架(默认为上架)
+    private int state = Goods.STATE_VALID;
 
-    private String[] categoryIds;
+    private String categoryId;
 
     //那个商家的
     private String shopId;
 
+    public GoodsBean(){
+        this.id = CodeUtils.getUUID();
+    }
 
     public String getId() {
         return id;
@@ -49,27 +55,11 @@ public class GoodsBean implements Serializable{
         this.name = name == null ? null : name.trim();
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getPromotinalPrice() {
-        return promotinalPrice;
-    }
-
-    public void setPromotinalPrice(Double promotinalPrice) {
-        this.promotinalPrice = promotinalPrice;
-    }
-
-    public Integer getNum() {
+    public int getNum() {
         return num;
     }
 
-    public void setNum(Integer num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
@@ -97,19 +87,11 @@ public class GoodsBean implements Serializable{
         this.pictures = pictures == null ? null : pictures.trim();
     }
 
-    public Double getPostfree() {
-        return postfree;
-    }
-
-    public void setPostfree(Double postfree) {
-        this.postfree = postfree;
-    }
-
-    public Integer getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(int state) {
         this.state = state;
     }
 
@@ -121,11 +103,35 @@ public class GoodsBean implements Serializable{
         this.shopId = shopId == null ? null : shopId.trim();
     }
 
-    public String[] getCategoryIds() {
-        return categoryIds;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryIds(String[] categoryIds) {
-        this.categoryIds = categoryIds;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPromotinalPrice() {
+        return promotinalPrice;
+    }
+
+    public void setPromotinalPrice(String promotinalPrice) {
+        this.promotinalPrice = promotinalPrice;
+    }
+
+    public String getPostfree() {
+        return postfree;
+    }
+
+    public void setPostfree(String postfree) {
+        this.postfree = postfree;
     }
 }

@@ -35,7 +35,7 @@ public interface PermissionMapper {
      * @param id
      * @return
      */
-    List<Permission> findAllByRoleId(String id,@Param("isValid") boolean isValid);
+    List<Permission> findAllByRoleId(@Param("id")String id,@Param("isValid") boolean isValid);
 
 
     /**

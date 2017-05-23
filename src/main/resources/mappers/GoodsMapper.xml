@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.khh.web.dao.GoodsMapper" >
-  <resultMap id="BaseResultMap" type="com.khh.web.domain.Goods" >
+  <resultMap id="GoodsResultMap" type="com.khh.web.domain.Goods" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="promotinal_price" property="promotinalPrice" jdbcType="DOUBLE" />
+    <result column="price" property="price" />
+    <result column="promotinal_price" property="promotinalPrice"  />
     <result column="num" property="num" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="pictures" property="pictures" jdbcType="VARCHAR" />
-    <result column="postFree" property="postfree" jdbcType="DOUBLE" />
+    <result column="postFree" property="postfree"  />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
-    <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="is_valid" property="isValid"/>
   </resultMap>
+
+
+
   <sql id="Base_Column_List" >
-    id, name, price, promotinal_price, num, description, create_time, pictures, postFree, 
-    state, shop_id, is_valid
+    id, name, price, promotinal_price, num, description, create_time, pictures, postFree,
+    state, shop_id,category_id, is_valid
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="GoodsResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from t_goods
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_goods
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.khh.web.domain.Goods" >
-    insert into t_goods (id, name, price, 
-      promotinal_price, num, description, 
-      create_time, pictures, postFree, 
-      state, shop_id, is_valid
+    insert into t_goods (id, name, price,
+      promotinal_price, num, description,
+      create_time, pictures, postFree,
+      state, shop_id,category_id, is_valid
       )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
-      #{promotinalPrice,jdbcType=DOUBLE}, #{num,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{pictures,jdbcType=VARCHAR}, #{postfree,jdbcType=DOUBLE}, 
-      #{state,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{isValid,jdbcType=TINYINT}
+    values (#{id}, #{name}, #{price},
+      #{promotinalPrice}, #{num}, #{description},
+      #{createTime}, #{pictures}, #{postfree},
+      #{state}, #{shopId},#{categoryId}, #{isValid}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.khh.web.domain.Goods" >
@@ -77,46 +81,52 @@
       <if test="shopId != null" >
         shop_id,
       </if>
+        <if test="categoryId != null" >
+            category_id,
+        </if>
       <if test="isValid != null" >
         is_valid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
+        #{id},
       </if>
       <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+        #{name},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
+        #{price},
       </if>
       <if test="promotinalPrice != null" >
-        #{promotinalPrice,jdbcType=DOUBLE},
+        #{promotinalPrice},
       </if>
       <if test="num != null" >
-        #{num,jdbcType=INTEGER},
+        #{num},
       </if>
       <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
+        #{description},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime},
       </if>
       <if test="pictures != null" >
-        #{pictures,jdbcType=VARCHAR},
+        #{pictures},
       </if>
       <if test="postfree != null" >
-        #{postfree,jdbcType=DOUBLE},
+        #{postfree},
       </if>
       <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+        #{state},
       </if>
       <if test="shopId != null" >
-        #{shopId,jdbcType=VARCHAR},
+        #{shopId},
       </if>
+        <if test="categoryId != null" >
+            #{categoryId},
+        </if>
       <if test="isValid != null" >
-        #{isValid,jdbcType=TINYINT},
+        #{isValid},
       </if>
     </trim>
   </insert>
@@ -124,40 +134,43 @@
     update t_goods
     <set >
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        name = #{name},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
+        price = #{price},
       </if>
       <if test="promotinalPrice != null" >
-        promotinal_price = #{promotinalPrice,jdbcType=DOUBLE},
+        promotinal_price = #{promotinalPrice},
       </if>
       <if test="num != null" >
-        num = #{num,jdbcType=INTEGER},
+        num = #{num},
       </if>
       <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
+        description = #{description},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime},
       </if>
       <if test="pictures != null" >
-        pictures = #{pictures,jdbcType=VARCHAR},
+        pictures = #{pictures},
       </if>
       <if test="postfree != null" >
-        postFree = #{postfree,jdbcType=DOUBLE},
+        postFree = #{postfree},
       </if>
       <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
+        state = #{state},
       </if>
       <if test="shopId != null" >
-        shop_id = #{shopId,jdbcType=VARCHAR},
+        shop_id = #{shopId},
       </if>
+        <if test="categoryId != null" >
+            category_id = #{categoryId},
+        </if>
       <if test="isValid != null" >
-        is_valid = #{isValid,jdbcType=TINYINT},
+        is_valid = #{isValid},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id}
   </update>
 
 </mapper>

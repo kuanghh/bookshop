@@ -27,6 +27,19 @@ form{
 	<script type="text/javascript">
 		$(function(){
 			initAllCategory();
+			
+			$("#upload").click(function () {
+				var url = projectUrl + "/back/Goods/add.action";
+				$("#submitForm").attr("action",url);
+				var $pic = $(".picfile");
+
+				for(var i = 0; i < $pic.length; i++){
+					if($pic[i].value == ""){
+						$pic[i].remove();
+					}
+				}
+				$("#submitForm").submit();
+			})
 
 		});
 
@@ -34,7 +47,7 @@ form{
 		 * 添加图片按钮
 		 */
 		function addPic(){
-			var $tr =  $("<tr id='picTr'> <td bgcolor='FFFFFF' class='STYLE19'>图片</td> <td><input class='picfile' type='file' name='files' style='width:300px' /></td> </tr>");
+			var $tr =  $("<tr class='picTr'> <td bgcolor='FFFFFF' class='STYLE19'>图片</td> <td><input class='picfile' type='file' name='files' style='width:300px' /></td> </tr>");
 			$("#addPic").after($tr);
 		}
 
@@ -43,22 +56,22 @@ form{
 		 */
 		function initAllCategory(){
 			var url = projectUrl + "/category/getAll.action";
-			var data = {}
-			var categorys = "";
+			var data = {};
 			$.get(url,data,function (databack) {
 				if(databack.code == 2000){
-					categorys = databack.data.list;
+					var categorys = databack.data.list;
+					var $select = $("#categoryId");
+					for(var i = 0; i < categorys.length; i++){
+						var $option = $("<option value='" + categorys[i].id + "'>"+ categorys[i].name+"</option>");
+						$select.append($option);
+					}
 				}else{
 					alert(databack.message);
 					return;
 				}
 			});
 
-			var $select = $("#categoryId");
-			for(var i = 0; i < categorys.length; i++){
-				var $option = $("<option value='" + categorys[i].id + "'>"+ categorys[i].name+"</option>");
-				$select.append($option);
-			}
+
 
 		}
 	</script>
@@ -94,7 +107,7 @@ form{
     </table>
     
     <!-- 提交表单 -->
-    <form action="" method="post" enctype="multipart/form-data">
+    <form id="submitForm" action="" method="post" enctype="multipart/form-data">
     	<table width="500px;" class="form_table" align="center">
     	<tr>
     		<td bgcolor="#FFFFFF" class="STYLE19">书本名称：</td>
@@ -122,7 +135,7 @@ form{
 			</td>
 		</tr>
 
-    	<tr id='picTr'>
+    	<tr class='picTr'>
     		<td bgcolor='FFFFFF' class='STYLE19'>图片</td>
     		<td><input class='picfile' type='file' name='files' style='width:300px' /></td>
     	</tr>
@@ -144,7 +157,7 @@ form{
     	</tr>
     	
     	<tr>
-    		<td></td><td><input id="upload" type="button" value="增加"></td>
+    		<td></td><td><input id="upload" type="button" value="提交"></td>
     	</tr>
     	</table>
     </form>

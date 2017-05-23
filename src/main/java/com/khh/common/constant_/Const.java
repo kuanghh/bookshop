@@ -7,6 +7,11 @@ package com.khh.common.constant_;
 public class Const {
 
     /**
+     * 图片保存的地址
+     */
+    public static String IMGSAVEPATH = "E:/img";
+
+    /**
      * 正在登录的用户
      */
     public static String LOGIN_USER = "login_user";

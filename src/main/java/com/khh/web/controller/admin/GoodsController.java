@@ -2,18 +2,22 @@ package com.khh.web.controller.admin;
 
 import com.khh.common.base.BaseController;
 import com.khh.common.bean.GoodsBean;
+import com.khh.common.bean.PagerBean;
 import com.khh.common.bean.ResponseBean;
-import com.khh.common.bean.UserRegisterBean;
+import com.khh.common.constant_.Const;
+import com.khh.web.domain.Person;
+import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.GoodsService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/5/20.
@@ -33,17 +37,48 @@ public class GoodsController extends BaseController{
      * @return
      * @throws Exception
      */
+    @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseBean add(@Valid GoodsBean goodsBean, BindingResult result, MultipartFile[] files) throws Exception{
-        ResponseBean responseBean = new ResponseBean();
+    public String add(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files, HttpSession session) throws Exception{
 
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        goodsBean.setShopId(person.getId());
 
+        boolean success = goodsService.insert(goodsBean,files);
 
-        responseBean.setSuccessResponse("注册成功");
-        return responseBean;
+        return success ? "redirect:/admin/jsps/listBook.html" : "redircet:/error.jsp";
     }
 
+    /**
+     * 根据关键字,商家的id,分页查询所有商品
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @ResponseBody
+    @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.GET)
+    public ResponseBean findInPageByKey(HttpSession session, PagerBean<GoodsBean> pagerBean, @RequestParam Map<String,String> map) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        //如果提交数据有关键字则....
+        if(map != null && !map.isEmpty()){
+            if(map.containsKey("pageNo")){
+                map.remove("pageNo");
+            }
+            pagerBean.setKeyMap(map);
+        }
+
+        //获取当前商家的id
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        if(!goodsService.findInPageByKey(pagerBean,person.getId())){
+            responseBean.setErrorResponse("获取失败");
+            return responseBean;
+        }
+
+        responseBean.setData("page",pagerBean);
+        responseBean.setSuccessResponse("获取成功");
+        return responseBean;
+    }
 
 }
 
