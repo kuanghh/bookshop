@@ -34,4 +34,11 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> findBeanInPageWithKeyAndShopId(@Param("start") int start,@Param("size") int size ,@Param("g")Goods goods);
+
+    /**
+     * 根据id删除商品（假删除）
+     * @param id
+     * @return
+     */
+    int deleteById(String id);
 }

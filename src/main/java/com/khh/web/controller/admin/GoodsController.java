@@ -77,6 +77,25 @@ public class GoodsController extends BaseController{
         return responseBean;
     }
 
+    /**
+     * 根据id,删除商品
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @ResponseBody
+    @RequestMapping(value = "/deleteById" ,method = RequestMethod.POST)
+    public ResponseBean deleteById(String id) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        if(id == null ||  !goodsService.deleteById(id)){
+            responseBean.setErrorResponse("删除失败");
+            return responseBean;
+        }
+        responseBean.setSuccessResponse("删除成功");
+        return responseBean;
+    }
+
 }
 
 

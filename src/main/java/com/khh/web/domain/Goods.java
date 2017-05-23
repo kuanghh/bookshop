@@ -151,10 +151,6 @@ public class Goods implements Serializable{
         return isValid;
     }
 
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
     public String getCategoryId() {
         return categoryId;
     }
@@ -186,15 +182,15 @@ public class Goods implements Serializable{
         if(this.name != null) goodsBean.setName(this.name);
         if(this.price != 0) goodsBean.setPrice(MoneyConvert.moneyLongToStr(price));
         if(this.promotinalPrice != 0) goodsBean.setPromotinalPrice(MoneyConvert.moneyLongToStr(promotinalPrice));
-        if(this.num != 0) goodsBean.setNum(num);
         if(this.description != null)goodsBean.setDescription(this.description);
         if(this.createTime != null) goodsBean.setCreateTime(this.createTime);
         if(this.pictures != null)goodsBean.setPictures(this.pictures);
-        if(this.postfree != 0)goodsBean.setPostfree(MoneyConvert.moneyLongToStr(this.postfree));
         if(this.shopId != null)goodsBean.setShopId(this.shopId);
         if(this.categoryId != null)goodsBean.setCategoryId(this.categoryId);
 
+        goodsBean.setNum(num);
         goodsBean.setState(this.state);
+        goodsBean.setPostfree(MoneyConvert.moneyLongToStr(this.postfree));
 
         if(this.shop != null){
             goodsBean.setShopName(this.shop.getShopName());

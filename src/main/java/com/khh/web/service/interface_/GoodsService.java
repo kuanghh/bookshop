@@ -23,4 +23,11 @@ public interface GoodsService {
      * @throws Exception
      */
     boolean findInPageByKey(PagerBean<GoodsBean> pagerBean);
+
+    /**
+     * 根据id删除商品
+     * @param id
+     * @return
+     */
+    boolean deleteById(String id);
 }

@@ -101,4 +101,9 @@ public class GoodsServiceImpl implements GoodsService{
         pagerBean.setData(goodsBeanList);
         return true;
     }
+
+    @Override
+    public boolean deleteById(String id) {
+        return  goodsMapper.deleteById(id) == 1;
+    }
 }
