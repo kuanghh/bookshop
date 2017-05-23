@@ -41,4 +41,19 @@ public interface GoodsMapper {
      * @return
      */
     int deleteById(String id);
+
+    /**
+     * 根据id查询商品(只查询有效记录)
+     * @param id
+     * @return
+     */
+    Goods findById(String id);
+
+    /**
+     * 根据id修改商品状态(只修改有效记录)
+     * @param id
+     * @param state
+     * @return
+     */
+    int updateState(@Param("id") String id,@Param("state") int state);
 }

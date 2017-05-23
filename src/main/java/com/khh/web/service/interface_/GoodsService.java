@@ -30,4 +30,27 @@ public interface GoodsService {
      * @return
      */
     boolean deleteById(String id);
+
+    /**
+     * 根据id查询商品
+     * @param id
+     * @return
+     */
+    GoodsBean findById(String id);
+
+    /**
+     * 根据id修改商品状态
+     * @param id
+     * @param state
+     * @return
+     */
+    boolean updateState(String id, int state);
+
+    /**
+     * 修改商品
+     * @param goodsBean
+     * @param files
+     * @return
+     */
+    boolean update(GoodsBean goodsBean, MultipartFile[] files);
 }

@@ -223,4 +223,19 @@
     update t_goods set is_valid = 0 where id = #{id}
   </update>
 
+  <update id="updateState" >
+    update t_goods set state = #{state} where id = #{id}
+  </update>
+
+  <select id="findById" resultMap="GoodsDetailsResultMap">
+     select
+    g.id as id, g.name as name,g.price as price, g.promotinal_price as promotinal_price, g.num as num, g.description as description, g.create_time as create_time,
+    g.pictures as pictures, g.postFree as postFree,g.state as state, g.shop_id as shop_id, g.category_id as category_id, g.is_valid as is_valid
+    ,s.id as s_shop_id , s.shop_name as s_shop_name,s.address as s_shop_address
+    ,c.id as c_category_id , c.name as c_category_name
+    from t_goods g,t_shop s, t_category c
+    where   g.is_valid = 1  and s.is_valid = 1  and  s.id = g.shop_id and c.id = g.category_id and c.is_valid = 1
+    and g.id = #{id}
+  </select>
+
 </mapper>

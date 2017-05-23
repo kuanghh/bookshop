@@ -9,6 +9,7 @@ import com.khh.web.domain.Goods;
 import com.khh.web.service.interface_.GoodsService;
 import com.khh.web.utils.BeanUtilEx;
 import com.khh.web.utils.MoneyConvert;
+import com.khh.web.utils.MyFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,24 +43,9 @@ public class GoodsServiceImpl implements GoodsService{
 
 
         //2 添加图片,并修改图片名称，保存图片
-        List<String> imgList = new ArrayList<>();
-        if(files.length == 0) throw new RuntimeException();
-        for (int i = 0; i < files.length; i++) {
-            // TODO 图片格式验证
-            String fileName = System.currentTimeMillis() + "_" + files[i].getOriginalFilename();
-            //2.1保存文件
-            try {
-                String picPath = Const.IMGSAVEPATH + "/" + fileName;
-                files[i].transferTo(new File(picPath));
-                //把路径保存imgList
-                imgList.add(picPath);
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException();
-            }
-        }
+        List<String> imgList = MyFileUtils.saveFile(files);
         String pictures = JSONObject.toJSONString(imgList);
-        //2.2将所有图片地址保存到实例
+        //2.1将所有图片地址保存到实例
         good.setPictures(pictures);
 
         //保存商品
@@ -106,4 +92,39 @@ public class GoodsServiceImpl implements GoodsService{
     public boolean deleteById(String id) {
         return  goodsMapper.deleteById(id) == 1;
     }
+
+    @Override
+    public GoodsBean findById(String id) {
+
+        Goods goods = goodsMapper.findById(id);
+        GoodsBean goodsBean = goods.domain2Vo();
+        return goodsBean;
+    }
+
+    @Override
+    public boolean updateState(String id, int state) {
+
+        return  goodsMapper.updateState(id,state) == 1;
+    }
+
+    @Override
+    public boolean update(GoodsBean goodsBean, MultipartFile[] files) {
+        //1 bean转domain
+        Goods good = (Goods) BeanUtilEx.copyProperties2(new Goods(), goodsBean);
+        //1.1金钱计算
+        good.setPrice(MoneyConvert.moneyStrToLong(goodsBean.getPrice()));
+        good.setPromotinalPrice(MoneyConvert.moneyStrToLong(goodsBean.getPromotinalPrice()));
+        good.setPostfree(MoneyConvert.moneyStrToLong(goodsBean.getPostfree()));
+
+        //2 添加图片,并修改图片名称，保存图片
+        List<String> imgList = MyFileUtils.saveFile(files);
+        String pictures = JSONObject.toJSONString(imgList);
+        //2.1将所有图片地址保存到实例
+        good.setPictures(pictures);
+
+        int update = goodsMapper.updateByPrimaryKeySelective(good);
+        return update == 1;
+    }
+
+
 }

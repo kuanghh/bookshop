@@ -5,6 +5,7 @@ import com.khh.common.bean.GoodsBean;
 import com.khh.common.bean.PagerBean;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.constant_.Const;
+import com.khh.web.domain.Goods;
 import com.khh.web.domain.Person;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.GoodsService;
@@ -94,6 +95,73 @@ public class GoodsController extends BaseController{
         }
         responseBean.setSuccessResponse("删除成功");
         return responseBean;
+    }
+
+
+    /**
+     * 根据id查询商品
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @ResponseBody
+    @RequestMapping(value = "/findById" ,method = RequestMethod.POST)
+    public ResponseBean findById(String id) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        if(id == null){
+            responseBean.setErrorResponse("查询失败");
+            return responseBean;
+        }
+        GoodsBean goodsBean = goodsService.findById(id);
+        responseBean.setData("goods",goodsBean);
+        responseBean.setSuccessResponse("查询成功");
+        return responseBean;
+    }
+
+    /**
+     * 改变商品状态，下架还是上架
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @ResponseBody
+    @RequestMapping(value = "/changeState" ,method = RequestMethod.POST)
+    public ResponseBean changeState(String id,int state) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+
+        // TODO 这里做得不好，如果当状态很多的时候，这里要修改，可以尝试把所有状态改成枚举类型
+        if(state != Goods.STATE_VALID && state != Goods.STATE_NOVALID){
+            responseBean.setErrorResponse("修改失败");
+            return responseBean;
+        }
+
+        if(id == null  || !goodsService.updateState(id,state)){
+            responseBean.setErrorResponse("修改失败");
+            return responseBean;
+        }
+        responseBean.setSuccessResponse("修改成功");
+        return responseBean;
+    }
+
+    /**
+     * 修改商品
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SHOP)
+    @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
+    public String edit(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files,HttpSession session) throws Exception{
+
+
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        goodsBean.setShopId(person.getId());
+
+        boolean success = goodsService.update(goodsBean,files);
+
+        return success ? "redirect:/admin/jsps/listBook.html" : "redircet:/error.jsp";
     }
 
 }

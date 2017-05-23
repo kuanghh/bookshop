@@ -2,6 +2,7 @@ package com.khh.test;
 
 import com.alibaba.fastjson.JSONObject;
 import com.khh.common.bean.UserRegisterBean;
+import com.khh.web.domain.Goods;
 import com.khh.web.domain.Person;
 import com.khh.web.domain.User;
 import com.khh.web.utils.BeanUtilEx;
@@ -9,6 +10,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -60,4 +62,8 @@ public class TestSomeThing {
 //        list.add("3");
 //        System.out.println(JSONObject.toJSONString(list));
 //    }
+
+    public static void test4() throws  Exception{
+
+    }
 }

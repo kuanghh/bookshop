@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>所有用户信息列表</title>
+<title>书本信息列表</title>
 <style type="text/css">
 body {
 	margin-left: 3px;
@@ -137,7 +137,7 @@ a{
 
                 var $td10 = $("<td height='20' bgcolor='#FFFFFF' class='STYLE6'></td>");
                 var $div10 = $("<div align='center' class='STYLE21'></div>");
-                var $a1 = $("<a href='javascript:void(0)'>修改</a>");
+                var $a1 = $("<a href='javascript:void(0)' onclick=\"editUI('" + goods[i].id + "')\">修改</a>");
                 var $a2 = $("<a href='javascript:void(0)' onclick=\"deleteGoods('" + goods[i].id + "')\">删除</a>");
                 var $p = $("<span>|</span>");
                 $div10.append($a1);
@@ -242,6 +242,13 @@ a{
             },"json");
         }
 
+        /**
+         *跳转到修改页面
+         */
+        function editUI(uid){
+          var url = "editBook.html?id=" + uid;
+          window.location.href = url;
+        }
         /**
          * 刷新当前页面
          */
