@@ -198,7 +198,7 @@ public class Goods implements Serializable{
 
         if(this.shop != null){
             goodsBean.setShopName(this.shop.getShopName());
-            goodsBean.setShopName(this.shop.getAddress());
+            goodsBean.setShopAddress(this.shop.getAddress());
         }
         if(this.category != null){
             goodsBean.setCategoryName(this.category.getName());

@@ -60,13 +60,6 @@ public class GoodsController extends BaseController{
     @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.GET)
     public ResponseBean findInPageByKey(HttpSession session, PagerBean<GoodsBean> pagerBean,GoodsBean key) throws Exception{
         ResponseBean responseBean = new ResponseBean();
-        //如果提交数据有关键字则....
-//        if(map != null && !map.isEmpty()){
-//            if(map.containsKey("pageNo")){
-//                map.remove("pageNo");
-//            }
-//            pagerBean.setKeyMap(map);
-//        }
 
         //获取当前商家的id
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
