@@ -34,6 +34,7 @@ public class Goods implements Serializable{
 
     private String categoryId;
 
+
     private Category category;
 
     private Shop shop;

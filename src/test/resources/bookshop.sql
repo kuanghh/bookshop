@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/22 14:56:19                           */
+/* Created on:     2017/5/22 21:57:14                           */
 /*==============================================================*/
 
 
@@ -9,8 +9,6 @@ drop table if exists t_admin;
 drop table if exists t_cart;
 
 drop table if exists t_category;
-
-drop table if exists t_category_goods;
 
 drop table if exists t_goods;
 
@@ -67,18 +65,6 @@ create table t_category
 );
 
 /*==============================================================*/
-/* Table: t_category_goods                                      */
-/*==============================================================*/
-create table t_category_goods
-(
-   id                   varchar(32) not null comment '唯一标识',
-   category_id          varchar(32) not null comment '商品类别id',
-   goods_id             varchar(32) not null comment '商品id',
-   is_valid             tinyint not null comment '数据是否有效',
-   primary key (id)
-);
-
-/*==============================================================*/
 /* Table: t_goods                                               */
 /*==============================================================*/
 create table t_goods
@@ -94,6 +80,7 @@ create table t_goods
    postFree             bigint not null comment '邮费',
    state                int not null comment '(1：上架，0：下架)',
    shop_id              varchar(32) not null comment '店铺id',
+   category_id          varchar(32) not null,
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)
 );

@@ -30,10 +30,16 @@ public class GoodsBean implements Serializable{
     //是否已经下架(默认为上架)
     private int state = Goods.STATE_VALID;
 
-    private String categoryId;
-
     //那个商家的
     private String shopId;
+
+    private String shopName;
+
+    private String shopAddress;
+
+    private String categoryId;
+
+    private String categoryName;
 
     public GoodsBean(){
         this.id = CodeUtils.getUUID();
@@ -133,5 +139,29 @@ public class GoodsBean implements Serializable{
 
     public void setPostfree(String postfree) {
         this.postfree = postfree;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
