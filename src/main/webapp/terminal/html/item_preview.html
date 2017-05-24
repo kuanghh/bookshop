@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>		
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>图书商城</title>
+	<meta name="keywords" content="catalog, responsive, bootstrap, free template, fluid layout, templatemo, html5 css3" />
+	<meta name="description" content="Catalog theme is free responsive design based on Bootstrap framework." />
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+	<link href="templatemo_style.css" rel="stylesheet" type="text/css">
+	<!--
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css">
+	<link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+	-->
+	</head>
+	<body>
+		<header>
+			<div class="container logo">
+				<div class="row">
+					<div class="col-md-12"><a href="http://www.cssmoban.com/"  target="_parent"><img src="images/templatemo_logo.png" alt="templatemo 379 catalog"></a></div>
+                    <a href="#" title="Mystockphoto from cn.mystockphoto.com"  class="row_top" target="_blank"><img src="images/templatemo_top.png" title="Mystockphoto" alt="Mystockphoto" /></a>
+				</div>
+			</div>
+			<nav class="navbar navbar-default" role="navigation"> 
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>					
+				</div>
+
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">首页</a></li>
+                        <li><a href="#mini_templates">我的购物车</a></li>
+						<li><a href="#flash_templates">我的账号</a></li>
+						<li><a href="contact.html">联系我们</a></li>
+					</ul>
+					<form class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search">
+						</div>
+						<button type="submit" class="btn btn-default">查询商品</button>
+					</form>					
+				</div><!-- /.navbar-collapse -->
+			</nav>
+		</header>
+		<div class="container">
+			<div class="row" id="preview">
+				<div class="row">
+					<div class="col-md-12" id="img_preview">
+                    
+						<h3>xxxx商品</h3>
+						
+						<a href="images/templatemo_374_responsive_1780x1780.jpg" title="Click to see the original size">
+							<img src="images/templatemo_374_responsive_1780x1780.jpg" 
+                            	alt="templatemo 374 responsive" class="img-responsive" width="840" height="840">
+						</a>	
+                        			
+					</div>
+				</div> 
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="preview_footer_container">
+
+							
+                            
+						</div> <!-- preview_footer_container -->
+					</div>
+				</div>						
+			</div> <!-- row -->
+		</div> <!-- container -->
+		<footer class="container">
+			<div class="credit">
+				<p id="templatemo_cr_bar">
+					Copyright © 2072 <a href="#">xxxxxxx</a> | <a href="#"  title="xxxxx">xxxx</a> Collect from <a href="http://www.cssmoban.com">xxxxxxx</a>
+				</p>
+			</div>
+		</footer>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	    <!-- 
+		http://masonry.desandro.com/
+	    http://desandro.mit-license.org/ 
+		http://stackoverflow.com/questions/17767130/masonry-js-error-uncaught-typeerror-object-object-object-has-no-method-imag
+		Align items in center: https://github.com/desandro/isotope/issues/20
+	    Hiding text overflow: http://stackoverflow.com/questions/15308061/how-to-avoid-text-overflow-in-twitter-bootstrap
+		-->
+		<script src="js/masonry.pkgd.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>   
+		<script>
+
+			$(document).ready(function(){
+				init_masonry();
+			});
+
+			function init_masonry(){
+				var $container = $('.item_container');
+				$container.imagesLoaded( function(){
+					$container.masonry({
+						itemSelector : '.item',
+						"gutter": 10,
+						isFitWidth: true
+					});
+				});
+
+				var $fcontainer = $('.preview_footer_container');
+
+				$fcontainer.masonry({
+					itemSelector : '.footer_item',
+					"gutter": 10,
+					isFitWidth: true
+				});
+			}
+			
+		</script>		
+	</body>
+</html>

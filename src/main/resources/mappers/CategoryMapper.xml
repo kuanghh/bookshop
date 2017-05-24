@@ -27,7 +27,7 @@
   </select>
 
   <select id="findAll" resultType="com.khh.common.bean.CategoryBean">
-    select id,name from t_category where is_valid = 1;
+    select id,name from t_category where is_valid = 1 order By name ASC ;
   </select>
 
 </mapper>

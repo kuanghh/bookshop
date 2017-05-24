@@ -17,12 +17,12 @@ public interface GoodsService {
     boolean insert(GoodsBean goodsBean, MultipartFile[] files);
 
     /**
-     * 根据关键字,商家的id,分页查询所有商品
+     * 根据指定条件分页查询所有商品，商家是否认证
      * @param pagerBean
      * @return
      * @throws Exception
      */
-    boolean findInPageByKey(PagerBean<GoodsBean> pagerBean);
+    boolean findInPageByKey(PagerBean<GoodsBean> pagerBean,boolean shopAuth);
 
     /**
      * 根据id删除商品
@@ -53,4 +53,6 @@ public interface GoodsService {
      * @return
      */
     boolean update(GoodsBean goodsBean, MultipartFile[] files);
+
+
 }

@@ -8,6 +8,9 @@ import com.khh.web.domain.User;
 import com.khh.web.utils.BeanUtilEx;
 import org.apache.commons.beanutils.BeanUtils;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
@@ -22,7 +25,7 @@ public class TestSomeThing {
 //        test1();
 //        test2();
 //        test3();
-
+            test4();
     }
 
 //    public static void  test1() throws Exception{
@@ -64,6 +67,15 @@ public class TestSomeThing {
 //    }
 
     public static void test4() throws  Exception{
-
+        FileInputStream fis = new FileInputStream("E:/img/1495469074775_logo.png");
+        OutputStream os = new FileOutputStream("E:/1.png");
+        int count = -1;
+        byte[] buffer = new byte[1024 * 8];
+        while ((count = fis.read(buffer)) != -1) {
+            os.write(buffer, 0, count);
+            os.flush();
+        }
+        fis.close();
+        os.close();
     }
 }

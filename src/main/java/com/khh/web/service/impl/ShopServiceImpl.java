@@ -123,7 +123,8 @@ public class ShopServiceImpl implements ShopService{
         //bean转domain
         Person person = (Person) BeanUtilEx.copyProperties2(new Person(), shopRegisterBean);
         Shop shop = (Shop) BeanUtilEx.copyProperties2(new Shop(), shopRegisterBean);
-
+        //商家每次修改完记录后都需要管理员认证
+        shop.setState(Shop.DISABLE);
         int first = personMapper.update(person);
         int secound = shopMapper.update(shop);
 

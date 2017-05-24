@@ -21,19 +21,19 @@ public interface GoodsMapper {
 
 
     /**
-     *根据关键字，商铺id，获取一共有多少条商品记录(只查询有效记录)
+     *根据指定条件获取一共有多少条商品记录,商家是否需要认证(只查询有效记录)
      * @param
      * @return
      */
-    int findCountWithKeyAndShopId(@Param("g") Goods goods);
+    int findCountWithKeyAndShopId(@Param("goods") Goods goods,@Param("shopAuth") boolean shopAuth);
 
     /**
-     * 根据商品名称，类别id，商铺id，获取所有商品记录(只查询有效记录)(默认按时间排序)
+     * 根据指定条件获取所有商品记录，商家是否需要认证(只查询有效记录)(默认按时间排序)
      * @param
      * @param
      * @return
      */
-    List<Goods> findBeanInPageWithKeyAndShopId(@Param("start") int start,@Param("size") int size ,@Param("g")Goods goods);
+    List<Goods> findBeanInPageWithKeyAndShopId(@Param("start") int start,@Param("size") int size ,@Param("g")Goods goods,@Param("shopAuth")boolean shopAuth);
 
     /**
      * 根据id删除商品（假删除）

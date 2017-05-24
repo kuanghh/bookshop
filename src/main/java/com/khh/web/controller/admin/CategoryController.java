@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/5/19.
  */
-@Controller
+@Controller("adminCategoryController")
 @RequestMapping("/category")
 public class CategoryController extends BaseController{
 

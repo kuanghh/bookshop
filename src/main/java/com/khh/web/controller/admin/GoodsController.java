@@ -68,7 +68,8 @@ public class GoodsController extends BaseController{
         if(key != null){
             pagerBean.setT(key);
         }
-        if(!goodsService.findInPageByKey(pagerBean)){
+        //获取不必认证过店铺的商品
+        if(!goodsService.findInPageByKey(pagerBean,false)){
             responseBean.setErrorResponse("获取失败");
             return responseBean;
         }

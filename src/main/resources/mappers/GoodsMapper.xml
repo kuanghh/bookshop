@@ -186,16 +186,19 @@
 
   <select id="findCountWithKeyAndShopId" parameterType="com.khh.web.domain.Goods" resultType="int">
       select count(*)
-      from t_goods g
-      where g.is_valid = 1
-        <if test="g.shopId != null">
-        and g.shop_id = #{g.shopId}
+      from t_goods g , t_shop s
+      where g.is_valid = 1 and s.id = g.shop_id and s.is_valid = 1
+        <if test="shopAuth">
+        and s.state = 1
         </if>
-        <if test="g.categoryId != null">
-        and g.category_id = #{g.categoryId}
+        <if test="goods.shopId != null">
+        and g.shop_id = #{goods.shopId}
         </if>
-        <if test="g.name != null">
-        and g.name like '%${g.name}%'
+        <if test="goods.categoryId != null">
+        and g.category_id = #{goods.categoryId}
+        </if>
+        <if test="goods.name != null">
+        and g.name like '%${goods.name}%'
         </if>
   </select>
 
@@ -207,6 +210,9 @@
     ,c.id as c_category_id , c.name as c_category_name
     from t_goods g,t_shop s, t_category c
     where g.is_valid = 1  and s.is_valid = 1  and  s.id = g.shop_id and c.id = g.category_id and c.is_valid = 1
+    <if test="shopAuth">
+      and s.state = 1
+    </if>
     <if test="g.shopId != null">
       and g.shop_id = #{g.shopId}
     </if>
