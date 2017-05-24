@@ -436,11 +436,19 @@
 			 * 创建商品a标签(id,name)
 			 */
 			function createGoodstagA(good){
-				$a = ("<a href='index.html' class='thumbnail' >" +
+				$a = ("<a href='javascript:void(0)' class='thumbnail' onclick=\"goodsDetialUI('" + good.id + "')\" >" +
 				"<img src="+ projectUrl + "/terminal/img/getImg.action?address=" + analImgArry(good.pictures) +" />" +
 				"<p>" + good.name + "</p>" +
 				"</a>");
 				return $a
+			}
+
+			/**
+			 *跳转到商品详情页面
+			 */
+			function goodsDetialUI(uid){
+				var url = "item_preview.html?id=" + uid;
+				window.location.href = url;
 			}
 
 			/**

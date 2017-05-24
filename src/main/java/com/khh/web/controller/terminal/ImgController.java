@@ -21,7 +21,7 @@ import java.io.OutputStream;
 public class ImgController extends BaseController{
 
     /**
-     * 根据关键字或者类别的id,分页查询所有商品
+     * 图片输出流
      * @param   response
      * @return
      * @throws Exception

@@ -49,4 +49,25 @@ public class GoodsController {
         responseBean.setSuccessResponse("获取成功");
         return responseBean;
     }
+
+    /**
+     * 根据id查询商品
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findById" ,method = RequestMethod.POST)
+    public ResponseBean findById(String id) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        if(id == null){
+            responseBean.setErrorResponse("查询失败");
+            return responseBean;
+        }
+        System.out.println();
+        GoodsBean goodsBean = goodsService.findById(id);
+        responseBean.setData("goods",goodsBean);
+        responseBean.setSuccessResponse("查询成功");
+        return responseBean;
+    }
 }

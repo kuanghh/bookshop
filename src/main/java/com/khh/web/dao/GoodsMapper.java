@@ -22,15 +22,14 @@ public interface GoodsMapper {
 
     /**
      *根据指定条件获取一共有多少条商品记录,商家是否需要认证(只查询有效记录)
-     * @param
+     * @param goods shopAuth
      * @return
      */
     int findCountWithKeyAndShopId(@Param("goods") Goods goods,@Param("shopAuth") boolean shopAuth);
 
     /**
      * 根据指定条件获取所有商品记录，商家是否需要认证(只查询有效记录)(默认按时间排序)
-     * @param
-     * @param
+     * @param goods shopAuth
      * @return
      */
     List<Goods> findBeanInPageWithKeyAndShopId(@Param("start") int start,@Param("size") int size ,@Param("g")Goods goods,@Param("shopAuth")boolean shopAuth);
