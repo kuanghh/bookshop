@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Administrator on 2017/5/25.
@@ -39,5 +41,16 @@ public class CartServiceImpl  implements CartService{
             cartDB.setNum(cartDB.getNum() + 1);
             return cartMapper.updateByPrimaryKeySelective(cartDB) == 1;
         }
+    }
+
+    @Override
+    public List<CartBean> findAllCartByUserId(String id) {
+
+        List<Cart> list = cartMapper.findAllByUserId(id);
+        if(list == null ||list.isEmpty()){
+            return null;
+        }
+
+        return list.stream().map(Cart::domain2Vo).collect(Collectors.toList());
     }
 }

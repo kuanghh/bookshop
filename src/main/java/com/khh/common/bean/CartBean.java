@@ -20,11 +20,18 @@ public class CartBean implements Serializable{
 
     private String userId;
 
+    private String shopId;
+
     //产品名字
     private String goodsName;
 
     //产品价格
     private String goodsPrice;
+
+    private String shopName;
+
+    private String shopAddress;
+
 
     public CartBean(){
         this.id = CodeUtils.getUUID();
@@ -76,6 +83,30 @@ public class CartBean implements Serializable{
 
     public void setGoodsPrice(String goodsPrice) {
         this.goodsPrice = goodsPrice;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
     }
 
     public Cart vo2Domain(){

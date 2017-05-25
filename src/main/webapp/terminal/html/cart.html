@@ -14,6 +14,17 @@
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css">
 	<link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
 	-->
+	<style>
+		#tab{
+			text-align: center;
+			border: 1px solid black;
+			width:100%;
+			bgcolor:#a8c7ce;
+		}
+		#tab td{
+			border: 1px solid black;
+		}
+	</style>
 	</head>
 	<body>
 		<header>
@@ -35,8 +46,8 @@
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">首页</a></li>
-                        <li><a href="#mini_templates">我的购物车</a></li>
+						<li class="active"><a href="index.html">首页</a></li>
+                        <li><a href="cart.html">我的购物车</a></li>
 						<li><a href="#flash_templates">我的账号</a></li>
 						<li><a href="contact.html">联系我们</a></li>
 					</ul>
@@ -51,12 +62,18 @@
 				<div class="row">
 					<div class="col-md-12" id="img_preview">
                     
-						<h3>xxxx商品</h3>
-						
-						<a href="images/templatemo_374_responsive_1780x1780.jpg" title="Click to see the original size">
-							<img src="images/templatemo_374_responsive_1780x1780.jpg" 
-                            	alt="templatemo 374 responsive" class="img-responsive" width="840" height="840">
-						</a>	
+						<div class="table_div" >
+							<table id="tab"cellpadding="0" cellspacing="1"  >
+								<tr>
+									<td>商品名称</td>
+									<td>商品价格</td>
+									<td>商品店铺名称</td>
+									<td>发货地址</td>
+									<td>购买数目</td>
+									<td>操作</td>
+								</tr>
+							</table>
+						</div>
                         			
 					</div>
 				</div> 
@@ -94,6 +111,7 @@
 		-->
 		<script src="js/masonry.pkgd.min.js"></script>
 		<script src="js/imagesloaded.pkgd.min.js"></script>   
+		<script src="../../js/common.js"></script>
 		<script>
 			$(document).ready(function(){
 				init_masonry();
@@ -114,6 +132,15 @@
 					"gutter": 10,
 					isFitWidth: true
 				});
+			}
+
+			$(function(){
+				//初始化购物车列表
+				initCart();
+			})
+
+			function initCart(){
+
 			}
 			
 		</script>		

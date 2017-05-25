@@ -1,6 +1,8 @@
 package com.khh.web.domain;
 
+import com.khh.common.bean.CartBean;
 import com.khh.web.utils.CodeUtils;
+import com.khh.web.utils.MoneyConvert;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +20,8 @@ public class Cart implements Serializable{
     private String goodsId;
 
     private String userId;
+
+
 
     private Goods goods;
 
@@ -90,5 +94,25 @@ public class Cart implements Serializable{
 
     public void setValid(boolean valid) {
         isValid = valid;
+    }
+
+    public CartBean domain2Vo(){
+        CartBean cartBean = new CartBean();
+        if(this.id != null) cartBean.setId(this.id);
+        if(this.num != null) cartBean.setNum(this.num);
+        if(this.goodsId != null) cartBean.setGoodsId(this.goodsId);
+        if(this.userId != null) cartBean.setUserId(this.userId);
+
+        if(this.goods != null){
+            cartBean.setGoodsName(this.getGoods().getName());
+            cartBean.setGoodsPrice(MoneyConvert.moneyLongToStr(this.getGoods().getPrice()));
+            Shop shop = this.goods.getShop();
+            if(shop != null){
+                cartBean.setShopId(shop.getId());
+                cartBean.setShopName(shop.getShopName());
+                cartBean.setShopAddress(shop.getAddress());
+            }
+        }
+        return cartBean;
     }
 }

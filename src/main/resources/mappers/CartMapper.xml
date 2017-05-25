@@ -9,6 +9,23 @@
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="is_valid" property="isValid"/>
   </resultMap>
+
+
+  <resultMap id="CartDetailMap" type="com.khh.web.domain.Cart" extends="BaseResultMap">
+    <association property="goods" column="goods_id" javaType="com.khh.web.domain.Goods">
+        <id column="g_id" property="id" />
+        <result column="g_name" property="name"/>
+        <result column="g_price" property="price"/>
+        <result column="g_promotinalPrice" property="promotinalPrice"/>
+        <result column="g_postfree" property="postfree"/>
+        <association property="shop" column="shop_id" javaType="com.khh.web.domain.Shop">
+            <id column="s_id" property="id" />
+            <result column="s_name" property="shopName" />
+            <result column="s_address" property="address" />
+        </association>
+    </association>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, update_time, num, goods_id, user_id, is_valid
   </sql>
@@ -111,6 +128,15 @@
     select *
     from t_cart
     where goods_id = #{goodsId} and user_id = #{userId}
+  </select>
+
+  <select id="findAllByUserId" resultMap="CartDetailMap">
+    select c.id as id ,c.update_time as update_time, c.num as num ,c.goods_id as goods_id, c.user_id as user_id,
+          g.id as g_id,g.name as g_name, g.price as g_price,g.promotinal_price as g_promotinalPrice,g.postfree as g_postfree,
+          s.id as s_id, s.shop_name as s_name,s.address as s_address
+    from t_cart c,t_shop s,t_goods g
+    where c.is_valid = 1 and s.is_valid = 1 and g.is_valid = 1 and c.user_id = #{userId} and c.goods_id = g.id and g.shop_id = s.id
+    and s.state = 1 and g.state = 1 and g.num > 0
   </select>
 
 </mapper>
