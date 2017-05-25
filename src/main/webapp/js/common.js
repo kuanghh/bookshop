@@ -32,6 +32,7 @@ function exit(){
             alert(databack.message);
         }else{
             alert(databack.message);
+            window.location.href = "index.html";
         }
     });
 }

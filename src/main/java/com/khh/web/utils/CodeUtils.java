@@ -14,6 +14,14 @@ public class CodeUtils {
         return UUID.randomUUID().toString().replaceAll("-","");
     }
 
+    /**
+     * 生成订单号
+     */
+    public static String getOrderSerial(){
+        String s = UUID.randomUUID().toString().replaceAll("-", "");
+        return s.substring(0,15);
+    }
+
     public static void main(String[] args) {
         for (int i = 0; i < 15; i++) {
             System.out.println(CodeUtils.getUUID());

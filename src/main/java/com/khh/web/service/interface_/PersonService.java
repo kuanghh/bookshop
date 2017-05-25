@@ -43,5 +43,11 @@ public interface PersonService {
      */
     Person findByPhone(String phone);
 
-
+    /**
+     * 根据id还有密码查询用户
+     * @param id
+     * @param password
+     * @return
+     */
+    int findByIdAndPassword(String id, String password);
 }

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>		
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>图书商城</title>
+	<meta name="keywords" content="catalog, responsive, bootstrap, free template, fluid layout, templatemo, html5 css3" />
+	<meta name="description" content="Catalog theme is free responsive design based on Bootstrap framework." />
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+	<link href="templatemo_style.css" rel="stylesheet" type="text/css">
+	<!--
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css">
+	<link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
+	-->
+	<style>
+		#tab{
+			text-align: center;
+			border: 1px solid black;
+			width:100%;
+			bgcolor:#a8c7ce;
+		}
+		#tab td{
+			border: 1px solid black;
+		}
+	</style>
+	</head>
+	<body>
+		<header>
+			<div class="container logo">
+				<div class="row">
+					<div class="col-md-12"><a href="http://www.cssmoban.com/"  target="_parent"><img src="images/logo.png" alt="templatemo 379 catalog"></a></div>
+					<span style="padding-left: 900px"><a href="../login.html">登录</a>&nbsp;&nbsp;</span>
+					<span><a href="javascript:void(0)" onclick="exit()">退出</a></span>
+				</div>
+			</div>
+			<nav class="navbar navbar-default" role="navigation"> 
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>					
+				</div>
+
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">首页</a></li>
+                        <li><a href="cart.html">我的购物车</a></li>
+						<li><a href="myInfo.html">我的账号</a></li>
+						<li><a href="contact.html">联系我们</a></li>
+					</ul>
+					<form class="navbar-form navbar-right" role="search">
+
+					</form>					
+				</div><!-- /.navbar-collapse -->
+			</nav>
+		</header>
+		<div class="container">
+			<div class="row" id="preview">
+				<div class="row">
+					<div class="col-md-12" id="img_preview">
+                    	<div>
+							<span>一共合计(包含运费):</span>
+							<span id="totalPrice"></span>
+						</div>
+						<div>
+							<span>请输入交易密码:</span>
+							<span><input type="password" id="password" /></span>
+						</div>
+                        <div>
+							<input type="button" id="payMoney" value="下单！">
+						</div>
+					</div>
+				</div> 
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="preview_footer_container">
+
+						</div> <!-- preview_footer_container -->
+					</div>
+				</div>						
+			</div> <!-- row -->
+		</div> <!-- container -->
+		<footer class="container">
+			<div class="credit">
+				<p id="templatemo_cr_bar">
+					Copyright © 2072 <a href="#">xxxxxxx</a> | <a href="#"  title="xxxxx">xxxx</a> Collect from <a href="http://www.cssmoban.com">xxxxxxx</a>
+				</p>
+			</div>
+		</footer>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	    <!-- 
+		http://masonry.desandro.com/
+	    http://desandro.mit-license.org/ 
+		http://stackoverflow.com/questions/17767130/masonry-js-error-uncaught-typeerror-object-object-object-has-no-method-imag
+		Align items in center: https://github.com/desandro/isotope/issues/20
+	    Hiding text overflow: http://stackoverflow.com/questions/15308061/how-to-avoid-text-overflow-in-twitter-bootstrap
+		-->
+		<script src="js/masonry.pkgd.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>   
+		<script src="../../js/common.js"></script>
+
+		<script>
+			$(document).ready(function(){
+				init_masonry();
+			});
+
+			function init_masonry(){
+				var $container = $('.item_container');
+				$container.imagesLoaded( function(){
+					$container.masonry({
+						itemSelector : '.item',
+						"gutter": 10,
+						isFitWidth: true
+					});
+				});
+				var $fcontainer = $('.preview_footer_container');
+				$fcontainer.masonry({
+					itemSelector : '.footer_item',
+					"gutter": 10,
+					isFitWidth: true
+				});
+			}
+
+
+
+			$(function(){
+
+				//先获取地址参数
+				var address=getAddress();
+
+				//计算总价并显示
+				caleTotalPrice();
+				//初始化下单按钮功能
+				initPayMoney();
+			});
+
+			/**
+			 * 获取传过来的地址参数
+			 * @returns {*}
+			 */
+			function getAddress(){
+				var thisURL = document.URL;
+				var  getval =thisURL.split('?')[1];
+				var address= getval.split("=")[1];
+				return address;
+			}
+
+			/**
+			 * 计算价格，并显示
+			 */
+			function caleTotalPrice(){
+				var url = projectUrl + "/cart/calTotalPrice.action";
+				var data={};
+				$.post(url,data,function(databack){
+					var code  = databack.code;
+					if(code == 5000){
+						alert(databack.message);
+					}else if(code == 2000){
+						var totalPrice = databack.data.totalPrice;
+						$("#totalPrice").html(totalPrice);
+					}
+				});
+			}
+
+			/**
+			 * 初始化下单按钮功能
+			 */
+			function initPayMoney(){
+				$("#payMoney").click(function(){
+					//验证密码错误
+					var pwd = $("#password").val();
+					var url = projectUrl + "/user/checkPwd.action";
+					var data = {"password":pwd};
+					$.post(url,data,function(databack){
+						var code  = databack.code;
+						if(code == 5000){ //密码错误
+							alert(databack.message);
+							return;
+						}else if(code == 2000) {
+//							alert(databack.message);
+							//TODO 创建订单
+						}
+					});
+				});
+			}
+
+		</script>		
+	</body>
+</html>

@@ -1,13 +1,11 @@
 package com.khh.web.controller.terminal;
 
 import com.khh.common.base.BaseController;
-import com.khh.common.bean.PagerBean;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.bean.UserBean;
 import com.khh.common.bean.UserRegisterBean;
 import com.khh.common.constant_.Const;
 import com.khh.web.domain.Person;
-import com.khh.web.domain.User;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.PersonService;
 import com.khh.web.service.interface_.UserService;
@@ -16,15 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by 951087952@qq.com on 2017/5/17.
@@ -36,6 +31,9 @@ public class UserController extends BaseController{
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PersonService personService;
 
     /**
      * 跳转登录UI
@@ -140,6 +138,29 @@ public class UserController extends BaseController{
         }
 
         responseBean.setSuccessResponse("修改成功");
+        return responseBean;
+    }
+
+    /**
+     * 验证交易密码
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/checkPwd" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean checkPwd(String password,HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        int count = personService.findByIdAndPassword(person.getId(),password);
+        if(count == 1){
+            responseBean.setSuccessResponse("验证成功");
+            return responseBean;
+        }
+
+        responseBean.setErrorResponse("验证出错");
         return responseBean;
     }
 

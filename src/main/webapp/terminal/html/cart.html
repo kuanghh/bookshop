@@ -49,7 +49,7 @@
 					<ul class="nav navbar-nav">
 						<li ><a href="index.html">首页</a></li>
                         <li class="active"><a href="cart.html">我的购物车</a></li>
-						<li><a href="#flash_templates">我的账号</a></li>
+						<li><a href="myInfo.html">我的账号</a></li>
 						<li><a href="contact.html">联系我们</a></li>
 					</ul>
 					<form class="navbar-form navbar-right" role="search">
@@ -76,7 +76,15 @@
 								</tr>
 							</table>
 						</div>
-                        			
+						<div id="send_to_addr_div">
+							请选择收取地址：
+							<select id="send_to_addr_sel">
+								<option></option>
+							</select>
+						</div>
+                        <div>
+							<input type="button" id="caleMoney" value="结算">
+						</div>
 					</div>
 				</div> 
 				
@@ -138,8 +146,60 @@
 			$(function(){
 				//初始化购物车列表
 				initCart();
-			})
+				//初始化可选择地址
+				initUserAddress();
+				//初始化结算按钮功能
+				initCaleButton();
+			});
 
+
+			//用来记录当前用户是否有收货地址
+			var hasAddr = false;
+
+			/**
+			 * 初始化可选择地址
+			 */
+			function initUserAddress() {
+				var url = projectUrl + "/user/myInfo.action";
+				var data = {};
+				$.post(url,data,function(databack){
+					var code  = databack.code;
+					if(code == 2000){
+						var user = databack.data.user;
+						var addresses = user.address;
+						var addrArry = jsonArr2JsArr(addresses);
+						for(var i = 0; i < addrArry.length; i++){
+							$("#send_to_addr_sel").append("<option  value='"+addrArry[i]+"'>"+addrArry[i]+"</option>");
+							//表明有收货地址
+							hasAddr = true;
+						}
+					}else{
+						alert(databack.message);
+					}
+				});
+			}
+
+			/**
+			 * 初始化结算按钮功能
+			 */
+			function initCaleButton() {
+				$("#caleMoney").click(function(){
+					if(!hasAddr){
+						alert("请添加收货地址后再来结算,在个人信息处可添加收货地址");
+						return ;
+					}
+					var address = $("option:selected").val();
+					if(address == null || address.length == 0){
+						alert("地址无效");return ;
+					}
+					//TODO 跳转到输入密码界面
+					window.location.href  = "pay.html?address=" + address;
+				});
+			}
+
+			/**
+			 *初始化购物车列表
+			 */
 			function initCart(){
 				//获取所有购物车记录
 				var url = projectUrl + "/cart/getMyCart.action";

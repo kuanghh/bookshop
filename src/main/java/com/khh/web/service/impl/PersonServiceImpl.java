@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service("personService")
 public class PersonServiceImpl implements PersonService{
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
+
     @Autowired
     private PersonMapper personMapper;
 
@@ -40,6 +40,11 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Person findByPhone(String phone) {
         return personMapper.findByPhone(phone);
+    }
+
+    @Override
+    public int findByIdAndPassword(String id, String password) {
+        return personMapper.findByIdAndPassword(id,password);
     }
 
 }

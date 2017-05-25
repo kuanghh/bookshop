@@ -7,9 +7,11 @@ import com.khh.web.domain.Cart;
 import com.khh.web.domain.Goods;
 import com.khh.web.service.interface_.CartService;
 import com.khh.web.utils.BeanUtilEx;
+import com.khh.web.utils.MoneyConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,5 +86,24 @@ public class CartServiceImpl  implements CartService{
         cart.setUpdateTime(new Date());
         cartMapper.updateByPrimaryKeySelective(cart);
         return null;
+    }
+
+    @Override
+    public String findForCaleTotalPrice(String id) {
+
+        List<Cart> list = cartMapper.findAllByUserId(id);
+
+        long totalPrice = 0L;
+        /**
+         * 遍历所有商品，
+         * 总价 = （ 物件1价格 * 物件1的个数 + 物件1的邮费） +  （ 物件2价格 * 物件2的个数 + 物件2的邮费）+.....
+         */
+        for(Cart cart : list){
+            Integer num = cart.getNum();
+            long price = cart.getGoods().getPrice();
+            long postfree = cart.getGoods().getPostfree();
+            totalPrice += price * num  + postfree;
+        }
+        return MoneyConvert.moneyLongToStr(totalPrice);
     }
 }

@@ -80,6 +80,9 @@
     where phone = #{phone} and is_valid = 1
   </select>
   
-
+  <select id="findByIdAndPassword" resultType="int">
+    select count(*) from t_person
+    where password = #{password} and id = #{id} and  is_valid = 1
+  </select>
 
 </mapper>

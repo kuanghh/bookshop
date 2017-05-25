@@ -9,6 +9,7 @@ import com.khh.common.constant_.ResponseBeanType;
 import com.khh.web.domain.Person;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.CartService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -136,7 +137,26 @@ public class CartController extends BaseController{
     }
 
 
+    /**
+     * 计算价格
+     * @return
+     */
+    @RequiresRoles(value = RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/calTotalPrice" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean calTotalPrice(HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
 
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        String totalPrice = cartService.findForCaleTotalPrice(person.getId());
+        if(StringUtils.isEmpty(totalPrice)){
+            responseBean.setSuccessResponse("计算失败");
+            return responseBean;
+        }
+        responseBean.setData("totalPrice",totalPrice);
+        responseBean.setSuccessResponse("计算成功");
+        return responseBean;
+    }
 
 
 

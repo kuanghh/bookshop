@@ -38,4 +38,11 @@ public interface CartService {
      * @return
      */
     String changeNum(String id, Integer num);
+
+    /**
+     * 计算总价格
+     * @param id
+     * @return
+     */
+    String findForCaleTotalPrice(String id);
 }

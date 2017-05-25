@@ -55,5 +55,11 @@ public interface PersonMapper {
      */
     Person findByPhone(String phone);
 
-
+    /**
+     * 根据id和密码查询用户（只查询有效信息）
+     * @param id
+     * @param password
+     * @return
+     */
+    int findByIdAndPassword(@Param("id") String id,@Param("password") String password);
 }
