@@ -9,11 +9,13 @@ import com.khh.web.service.interface_.CategoryService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -36,8 +38,13 @@ public class CategoryController extends BaseController{
     @RequiresRoles(value = RoleSign.SYSTEMADMIN)
     @RequestMapping(value = "/insert" ,method = RequestMethod.POST)
     @ResponseBody
-    public ResponseBean insert(CategoryBean categoryBean) throws Exception{
+    public ResponseBean insert(@Valid CategoryBean categoryBean, BindingResult result) throws Exception{
         ResponseBean responseBean = new ResponseBean();
+        //信息验证
+        if(result.hasErrors()){
+            responseBean.setErrorResponse(result.getFieldError().getDefaultMessage());
+            return responseBean;
+        }
 
          //判断当前类别是否存在
         if(categoryService.findByName(categoryBean.getName()) > 0){

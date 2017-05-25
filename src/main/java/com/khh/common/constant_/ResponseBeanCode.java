@@ -3,7 +3,7 @@ package com.khh.common.constant_;
 /**
  * Created by Administrator on 2017/3/30.
  */
-public class    ResponseBeanCode {
+public class ResponseBeanCode {
 
     //请求成功
     public static int SUCCESS = 2000 ;

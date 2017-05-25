@@ -42,6 +42,10 @@ public class GoodsController extends BaseController{
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
     public String add(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files, HttpSession session) throws Exception{
 
+        //信息验证
+        if(result.hasErrors()){
+            return "redircet:/error.jsp";
+        }
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
         goodsBean.setShopId(person.getId());
 
@@ -155,7 +159,9 @@ public class GoodsController extends BaseController{
     @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
     public String edit(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files,HttpSession session) throws Exception{
-
+        if(result.hasErrors()){
+            return "redircet:/error.jsp";
+        }
 
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
         goodsBean.setShopId(person.getId());

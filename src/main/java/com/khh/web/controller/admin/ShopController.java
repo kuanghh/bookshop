@@ -136,7 +136,10 @@ public class ShopController extends BaseController {
      */
     @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
-    public String edit(ShopRegisterBean shopRegisterBean) throws Exception{
+    public String edit(@Valid ShopRegisterBean shopRegisterBean,BindingResult result) throws Exception{
+        if(result.hasErrors()){
+            return "redirect:/error.jsp";
+        }
 
         if(shopRegisterBean == null){
             return "redircet:/error.jsp";

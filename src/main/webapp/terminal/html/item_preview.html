@@ -92,7 +92,9 @@
 							<span>图片：</span>
 							<span id="picture"></span>
 						</div>
-                        			
+						<div style="text-align: center">
+							<input type="button" id="addCart" value="加入购物车" />
+						</div>
 					</div>
 				</div> 
 				
@@ -100,8 +102,6 @@
 					<div class="col-md-12">
 						<div class="preview_footer_container">
 
-							
-                            
 						</div> <!-- preview_footer_container -->
 					</div>
 				</div>						
@@ -156,10 +156,34 @@
 				});
 			}
 
+			var id = "";
 
 			$(function () {
 				echoGoodsInfo();
+				initCartButton();
 			});
+
+			/**
+			 * 初始化购物车按钮功能
+			 */
+			function initCartButton(){
+				$("#addCart").click(function () {
+					//添加到购物车
+					var url = projectUrl + "/cart/addCart.action";
+                    var data = {};
+					$.get(url,data,function(databack){
+                        var code = databack.code;
+						if(code == 4003){
+							alert("请登录");
+							window.href.location = "../login.html";
+						}else if(code == 5000){
+                            alert(databack.message);
+						}else if(code == 2000){
+                            alert(databack.message);
+                        }
+					});
+				})
+			}
 
 			/**
 			 * 获取传递过来的id
@@ -176,7 +200,7 @@
 			 */
 			function echoGoodsInfo(){
 				//显示商品的信息
-				var id = getIdFromURL();
+				id = getIdFromURL();
 				if(id == null || id.length == 0 || id == "") return ;
 				var url = projectUrl + "/terminal/goods/findById.action";
 				var data = {"id":id};

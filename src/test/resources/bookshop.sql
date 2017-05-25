@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/22 21:57:14                           */
+/* Created on:     2017/5/25 8:56:03                            */
 /*==============================================================*/
 
 
@@ -99,6 +99,7 @@ create table t_orders
    shop_id              varchar(32) not null comment '店铺id',
    user_id              varchar(32) not null comment '买家id',
    state                int not null comment '是否处理(0:未发货，1：已发货)',
+   address              varchar(255) not null comment '收货地址',
    is_valid             tinyint not null comment '数据是否有效',
    primary key (id)
 );
