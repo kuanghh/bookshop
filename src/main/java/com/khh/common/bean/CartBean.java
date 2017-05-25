@@ -28,6 +28,9 @@ public class CartBean implements Serializable{
     //产品价格
     private String goodsPrice;
 
+    //邮费
+    private String postfree;
+
     private String shopName;
 
     private String shopAddress;
@@ -107,6 +110,14 @@ public class CartBean implements Serializable{
 
     public void setShopAddress(String shopAddress) {
         this.shopAddress = shopAddress;
+    }
+
+    public String getPostfree() {
+        return postfree;
+    }
+
+    public void setPostfree(String postfree) {
+        this.postfree = postfree;
     }
 
     public Cart vo2Domain(){

@@ -33,7 +33,7 @@
     select 
     <include refid="Base_Column_List" />
     from t_cart
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} and is_valid= 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_cart
@@ -112,7 +112,7 @@
         is_valid = 0,
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} and is_valid = 1
   </update>
   <update id="updateByPrimaryKey" parameterType="com.khh.web.domain.Cart" >
     update t_cart
@@ -121,13 +121,13 @@
       goods_id = #{goodsId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       is_valid = #{isValid}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} and is_valid= 1
   </update>
 
   <select id="findByGoodIdAndUserId" resultMap="BaseResultMap">
     select *
     from t_cart
-    where goods_id = #{goodsId} and user_id = #{userId}
+    where goods_id = #{goodsId} and user_id = #{userId} and is_valid= 1
   </select>
 
   <select id="findAllByUserId" resultMap="CartDetailMap">

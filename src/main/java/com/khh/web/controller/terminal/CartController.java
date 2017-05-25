@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -84,6 +85,50 @@ public class CartController extends BaseController{
         responseBean.setSuccessResponse("查询成功");
         return responseBean;
     }
+
+    /**
+     * 删除记录信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/deleteById" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean deleteById(String id) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+
+        if(id == null || !cartService.deleteById(id)){
+            responseBean.setErrorResponse("删除失败");
+            return responseBean;
+        }
+        responseBean.setSuccessResponse("删除成功");
+        return responseBean;
+    }
+
+    /**
+     * 改变记录数
+     * @return
+     */
+    @RequiresRoles(value = RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/changeNum" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean changeNum(@RequestParam("id") String id,@RequestParam("num") Integer num) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+        if(id == null || num == null ){
+            responseBean.setErrorResponse("修改失败");
+            return responseBean;
+        }
+
+        String message = cartService.changeNum(id,num);
+        if(message != null){
+            responseBean.setErrorResponse(message);
+            return responseBean;
+        }
+        responseBean.setSuccessResponse("修改成功");
+        return responseBean;
+    }
+
 
 
 

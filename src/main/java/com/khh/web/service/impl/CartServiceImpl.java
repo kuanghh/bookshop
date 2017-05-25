@@ -2,7 +2,9 @@ package com.khh.web.service.impl;
 
 import com.khh.common.bean.CartBean;
 import com.khh.web.dao.CartMapper;
+import com.khh.web.dao.GoodsMapper;
 import com.khh.web.domain.Cart;
+import com.khh.web.domain.Goods;
 import com.khh.web.service.interface_.CartService;
 import com.khh.web.utils.BeanUtilEx;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class CartServiceImpl  implements CartService{
 
     @Autowired
     private CartMapper cartMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
 
     @Override
@@ -52,5 +57,32 @@ public class CartServiceImpl  implements CartService{
         }
 
         return list.stream().map(Cart::domain2Vo).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean deleteById(String id) {
+        Cart cart = new Cart();
+        cart.setId(id);
+        cart.setIsValid(false);
+        return cartMapper.updateByPrimaryKeySelective(cart) == 1;
+    }
+
+    @Override
+    public String changeNum(String id, Integer num) {
+
+        Cart cart = cartMapper.selectByPrimaryKey(id);
+        if(cart == null) return "记录不存在";
+        String goodsId = cart.getGoodsId();
+        //查看商品库存情况
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        if(goods == null) return "商品不存在";
+        if(goods.getState() == Goods.STATE_NOVALID) return "商品已经下架";
+        if(cart.getNum() + num < 0) return "输入错误";
+        if(cart.getNum() + num > goods.getNum()) return "商品活存不足";
+
+        cart.setNum(cart.getNum() + num);
+        cart.setUpdateTime(new Date());
+        cartMapper.updateByPrimaryKeySelective(cart);
+        return null;
     }
 }

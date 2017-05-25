@@ -175,7 +175,7 @@
                         var code = databack.code;
 						if(code == 4003){
 							alert("请登录");
-							window.href.location = "../login.html";
+							setTimeout(window.href.location = "../login.html",2000);
 						}else if(code == 5000){
                             alert(databack.message);
 						}else if(code == 2000){

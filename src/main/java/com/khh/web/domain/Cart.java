@@ -21,8 +21,6 @@ public class Cart implements Serializable{
 
     private String userId;
 
-
-
     private Goods goods;
 
     //默认有效
@@ -106,6 +104,7 @@ public class Cart implements Serializable{
         if(this.goods != null){
             cartBean.setGoodsName(this.getGoods().getName());
             cartBean.setGoodsPrice(MoneyConvert.moneyLongToStr(this.getGoods().getPrice()));
+            cartBean.setPostfree(MoneyConvert.moneyLongToStr(this.getGoods().getPostfree()));
             Shop shop = this.goods.getShop();
             if(shop != null){
                 cartBean.setShopId(shop.getId());

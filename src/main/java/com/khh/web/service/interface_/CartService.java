@@ -23,4 +23,19 @@ public interface CartService {
      * @return
      */
     List<CartBean> findAllCartByUserId(String id);
+
+    /**
+     * 根据id删除记录
+     * @param id
+     * @return
+     */
+    boolean deleteById(String id);
+
+    /**
+     * 根据id，改变购物车中某商品的数量
+     * @param id
+     * @param num
+     * @return
+     */
+    String changeNum(String id, Integer num);
 }

@@ -46,8 +46,8 @@
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="index.html">首页</a></li>
-                        <li><a href="cart.html">我的购物车</a></li>
+						<li ><a href="index.html">首页</a></li>
+                        <li class="active"><a href="cart.html">我的购物车</a></li>
 						<li><a href="#flash_templates">我的账号</a></li>
 						<li><a href="contact.html">联系我们</a></li>
 					</ul>
@@ -68,6 +68,7 @@
 									<td>商品名称</td>
 									<td>商品价格</td>
 									<td>商品店铺名称</td>
+									<td>邮费</td>
 									<td>发货地址</td>
 									<td>购买数目</td>
 									<td>操作</td>
@@ -82,8 +83,6 @@
 					<div class="col-md-12">
 						<div class="preview_footer_container">
 
-							
-                            
 						</div> <!-- preview_footer_container -->
 					</div>
 				</div>						
@@ -140,9 +139,93 @@
 			})
 
 			function initCart(){
-
+				//获取所有购物车记录
+				var url = projectUrl + "/cart/getMyCart.action";
+				var data = {};
+				$.get(url,data,function(databack){
+					var code  = databack.code;
+					if(code == 4003){
+						alert("请登录");
+						setTimeout(window.href.location = "../login.html",2000);
+					}else if(code == 5000){
+						alert(databack.message);
+					}else if(code == 2000){
+						//清空所有信息行记录
+						$(".info_tr").remove();
+						var list = databack.data.list;
+						setData(list);
+					}
+				})
 			}
-			
+
+			/**
+			 * 为记录设值
+			 */
+			function setData(list) {
+				var $table = $("#tab");
+				for(var i = 0; i < list.length; i++){
+					var $tr = $("<tr class='info_tr'></tr>");
+
+					var $td_goods_name = $("<td>"+ list[i].goodsName +"</td>");
+					var $td_goods_price = $("<td>￥"+ list[i].goodsPrice +"</td>");
+					var $td_shop_name = $("<td>"+ list[i].shopName +"</td>");
+					var $td_shop_postfree = $("<td>￥"+ list[i].postfree +"</td>");
+					var $td_shop_address= $("<td>"+ list[i].shopAddress +"</td>");
+					var $td_num= $("<td>"+ list[i].num +"</td>");
+
+					var $td_operation = $("<td></td>");
+					var $a_delete  = $("<a href='javascript:void(0)' onclick=\"deleteById('" +list[i].id+ "')\">删除&nbsp;&nbsp;</a>");
+					var $a_increment = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',1)\">+1&nbsp;&nbsp;</a>");
+					var $a_reduce = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',-1)\">-1&nbsp;&nbsp;</a>");
+					$td_operation.append($a_increment);
+					$td_operation.append($a_reduce);
+					$td_operation.append($a_delete);
+
+					$tr.append($td_goods_name);
+					$tr.append($td_goods_price);
+					$tr.append($td_shop_name);
+					$tr.append($td_shop_postfree);
+					$tr.append($td_shop_address);
+					$tr.append($td_num);
+					$tr.append($td_operation);
+					$table.append($tr);
+				}
+			}
+
+			/**
+			 * 删除记录
+			 */
+			function deleteById(id){
+				var url = projectUrl + "/cart/deleteById.action";
+				var data = {"id":id};
+				$.post(url,data,function (databack) {
+					var code  = databack.code;
+					if(code == 2000){
+						alert(databack.message);
+						setTimeout(pageflush(),2000);
+					}else{
+						alert(databack.message);
+					}
+				});
+			}
+
+			/**
+			 * 改变数量
+			 */
+			function changeNum(id,num){
+				var url = projectUrl + "/cart/changeNum.action";
+				var data = {"id":id,"num":num};
+				$.post(url,data,function (databack) {
+					var code  = databack.code;
+					if(code == 2000){
+						alert(databack.message);
+						setTimeout(pageflush(),2000);
+					}else{
+						alert(databack.message);
+					}
+				});
+			}
+
 		</script>		
 	</body>
 </html>
