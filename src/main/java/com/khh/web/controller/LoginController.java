@@ -115,24 +115,27 @@ public class LoginController extends BaseController{
 
     /**
      * 获取当前角色
-     * @param session
+     * @param
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/getRole" ,method = RequestMethod.GET)
     @ResponseBody
-    public ResponseBean getRole(HttpSession session) throws Exception{
+    public ResponseBean getRole() throws Exception{
         ResponseBean responseBean = new ResponseBean();
         Subject subject = SecurityUtils.getSubject();
 
+        responseBean.setSuccessResponse("获取成功");
         if(subject.hasRole(RoleSign.SYSTEMADMIN)){
             responseBean.setData("role",RoleSign.SYSTEMADMIN);
         }else if(subject.hasRole(RoleSign.SHOP)){
             responseBean.setData("role",RoleSign.SHOP);
         }else if(subject.hasRole(RoleSign.SIMPLEUSER)){
             responseBean.setData("role",RoleSign.SIMPLEUSER);
+        }else{
+            responseBean.setErrorResponse("获取失败");
         }
-        responseBean.setSuccessResponse("获取成功");
+
         return responseBean;
     }
 

@@ -45,9 +45,12 @@ public class CartController extends BaseController{
     public ResponseBean addCart(@Valid CartBean cartBean, BindingResult result, HttpSession session) throws Exception{
         ResponseBean responseBean = new ResponseBean();
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
-        if(person == null){
-            return noLogin();
-        }
+        /**
+         * 这里不许要验证是否登录，因为@RequiresRoles(RoleSign.SIMPLEUSER)，已经帮你判断是否有权限，若没有登录，也是没有权限
+         */
+//        if(person == null){
+//            return noLogin();
+//        }
         cartBean.setUserId(person.getId());
         //信息验证
         if(result.hasErrors()){
@@ -76,9 +79,12 @@ public class CartController extends BaseController{
     public ResponseBean getMyCart(HttpSession session) throws Exception{
         ResponseBean responseBean = new ResponseBean();
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
-        if(person == null){
-            return noLogin();
-        }
+        /**
+         * 这里不许要验证是否登录，因为@RequiresRoles(RoleSign.SIMPLEUSER)，已经帮你判断是否有权限，若没有登录，也是没有权限
+         */
+//        if(person == null){
+//            return noLogin();
+//        }
         List<CartBean> list = cartService.findAllCartByUserId(person.getId());
 
         responseBean.setData("list",list);
@@ -132,13 +138,6 @@ public class CartController extends BaseController{
 
 
 
-    private ResponseBean noLogin(){
-        ResponseBean responseBean = new ResponseBean();
-        responseBean.setCode(ResponseBeanCode.NO_LOGIN);
-        responseBean.setType(ResponseBeanType.ERROR);
-        responseBean.setMessage("请你先登录");
-        return responseBean;
 
-    }
 
 }

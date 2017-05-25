@@ -17,3 +17,21 @@ function strToDate(str){
 function pageflush(){
    return history.go(0);
 }
+
+function jsonArr2JsArr (jsonArr) {
+    var  jsonStr= jsonArr.substring(1,jsonArr.length-1);
+    var jsonArr= jsonStr.split(",");
+    return jsonArr;
+}
+
+function exit(){
+    var url = projectUrl + "/index/exit.action";
+    $.get(url,{},function(databack){
+        var code = databack.code;
+        if(code == 5000){
+            alert(databack.message);
+        }else{
+            alert(databack.message);
+        }
+    });
+}

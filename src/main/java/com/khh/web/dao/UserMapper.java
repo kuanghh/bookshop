@@ -45,6 +45,17 @@ public interface UserMapper {
      */
     List<UserRegisterBean> findBeanInPage(PagerBean<UserRegisterBean> pagerBean);
 
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    User findById(String id);
 
-
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    int update(User user);
 }

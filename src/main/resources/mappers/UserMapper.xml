@@ -17,6 +17,12 @@
     <result column="password" property="password" jdbcType="VARCHAR" />
   </resultMap>
 
+  <resultMap id="userBeanResultMap" type="com.khh.web.domain.User" extends="UserResultMap">
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="add_Column_List" >
     id, name, birthday, address, create_time, is_valid
   </sql>
@@ -65,5 +71,38 @@
     </if>
     limit #{start},#{pageSize}
   </select>
+
+  <select id="findById" resultMap="userBeanResultMap">
+     select p.id as id , p.account as account ,p.email as email , p.phone as phone ,
+          u.name as name , u.create_time as create_time,u.birthday as birthday,u.address as address
+    from t_user u,t_person p
+    where  u.id = p.id and p.is_valid = 1 and p.id=#{id}
+  </select>
+
+  <update id="update" >
+    update t_user
+    SET
+    id = id,
+    <if test="name != null">
+      name = #{name},
+    </if>
+    <if test="birthday != null">
+      birthday = #{birthday},
+    </if>
+    <if test="address != null">
+      address = #{address},
+    </if>
+    <if test="createTime != null">
+      create_time = #{createTime},
+    </if>
+    <if test="isValid">
+      is_valid = 1,
+    </if>
+    <if test="!isValid">
+      is_valid = 0,
+    </if>
+    id = id
+    where id = #{id} and is_valid = 1
+  </update>
 
 </mapper>

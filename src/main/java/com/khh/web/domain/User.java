@@ -1,5 +1,9 @@
 package com.khh.web.domain;
 
+import com.khh.common.bean.UserBean;
+import com.khh.common.bean.UserRegisterBean;
+import com.khh.web.utils.DateTool;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -57,5 +61,20 @@ public class User extends Person implements Serializable{
                 ", address='" + address + '\'' +
                 ", createTime=" + createTime +
                 '}';
+    }
+
+    public UserBean domain2Vo(){
+        UserBean userBean = new UserBean();
+
+        if(this.getId() != null) userBean.setId(this.getId());
+        if(this.getAccount() != null) userBean.setAccount(this.getAccount());
+        if(this.getEmail() != null) userBean.setEmail(this.getEmail());
+        if(this.getPhone() != null) userBean.setPhone(this.getPhone());
+
+        if(this.birthday != null) userBean.setBirthday(DateTool.Date2Str(this.birthday));
+        if(this.name != null) userBean.setName(this.name);
+        if(this.address != null) userBean.setAddress(this.address);
+        if(this.createTime != null) userBean.setCreateTime(this.createTime);
+        return userBean;
     }
 }

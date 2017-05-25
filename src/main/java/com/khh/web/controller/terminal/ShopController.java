@@ -1,5 +1,6 @@
 package com.khh.web.controller.terminal;
 
+import com.khh.common.base.BaseController;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.bean.ShopRegisterBean;
 import com.khh.web.service.interface_.ShopService;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
  */
 @Controller("fontShopController")
 @RequestMapping("/shop")
-public class ShopController {
+public class ShopController extends BaseController{
 
     @Resource
     private ShopService shopService;

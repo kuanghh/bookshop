@@ -40,12 +40,15 @@
     <if test="email != null">
       email = #{email},
     </if>
-    <if test="isValid != null">
-      is_valid = #{isValid},
+    <if test="isValid">
+      is_valid = 1,
+    </if>
+    <if test="!isValid">
+      is_valid = 0,
     </if>
     id =id
     where
-    id = #{id}
+    id = #{id} and is_valid = 1
   </update>
 
   <select id="findForLogin" parameterType="com.khh.web.domain.Person" resultMap="PersonResultMap">
@@ -64,17 +67,17 @@
 
   <select id="findByEmail" resultMap="PersonResultMap">
     select * from t_person
-    where email = #{email}
+    where email = #{email} and is_valid = 1
   </select>
 
   <select id="findByAccount"  resultMap="PersonResultMap">
     select * from t_person
-    where account = #{account}
+    where account = #{account} and is_valid = 1
   </select>
 
   <select id="findByPhone"  resultMap="PersonResultMap">
     select * from t_person
-    where phone = #{phone}
+    where phone = #{phone} and is_valid = 1
   </select>
   
 

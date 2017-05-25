@@ -41,12 +41,12 @@ public class GoodsController extends BaseController{
     @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
     public String add(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files, HttpSession session) throws Exception{
-
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
         //信息验证
-        if(result.hasErrors()){
+        if(result.hasErrors() || person == null){
             return "redircet:/error.jsp";
         }
-        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+
         goodsBean.setShopId(person.getId());
 
         boolean success = goodsService.insert(goodsBean,files);
@@ -152,18 +152,19 @@ public class GoodsController extends BaseController{
 
     /**
      * 修改商品
-     * @param
+     * @param goodsBean result
      * @return
      * @throws Exception
      */
     @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
     public String edit(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files,HttpSession session) throws Exception{
-        if(result.hasErrors()){
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        if(result.hasErrors() || person == null){
             return "redircet:/error.jsp";
         }
 
-        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+
         goodsBean.setShopId(person.getId());
 
         boolean success = goodsService.update(goodsBean,files);

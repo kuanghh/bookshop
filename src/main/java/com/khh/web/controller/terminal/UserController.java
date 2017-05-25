@@ -3,7 +3,10 @@ package com.khh.web.controller.terminal;
 import com.khh.common.base.BaseController;
 import com.khh.common.bean.PagerBean;
 import com.khh.common.bean.ResponseBean;
+import com.khh.common.bean.UserBean;
 import com.khh.common.bean.UserRegisterBean;
+import com.khh.common.constant_.Const;
+import com.khh.web.domain.Person;
 import com.khh.web.domain.User;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.PersonService;
@@ -33,10 +36,6 @@ public class UserController extends BaseController{
 
     @Resource
     private UserService userService;
-
-    @Resource
-    private PersonService personService;
-
 
     /**
      * 跳转登录UI
@@ -86,5 +85,62 @@ public class UserController extends BaseController{
         return responseBean;
     }
 
+    /**
+     * 获取当前用户的信息
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/myInfo" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean myInfo(HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        /**
+         * 这里不许要验证是否登录，因为@RequiresRoles(RoleSign.SIMPLEUSER)，已经帮你判断是否有权限，若没有登录，也是没有权限
+         */
+//        if(person == null){
+//            return noLogin();
+//        }
+        UserBean userBean = userService.findById(person.getId());
+        if(userBean == null){
+            responseBean.setErrorResponse("获取失败");
+            return responseBean;
+        }
+        responseBean.setData("user",userBean);
+        responseBean.setSuccessResponse("获取成功");
+        return responseBean;
+    }
+
+    /**
+     * 修改当前用户信息
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(RoleSign.SIMPLEUSER)
+    @RequestMapping(value = "/editUser" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseBean editUser(UserBean userBean,HttpSession session) throws Exception{
+        ResponseBean responseBean = new ResponseBean();
+
+        Person person = (Person) session.getAttribute(Const.LOGIN_USER);
+        /**
+         * 这里不许要验证是否登录，因为@RequiresRoles(RoleSign.SIMPLEUSER)，已经帮你判断是否有权限，若没有登录，也是没有权限
+         */
+//        if(person == null){
+//            return noLogin();
+//        }
+        userBean.setId(person.getId());
+        if(!userService.update(userBean)){
+            responseBean.setErrorResponse("修改失败");
+            return responseBean;
+        }
+
+        responseBean.setSuccessResponse("修改成功");
+        return responseBean;
+    }
 
 }

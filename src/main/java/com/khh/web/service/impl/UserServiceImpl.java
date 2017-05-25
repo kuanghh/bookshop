@@ -1,6 +1,7 @@
 package com.khh.web.service.impl;
 
 import com.khh.common.bean.PagerBean;
+import com.khh.common.bean.UserBean;
 import com.khh.common.bean.UserRegisterBean;
 import com.khh.web.dao.PersonMapper;
 import com.khh.web.dao.PersonRoleMapper;
@@ -13,6 +14,7 @@ import com.khh.web.domain.User;
 import com.khh.web.security.RoleSign;
 import com.khh.web.service.interface_.UserService;
 import com.khh.web.utils.BeanUtilEx;
+import com.khh.web.utils.DateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +27,16 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
+
     @Autowired
     private UserMapper userMapper;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private PersonMapper personMapper;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private PersonRoleMapper personRoleMapper;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private RoleMapper roleMapper;
 
@@ -104,5 +103,36 @@ public class UserServiceImpl implements UserService{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public UserBean findById(String id) {
+        User user = userMapper.findById(id);
+        return user != null ? user.domain2Vo() : null;
+    }
+
+
+    @Override
+    public boolean update(UserBean userBean) {
+
+        Person person = new Person();
+        person.setId(userBean.getId());
+        person.setAccount(userBean.getAccount());
+        person.setEmail(userBean.getEmail());
+        person.setPhone(userBean.getPhone());
+
+        User user = new User();
+        user.setId(userBean.getId());
+        user.setName(userBean.getName());
+        user.setAddress(userBean.getAddress());
+        user.setBirthday(DateTool.str2Date(userBean.getBirthday()));
+
+
+        int i = userMapper.update(user);
+        int j = personMapper.update(person);
+        if(i == 1 && j == 1){
+            return true;
+        }
+        return false;
     }
 }

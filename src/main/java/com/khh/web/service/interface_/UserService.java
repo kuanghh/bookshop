@@ -1,6 +1,7 @@
 package com.khh.web.service.interface_;
 
 import com.khh.common.bean.PagerBean;
+import com.khh.common.bean.UserBean;
 import com.khh.common.bean.UserRegisterBean;
 
 import java.util.List;
@@ -31,4 +32,18 @@ public interface UserService {
      * @return
      */
     boolean deleteById(String id);
+
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    UserBean findById(String id);
+
+    /**
+     * 更新用户信息
+     * @param userBean
+     * @return
+     */
+    boolean update(UserBean userBean);
 }
