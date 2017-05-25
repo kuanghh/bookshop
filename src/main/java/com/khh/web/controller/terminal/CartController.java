@@ -46,6 +46,7 @@ public class CartController extends BaseController{
             responseBean.setMessage("请你先登录");
             return responseBean;
         }
+        cartBean.setUserId(person.getId());
         //信息验证
         if(result.hasErrors()){
             responseBean.setErrorResponse(result.getFieldError().getDefaultMessage());

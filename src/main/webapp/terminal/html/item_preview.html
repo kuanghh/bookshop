@@ -170,8 +170,8 @@
 				$("#addCart").click(function () {
 					//添加到购物车
 					var url = projectUrl + "/cart/addCart.action";
-                    var data = {};
-					$.get(url,data,function(databack){
+                    var data = {"goodsId":id,"num":1};
+					$.post(url,data,function(databack){
                         var code = databack.code;
 						if(code == 4003){
 							alert("请登录");

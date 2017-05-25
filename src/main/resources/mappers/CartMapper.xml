@@ -107,15 +107,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="findByGoodIdAndUserId" resultType="int">
-    select count(*)
+  <select id="findByGoodIdAndUserId" resultMap="BaseResultMap">
+    select *
     from t_cart
     where goods_id = #{goodsId} and user_id = #{userId}
   </select>
 
-  <update id="updateByGoodsIdAndUserId" parameterType="com.khh.web.domain.Cart">
-    update t_cart
-    set num = #{num}
-    where goods_id = #{goodsId} and user_id = #{userId}
-  </update>
 </mapper>

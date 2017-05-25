@@ -28,7 +28,7 @@
 					var d = {};
 					$.get(u,d,function (j) {
 						if(j.data.role == "simple_user"){
-							window.location = projectUrl + "/terminal/index.html";
+							window.location = projectUrl + "/terminal/html/index.html";
 						}else{
 							alert("商家或管理员请从后台登录");
 							window.location = projectUrl + "/admin/login.html";

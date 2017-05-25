@@ -22,12 +22,7 @@ public interface CartMapper {
      * @param userId
      * @return
      */
-    int findByGoodIdAndUserId(@Param("goodsId") String goodsId,@Param("userId") String userId);
+    Cart findByGoodIdAndUserId(@Param("goodsId") String goodsId,@Param("userId") String userId);
 
-    /**
-     * 根据商品id和用户id，更新商品记录数
-     * @param cart
-     * @return
-     */
-    int updateByGoodsIdAndUserId(Cart cart);
+
 }
