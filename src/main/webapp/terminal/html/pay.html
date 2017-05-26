@@ -51,6 +51,7 @@
                         <li><a href="cart.html">我的购物车</a></li>
 						<li><a href="myInfo.html">我的账号</a></li>
 						<li><a href="contact.html">联系我们</a></li>
+						<li><a href="myOrders.html">我的订单</a></li>
 					</ul>
 					<form class="navbar-form navbar-right" role="search">
 
@@ -189,8 +190,11 @@
 						}else if(code == 2000) {
 //							alert(databack.message);
 
-							// TODO 创建订单
+
 							url = projectUrl + "/terminal/orders/createOrders.action";
+							//解码
+							address = decodeURI(address);
+							alert(address);
 							data={"address":address};
 							$.post(url,data,function(databack){
 								alert(databack.message);

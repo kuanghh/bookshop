@@ -55,4 +55,6 @@ public interface GoodsMapper {
      * @return
      */
     int updateState(@Param("id") String id,@Param("state") int state);
+
+
 }

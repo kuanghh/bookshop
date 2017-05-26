@@ -1,6 +1,9 @@
 package com.khh.web.domain;
 
+import com.khh.common.bean.OrdersBean;
 import com.khh.web.utils.CodeUtils;
+import com.khh.web.utils.MoneyConvert;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,6 +34,12 @@ public class Orders implements Serializable{
 
     //默认有效
     private boolean isValid = true;
+
+
+    private Shop shop;
+
+    private Goods goods;
+
 
     public static final int ORDERS_NOTSEND = 0;
     public static final int ORDERS_SEND = 1;
@@ -127,4 +136,45 @@ public class Orders implements Serializable{
     public void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
+
+    public OrdersBean domain2Vo(){
+        OrdersBean ordersBean = new OrdersBean();
+
+        if(this.id != null) ordersBean.setId(this.id);
+        if(this.serial != null) ordersBean.setSerial(this.serial);
+        if(this.createTime != null) ordersBean.setCreateTime(this.createTime);
+        if(this.num != null) ordersBean.setNum(this.num);
+        if(this.totalPrice != null) ordersBean.setTotalPrice(MoneyConvert.moneyLongToStr(this.totalPrice));
+        if(this.goodsId != null) ordersBean.setGoodsId(this.goodsId);
+        if(this.shopId != null) ordersBean.setShopId(this.shopId);
+        if(this.userId != null) ordersBean.setUserId(this.userId);
+        if(this.address != null) ordersBean.setAddress(this.address);
+        if(this.state != null) ordersBean.setState(this.state);
+
+        if(shop != null){
+            ordersBean.setShopName(this.shop.getShopName());
+        }
+        if(goods != null){
+            ordersBean.setGoodsName(this.goods.getName());
+        }
+        return ordersBean;
+    }
+
+
 }

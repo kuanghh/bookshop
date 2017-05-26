@@ -14,6 +14,20 @@
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="is_valid" property="isValid"  />
   </resultMap>
+
+
+   <resultMap id="OrdersDetailResultMap" type="com.khh.web.domain.Orders" extends="BaseResultMap">
+       <association property="shop" column="shop_id" javaType="com.khh.web.domain.Shop">
+           <id column="s_shop_id" property="id"/>
+           <result column="s_shop_name" property="shopName"/>
+       </association>
+       <association property="goods" column="shop_id" javaType="com.khh.web.domain.Goods">
+           <id column="g_goods_id" property="id"/>
+           <result column="g_goods_name" property="name"/>
+       </association>
+   </resultMap>
+
+
   <sql id="Base_Column_List" >
     id, serial, create_time, num, total_price, goods_id, shop_id, user_id, address, state, 
     is_valid
@@ -176,5 +190,46 @@
       #{orders.state}, #{orders.isValid})
     </foreach>
   </insert>
+
+  <select id="findCountWithKey"  resultType="int">
+      SELECT count(*)
+      from t_orders o ,t_goods g , t_shop s
+      WHERE o.is_valid = 1 and g.is_valid = 1 and s.is_valid = 1 and o.shop_id = s.id and o.goods_id = g.id and s.state = 1 and g.state = 1
+      <if test="orders.goodsId != null">
+          and o.goods_id = #{orders.goodsId}
+      </if>
+      <if test="orders.userId != null">
+          and o.user_id = #{orders.userId}
+      </if>
+      <if test="orders.shopId != null">
+          and o.shop_id = #{orders.shopId}
+      </if>
+      <if test="orders.state != null">
+          and o.state = #{orders.state}
+      </if>
+  </select>
+
+    <select id="findBeanInPage"  resultMap="OrdersDetailResultMap">
+        SELECT o.id as id, o.serial as serial, o.create_time as create_time, o.num as num, o.total_price as total_price, o.goods_id as goods_id, o.shop_id as shop_id,
+        o.user_id as user_id,o.address as  address,o.state as state,
+        g.id as g_goods_id,g.name as g_goods_name,
+        s.id as s_shop_id, s.shop_name as s_shop_name
+        from t_orders o ,t_goods g , t_shop s
+        WHERE o.is_valid = 1 and g.is_valid = 1 and s.is_valid = 1 and o.shop_id = s.id and o.goods_id = g.id and s.state = 1 and g.state = 1
+        <if test="orders.goodsId != null">
+            and o.goods_id = #{orders.goodsId}
+        </if>
+        <if test="orders.userId != null">
+            and o.user_id = #{orders.userId}
+        </if>
+        <if test="orders.shopId != null">
+            and o.shop_id = #{orders.shopId}
+        </if>
+        <if test="orders.state != null">
+            and o.state = #{orders.state}
+        </if>
+        order by o.create_time ASC limit #{start},#{size}
+    </select>
+
 
 </mapper>

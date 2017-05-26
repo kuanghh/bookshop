@@ -18,6 +18,7 @@
         <result column="g_price" property="price"/>
         <result column="g_promotinalPrice" property="promotinalPrice"/>
         <result column="g_postfree" property="postfree"/>
+        <result column="g_num" property="num"/>
         <association property="shop" column="shop_id" javaType="com.khh.web.domain.Shop">
             <id column="s_id" property="id" />
             <result column="s_name" property="shopName" />
@@ -132,7 +133,7 @@
 
   <select id="findAllByUserId" resultMap="CartDetailMap">
     select c.id as id ,c.update_time as update_time, c.num as num ,c.goods_id as goods_id, c.user_id as user_id,
-          g.id as g_id,g.name as g_name, g.price as g_price,g.promotinal_price as g_promotinalPrice,g.postfree as g_postfree,
+          g.id as g_id,g.name as g_name, g.price as g_price,g.promotinal_price as g_promotinalPrice,g.postfree as g_postfree,g.num as g_num,
           s.id as s_id, s.shop_name as s_name,s.address as s_address
     from t_cart c,t_shop s,t_goods g
     where c.is_valid = 1 and s.is_valid = 1 and g.is_valid = 1 and c.user_id = #{userId} and c.goods_id = g.id and g.shop_id = s.id

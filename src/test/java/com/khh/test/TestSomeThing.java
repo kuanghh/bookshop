@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
@@ -67,15 +68,18 @@ public class TestSomeThing {
 //    }
 
     public static void test4() throws  Exception{
-        FileInputStream fis = new FileInputStream("E:/img/1495469074775_logo.png");
-        OutputStream os = new FileOutputStream("E:/1.png");
-        int count = -1;
-        byte[] buffer = new byte[1024 * 8];
-        while ((count = fis.read(buffer)) != -1) {
-            os.write(buffer, 0, count);
-            os.flush();
-        }
-        fis.close();
-        os.close();
+//        FileInputStream fis = new FileInputStream("E:/img/1495469074775_logo.png");
+//        OutputStream os = new FileOutputStream("E:/1.png");
+//        int count = -1;
+//        byte[] buffer = new byte[1024 * 8];
+//        while ((count = fis.read(buffer)) != -1) {
+//            os.write(buffer, 0, count);
+//            os.flush();
+//        }
+//        fis.close();
+//        os.close();
+
+        String decode = URLDecoder.decode("%E4%B8%8A%E6%B5%B7", "utf-8");
+        System.out.println(decode);
     }
 }

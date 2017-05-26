@@ -14,6 +14,17 @@
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css">
 	<link href="http://getbootstrap.com/examples/offcanvas/offcanvas.css" rel="stylesheet">
 	-->
+	<style>
+		#tab{
+			text-align: center;
+			border: 1px solid black;
+			width:100%;
+			bgcolor:#a8c7ce;
+		}
+		#tab td{
+			border: 1px solid black;
+		}
+	</style>
 	</head>
 	<body>
 		<header>
@@ -36,10 +47,11 @@
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="index.html">首页</a></li>
-                        <li><a href="cart.html">我的购物车</a></li>
+						<li ><a href="index.html">首页</a></li>
+                        <li ><a href="cart.html">我的购物车</a></li>
 						<li><a href="myInfo.html">我的账号</a></li>
 						<li><a href="contact.html">联系我们</a></li>
+						<li class="active"><a href="myOrders.html">我的订单</a></li>
 					</ul>
 					<form class="navbar-form navbar-right" role="search">
 
@@ -52,49 +64,20 @@
 				<div class="row">
 					<div class="col-md-12" id="img_preview">
                     
-						<h3 id="goodTitle">xxxx商品</h3>
-						<div>
-							<span>商品名称：</span>
-							<span id="name">商品1</span>
-						</div>
-						<div >
-							<span>商品价格：</span>
-							<span id="price">9.33</span>
-						</div>
-						<div >
-							<span>商品库存：</span>
-							<span id="num">100</span>
-						</div>
-						<div >
-							<span>商品描述：</span>
-							<span id="description">1111111111111</span>
-						</div>
-						<div >
-							<span>上架时间：</span>
-							<span id="createTime"></span>
-						</div>
-						<div >
-							<span>邮费：</span>
-							<span id="postfree">1</span>
-						</div>
-						<div >
-							<span>状态：</span>
-							<span id="state">1</span>
-						</div>
-						<div >
-							<span>店铺名字：</span>
-							<span id="shopName"></span>
-						</div>
-						<div >
-							<span>发货地址：</span>
-							<span id="address"></span>
-						</div>
-						<div >
-							<span>图片：</span>
-							<span id="picture"></span>
-						</div>
-						<div style="text-align: center">
-							<input type="button" id="addCart" value="加入购物车" />
+						<div class="table_div" >
+							<table id="tab"cellpadding="0" cellspacing="1"  >
+								<tr>
+									<td>序号</td>
+									<td>订单编号</td>
+									<td>商品名称</td>
+									<td>店铺名称</td>
+									<td>收货地址</td>
+									<td>购买数目</td>
+									<td>下单时间</td>
+									<td>价格</td>
+									<td>订单状态</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 				</div> 
@@ -129,11 +112,10 @@
 	    Hiding text overflow: http://stackoverflow.com/questions/15308061/how-to-avoid-text-overflow-in-twitter-bootstrap
 		-->
 		<script src="js/masonry.pkgd.min.js"></script>
-		<script src="js/imagesloaded.pkgd.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>   
 		<script src="../../js/common.js"></script>
 
-		<script type="text/javascript">
-
+		<script>
 			$(document).ready(function(){
 				init_masonry();
 			});
@@ -147,9 +129,7 @@
 						isFitWidth: true
 					});
 				});
-
 				var $fcontainer = $('.preview_footer_container');
-
 				$fcontainer.masonry({
 					itemSelector : '.footer_item',
 					"gutter": 10,
@@ -157,104 +137,68 @@
 				});
 			}
 
-			var id = "";
+			$(function(){
+				//初始化购物车列表
+				initCart();
 
-			$(function () {
-				echoGoodsInfo();
-				initCartButton();
 			});
 
+
+
 			/**
-			 * 初始化购物车按钮功能
+			 *初始化购物车列表
 			 */
-			function initCartButton(){
-				$("#addCart").click(function () {
-					//添加到购物车
-					var url = projectUrl + "/cart/addCart.action";
-                    var data = {"goodsId":id,"num":1};
-					$.post(url,data,function(databack){
-                        var code = databack.code;
-						if(code == 4003){
-							alert("请登录");
-							setTimeout(window.href.location = "../login.html",2000);
-						}else if(code == 5000){
-                            alert(databack.message);
-						}else if(code == 2000){
-                            alert(databack.message);
-                        }
-					});
+			function initCart(){
+				//获取所有购物车记录
+				var url = projectUrl + "/cart/getMyCart.action";
+				var data = {};
+				$.get(url,data,function(databack){
+					var code  = databack.code;
+					if(code == 5000){
+						alert(databack.message);
+					}else if(code == 2000){
+						//清空所有信息行记录
+						$(".info_tr").remove();
+						var list = databack.data.list;
+						setData(list);
+					}
 				})
 			}
 
 			/**
-			 * 获取传递过来的id
+			 * 为记录设值
 			 */
-			function getIdFromURL(){
-				var thisURL = document.URL;
-				var  getval =thisURL.split('?')[1];
-				var goodsId= getval.split("=")[1];
-				return goodsId;
-			}
+			function setData(list) {
+				var $table = $("#tab");
+				for(var i = 0; i < list.length; i++){
+					var $tr = $("<tr class='info_tr'></tr>");
 
-			/**
-			 * 回显商品信息
-			 */
-			function echoGoodsInfo(){
-				//显示商品的信息
-				id = getIdFromURL();
-				if(id == null || id.length == 0 || id == "") return ;
-				var url = projectUrl + "/terminal/goods/findById.action";
-				var data = {"id":id};
-				$.post(url,data,function (databack) {
-					var code = databack.code;
-					if (code == 5000) {
-						alert(databack.message);
-					} else {
-						showGoodsInfo(databack.data.goods);
-					}
-				});
-			}
+					var $td_goods_name = $("<td>"+ list[i].goodsName +"</td>");
+					var $td_goods_price = $("<td>￥"+ list[i].goodsPrice +"</td>");
+					var $td_shop_name = $("<td>"+ list[i].shopName +"</td>");
+					var $td_shop_postfree = $("<td>￥"+ list[i].postfree +"</td>");
+					var $td_shop_address= $("<td>"+ list[i].shopAddress +"</td>");
+					var $td_num= $("<td>"+ list[i].num +"</td>");
 
-			/**
-			 * 显示商品的信息
-			 */
-			function showGoodsInfo(goods){
+					var $td_operation = $("<td></td>");
+					var $a_delete  = $("<a href='javascript:void(0)' onclick=\"deleteById('" +list[i].id+ "')\">删除&nbsp;&nbsp;</a>");
+					var $a_increment = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',1)\">+1&nbsp;&nbsp;</a>");
+					var $a_reduce = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',-1)\">-1&nbsp;&nbsp;</a>");
+					$td_operation.append($a_increment);
+					$td_operation.append($a_reduce);
+					$td_operation.append($a_delete);
 
-				$("#goodTitle").html(goods.name);
-				$("#name").html(goods.name);
-				$("#price").html("￥" + goods.price);
-				$("#num").html(goods.num);
-				$("#description").html(goods.description);
-				$("#createTime").html(strToDate(goods.createTime));
-				$("#shopName").html(goods.shopName);
-				$("#address").html(goods.shopAddress);
-				$("#postfree").html("￥" +goods.postfree);
-
-				if(goods.state == 1){
-					$("#state").html("上架");
-				}else{
-					$("#state").html("已下架");
+					$tr.append($td_goods_name);
+					$tr.append($td_goods_price);
+					$tr.append($td_shop_name);
+					$tr.append($td_shop_postfree);
+					$tr.append($td_shop_address);
+					$tr.append($td_num);
+					$tr.append($td_operation);
+					$table.append($tr);
 				}
-
-				var imgArr = analImgArry(goods.pictures);
-				var $picture = $("#picture");
-
-				for(var i = 0; i < imgArr.length; i++){
-					var $spanImg = $("<span class='spanImg'>&nbsp;&nbsp;&nbsp;&nbsp;</span>");
-					var $img = $("<img src="+ projectUrl + "/terminal/img/getImg.action?address=" + imgArr[i] +" />");
-					$spanImg.append($img);
-					$picture.append($spanImg);
-				}
-
 			}
 
-			/**
-			 *  解析图片地址json数组对象,并返回js数组
-			 */
-			function analImgArry(imgsObj){
-				var imgs = imgsObj.substring(1,imgsObj.length-1);
-				return imgs.split(",");
-			}
 
 
 		</script>		
