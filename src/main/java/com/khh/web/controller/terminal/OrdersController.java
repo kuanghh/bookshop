@@ -59,7 +59,7 @@ public class OrdersController extends BaseController{
      * 获取当前用户的所有订单信息
      */
     @RequiresRoles(RoleSign.SIMPLEUSER)
-    @RequestMapping(value = "/getMyOrders" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/getMyOrders" ,method = RequestMethod.POST)
     @ResponseBody
     public ResponseBean getMyOrders(PagerBean<OrdersBean> pagerBean,OrdersBean ordersBean,HttpSession session) throws Exception{
         ResponseBean responseBean = new ResponseBean();

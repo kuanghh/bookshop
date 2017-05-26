@@ -62,7 +62,7 @@ public class UserController extends BaseController{
      * @throws Exception
      */
     @RequiresRoles(value = RoleSign.SYSTEMADMIN)
-    @RequestMapping(value = "/findInPageAndKey" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/findInPageAndKey" ,method = RequestMethod.POST)
     @ResponseBody
     public ResponseBean findInPageAndKey(PagerBean pagerBean,@RequestParam Map<String,String> map) throws Exception{
         ResponseBean responseBean = new ResponseBean();

@@ -65,6 +65,13 @@
 					<div class="col-md-12" id="img_preview">
                     
 						<div class="table_div" >
+							<div>
+
+								<input type="radio" name="state" value="1" />已发货
+								<input type="radio" name="state" value="0" />未发货
+								<input type="radio" name="state" value="-1" checked="checked" />全部
+							</div>
+
 							<table id="tab"cellpadding="0" cellspacing="1"  >
 								<tr>
 									<td>序号</td>
@@ -78,7 +85,11 @@
 									<td>订单状态</td>
 								</tr>
 							</table>
+							<div id="pageBar" style="text-align: center">
+
+							</div>
 						</div>
+
 					</div>
 				</div> 
 				
@@ -138,31 +149,118 @@
 			}
 
 			$(function(){
-				//初始化购物车列表
-				initCart();
+				//初始化订单列表
+				initOrders();
+				//初始化单选按钮功能
+				initRadios();
 
 			});
 
+			var pageNo = 1;
+			var pageSize = 5;
+			var state = null;
 
 
 			/**
-			 *初始化购物车列表
+			 *初始化订单列表
 			 */
-			function initCart(){
+			function initOrders(){
+				pageNo = 1;
+				getInfo(pageNo);
+			}
+
+
+			/**
+			 * 获取数据
+			 */
+			function getInfo(pn){
+				pageNo = pn;
 				//获取所有购物车记录
-				var url = projectUrl + "/cart/getMyCart.action";
-				var data = {};
-				$.get(url,data,function(databack){
+				var url = projectUrl + "/terminal/orders/getMyOrders.action";
+
+				var data = {"pageNo":pageNo,"pageSize":pageSize};
+				if(state == 1){
+					data = {"pageNo":pageNo,"pageSize":pageSize,"state":1};
+				}else if(state == 0){
+					data = {"pageNo":pageNo,"pageSize":pageSize,"state":0};
+				}
+
+				$.post(url,data,function(databack){
 					var code  = databack.code;
 					if(code == 5000){
 						alert(databack.message);
+
 					}else if(code == 2000){
 						//清空所有信息行记录
 						$(".info_tr").remove();
-						var list = databack.data.list;
+						$("#pageBar").empty();
+						var list = databack.data.page.data;
 						setData(list);
+						intiPageBar(databack);
+
 					}
 				})
+			}
+
+			/**
+			 * 初始化分页工具栏
+			 */
+			function intiPageBar(databack){
+				/**初始化分页条**/
+				var pNo = databack.data.page.pageNo; //当前页数
+				var $pageDiv = $("<div></div>");
+				var $nowPage = $("<span>"+ "当前第" + pNo + "页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +"</span>");
+				$pageDiv.append($nowPage);
+				var pageCount = databack.data.page.pageCount; //一用有多少页
+				var barSize = 5;                         //工具条中分页的数目
+				//判断总页数是否小于等于工具条中分页的数目
+				if(pageCount <= barSize){
+					for(var y = 1; y <= pageCount; y++){
+						var $a3 = createAPageNode(y,y);
+						$pageDiv.append($a3);
+					}
+				}else{//如果大于
+
+					//判断是否第一页,是否最后一页
+					if(pNo == 1){ //第一页
+						for(var j = pNo; j < barSize + pNo; j++){
+							var $a4 = createAPageNode(j,j)
+							$pageDiv.append($a4);
+						}
+						//添加 下一页按钮
+						var $anext = createAPageNode(pNo + 1,"下一页");
+						$pageDiv.append($anext);
+					}else if(pNo == pageCount){//最后一页
+						//添加上一页按钮
+						var $apre = createAPageNode(pNo-1,"上一页");
+						$pageDiv.append($apre);
+						for(var z = pageCount-barSize+1; z <= pageCount; z++){
+							var $a5 = createAPageNode(z,z);
+							$pageDiv.append($a5);
+						}
+					}else{
+						//添加上一页按钮
+						var $apre1 = createAPageNode(pNo-1,"上一页");
+						$pageDiv.append($apre1);
+
+						for(var w = pNo; w < barSize+pNo; w++){
+							var $a6 = createAPageNode(w,w);
+							$pageDiv.append($a6);
+						}
+
+						//添加 下一页按钮
+						var $anext1 = createAPageNode(pNo + 1,"下一页");
+						$pageDiv.append($anext1);
+					}
+				}
+				$("#pageBar").append($pageDiv);
+			}
+
+			/**
+			 * 创建一个分页a标签
+			 */
+			function createAPageNode(key,value) {
+				return $("<a href='javascript:void(0)' onclick='getInfo("+ key + ")'>" + value + "&nbsp;&nbsp;</a>");
 			}
 
 			/**
@@ -173,30 +271,43 @@
 				for(var i = 0; i < list.length; i++){
 					var $tr = $("<tr class='info_tr'></tr>");
 
+					var $td_no = $("<td>" + (i+1) +"</td>")
+					var $td_orders_serial = $("<td>"+ list[i].serial +"</td>");
 					var $td_goods_name = $("<td>"+ list[i].goodsName +"</td>");
-					var $td_goods_price = $("<td>￥"+ list[i].goodsPrice +"</td>");
 					var $td_shop_name = $("<td>"+ list[i].shopName +"</td>");
-					var $td_shop_postfree = $("<td>￥"+ list[i].postfree +"</td>");
-					var $td_shop_address= $("<td>"+ list[i].shopAddress +"</td>");
-					var $td_num= $("<td>"+ list[i].num +"</td>");
-
-					var $td_operation = $("<td></td>");
-					var $a_delete  = $("<a href='javascript:void(0)' onclick=\"deleteById('" +list[i].id+ "')\">删除&nbsp;&nbsp;</a>");
-					var $a_increment = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',1)\">+1&nbsp;&nbsp;</a>");
-					var $a_reduce = $("<a href='javascript:void(0)' onclick=\"changeNum('" +list[i].id+ "',-1)\">-1&nbsp;&nbsp;</a>");
-					$td_operation.append($a_increment);
-					$td_operation.append($a_reduce);
-					$td_operation.append($a_delete);
-
+					var $td_orders_address = $("<td>"+ list[i].address +"</td>");
+					var $td_orders_num= $("<td>"+ list[i].num +"</td>");
+					var $td_orders_createTime= $("<td>"+ strToDate(list[i].createTime)  +"</td>");
+					var $td_totalPrice= $("<td>￥"+ list[i].totalPrice +"</td>");
+					var $td_orders_state= null;
+					if(list[i].state == 1){//已经发货
+						$td_orders_state = $("<td>已发货</td>");
+					}else{
+						$td_orders_state = $("<td>未发货</td>");
+					}
+					$tr.append($td_no);
+					$tr.append($td_orders_serial);
 					$tr.append($td_goods_name);
-					$tr.append($td_goods_price);
 					$tr.append($td_shop_name);
-					$tr.append($td_shop_postfree);
-					$tr.append($td_shop_address);
-					$tr.append($td_num);
-					$tr.append($td_operation);
+					$tr.append($td_orders_address);
+					$tr.append($td_orders_num);
+					$tr.append($td_orders_createTime);
+					$tr.append($td_totalPrice);
+					$tr.append($td_orders_state);
 					$table.append($tr);
 				}
+			}
+
+			/**
+			 * 初始化单选按钮功能
+			 */
+			function initRadios(){
+				$("input[name='state']").click(function(){
+
+					//获取选中的那个按钮的值
+					state = $("input[name='state']:checked").val();
+					getInfo(1);
+				});
 			}
 
 

@@ -62,7 +62,7 @@ a{
             var pageNo = no;
             var url = projectUrl + "/back/shop/findInPageAndKey.action";
             var data = {"pageNo":pageNo};
-            $.get(url,data,function(databack){
+            $.post(url,data,function(databack){
                 var code = databack.code;
                 if(code == 5000){
                     alert(databack.message);

@@ -62,7 +62,7 @@ public class GoodsController extends BaseController{
      */
     @RequiresRoles(value = RoleSign.SHOP)
     @ResponseBody
-    @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.POST)
     public ResponseBean findInPageByKey(HttpSession session, PagerBean<GoodsBean> pagerBean,GoodsBean key) throws Exception{
         ResponseBean responseBean = new ResponseBean();
 

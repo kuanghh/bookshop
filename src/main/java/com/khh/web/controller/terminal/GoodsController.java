@@ -32,10 +32,9 @@ public class GoodsController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/findInPageByKey" ,method = RequestMethod.POST) /* get会乱码，post不会乱码*/
     public ResponseBean findInPageByKey(PagerBean<GoodsBean> pagerBean, GoodsBean key) throws Exception{
         ResponseBean responseBean = new ResponseBean();
-
         if(key != null){
             pagerBean.setT(key);
         }
