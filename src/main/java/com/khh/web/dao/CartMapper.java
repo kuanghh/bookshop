@@ -33,4 +33,11 @@ public interface CartMapper {
      * @return
      */
     List<Cart> findAllByUserId(@Param("userId") String id);
+
+    /**
+     * 批量修改购物车记录为无效
+     * @param cartList
+     * @return
+     */
+    int updateAllToNoVaild(@Param("cartList") List<Cart> cartList);
 }

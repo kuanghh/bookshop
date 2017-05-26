@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.khh.web.dao.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.khh.web.domain.Orders" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="is_valid" property="isValid"  />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, serial, create_time, num, total_price, goods_id, shop_id, user_id, address, state, 
+    is_valid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_orders
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_orders
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.khh.web.domain.Orders" >
+    insert into t_orders (id, serial, create_time, 
+      num, total_price, goods_id, 
+      shop_id, user_id, address, 
+      state, is_valid)
+    values (#{id,jdbcType=VARCHAR}, #{serial,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{num,jdbcType=INTEGER}, #{totalPrice,jdbcType=BIGINT}, #{goodsId,jdbcType=VARCHAR}, 
+      #{shopId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{isValid})
+  </insert>
+  <insert id="insertSelective" parameterType="com.khh.web.domain.Orders" >
+    insert into t_orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="isValid != null" >
+        #{isValid},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.khh.web.domain.Orders" >
+    update t_orders
+    <set >
+      <if test="serial != null" >
+        serial = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="isValid" >
+        is_valid = 1
+      </if>
+      <if test="!isValid" >
+        is_valid = 0
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.khh.web.domain.Orders" >
+    update t_orders
+    set serial = #{serial,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      is_valid = #{isValid}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <insert id="insertAll" parameterType="java.util.List">
+    insert into t_orders(<include refid="Base_Column_List"/> )
+    VALUES
+    <foreach collection="ordersList" item="orders"  separator=",">
+      (#{orders.id}, #{orders.serial}, #{orders.createTime},
+      #{orders.num}, #{orders.totalPrice}, #{orders.goodsId},
+      #{orders.shopId}, #{orders.userId}, #{orders.address},
+      #{orders.state}, #{orders.isValid})
+    </foreach>
+  </insert>
+
+</mapper>

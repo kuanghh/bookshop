@@ -139,4 +139,14 @@
     and s.state = 1 and g.state = 1 and g.num > 0
   </select>
 
+  <update id="updateAllToNoVaild" parameterType="java.util.List">
+    UPDATE t_cart
+    set is_valid = 0
+    where id IN
+    <foreach collection="cartList" item="cart" open="(" close=")" separator=",">
+      #{cart.id}
+    </foreach>
+
+  </update>
+
 </mapper>

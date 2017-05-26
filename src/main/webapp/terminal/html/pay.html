@@ -141,7 +141,7 @@
 				//计算总价并显示
 				caleTotalPrice();
 				//初始化下单按钮功能
-				initPayMoney();
+				initPayMoney(address);
 			});
 
 			/**
@@ -175,9 +175,9 @@
 			/**
 			 * 初始化下单按钮功能
 			 */
-			function initPayMoney(){
+			function initPayMoney(address){
 				$("#payMoney").click(function(){
-					//验证密码错误
+					//验证密码是否正确
 					var pwd = $("#password").val();
 					var url = projectUrl + "/user/checkPwd.action";
 					var data = {"password":pwd};
@@ -188,7 +188,14 @@
 							return;
 						}else if(code == 2000) {
 //							alert(databack.message);
-							//TODO 创建订单
+
+							// TODO 创建订单
+							url = projectUrl + "/terminal/orders/createOrders.action";
+							data={"address":address};
+							$.post(url,data,function(databack){
+								alert(databack.message);
+								setTimeout(window.location.href="index.html",2000);
+							})
 						}
 					});
 				});

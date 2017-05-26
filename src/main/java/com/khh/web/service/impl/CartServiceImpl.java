@@ -82,6 +82,10 @@ public class CartServiceImpl  implements CartService{
         if(cart.getNum() + num < 0) return "输入错误";
         if(cart.getNum() + num > goods.getNum()) return "商品活存不足";
 
+        /**
+         * 以上操作都是查询操作，对数据库不存在添加修改删除，所以一旦不符合要求，可以不用报错，不用回滚
+         */
+
         cart.setNum(cart.getNum() + num);
         cart.setUpdateTime(new Date());
         cartMapper.updateByPrimaryKeySelective(cart);
