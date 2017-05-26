@@ -114,13 +114,21 @@ public class OrdersServiceImpl  implements OrdersService{
         //查询
         List<Orders> list = ordersMapper.findBeanInPage(start,pagerBean.getPageSize(),ob.vo2Domain());
 
-        List<OrdersBean> ordersBeanList = list.stream().map(Orders::domain2Vo).collect(Collectors.toList());
-
         if(list == null){
             return false;
         }
+        List<OrdersBean> ordersBeanList = list.stream().map(Orders::domain2Vo).collect(Collectors.toList());
         pagerBean.setData(ordersBeanList);
         return true;
+
+    }
+
+    @Override
+    public boolean updateOrdersState(String id) {
+        Orders orders = new Orders();
+        orders.setId(id);
+        orders.setState(Orders.ORDERS_SEND);
+        return ordersMapper.updateByPrimaryKeySelective(orders) == 1;
 
     }
 }

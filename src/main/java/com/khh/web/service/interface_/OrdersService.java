@@ -21,4 +21,11 @@ public interface OrdersService {
      * @return
      */
     boolean findInPageWithKey(PagerBean<OrdersBean> pagerBean);
+
+    /**
+     * 商家发货
+     * @param id
+     * @return
+     */
+    boolean updateOrdersState(String id);
 }
