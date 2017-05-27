@@ -24,7 +24,7 @@ function jsonArr2JsArr (jsonArr) {
     return jsonArr;
 }
 
-function exit(){
+function exit(user){
     var url = projectUrl + "/index/exit.action";
     $.get(url,{},function(databack){
         var code = databack.code;
@@ -32,7 +32,12 @@ function exit(){
             alert(databack.message);
         }else{
             alert(databack.message);
-            window.location.href = "index.html";
+            if("user" == user){
+                window.location.href = "index.html";
+            }else if("shop" == user){
+                window.open("../login.html");
+            }
         }
     });
 }
+

@@ -148,13 +148,13 @@ a{
                 var $div10 = $("<div align='center' class='STYLE21'></div>");
 
                 var o_state = orders[i].state;
-                if(state == 0){
+                if(o_state == 0){
                   $div9.text("未发货");
                   var $a1 = $("<a href='javascript:void(0)' onclick=\"doOrders('" + orders[i].id + "')\">发货</a>");
                   $div10.append($a1);
                 }else{
                   $div9.text("已经发货")
-                  $td10.text("无");
+                  $div10.text("无");
                 }
 
 
@@ -290,13 +290,13 @@ a{
             <td>
               <div align="right"><span class="STYLE1">
               <input type="checkbox" name="checkbox11" id="checkbox11" />  
-                  <a href="#" onclick="selectAll();" class="LINKSTYLE">**</a> &nbsp;&nbsp;
+                  <a href="#"  class="LINKSTYLE">**</a> &nbsp;&nbsp;
               <img src="../images/add.gif" width="10" height="10" />
-                  <a href="#" onclick="add();" class="LINKSTYLE">**</a> &nbsp;
+                  <a href="#"  class="LINKSTYLE">**</a> &nbsp;
               <img src="../images/del.gif" width="10" height="10" />
-                  <a href="#" onclick="del();"  class="LINKSTYLE">**</a> &nbsp;&nbsp;
+                  <a href="#"   class="LINKSTYLE">**</a> &nbsp;&nbsp;
               <img src="../images/edit.gif" width="10" height="10" />
-                  <a href="#" onclick="update();"  class="LINKSTYLE">**</a> &nbsp;</span>
+                  <a href="#"  class="LINKSTYLE">**</a> &nbsp;</span>
               <span class="STYLE1"> &nbsp;</span></div>
            </td>
           </tr>
@@ -306,6 +306,9 @@ a{
   </tr>
   <tr>
     <td id="ifoTd">
+        <input type="radio" name="state" value="1" />已发货
+        <input type="radio" name="state" value="0" />未发货
+        <input type="radio" name="state" value="-1" checked="checked" />全部
         <table id="tab" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce"
                onmouseover=""  onmouseout="" >
           <!-- 列表头 -->
