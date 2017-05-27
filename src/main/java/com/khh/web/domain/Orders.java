@@ -21,7 +21,7 @@ public class Orders implements Serializable{
 
     private Long totalPrice;
 
-    private String goodsId;
+        private String goodsId;
 
     private String shopId;
 
