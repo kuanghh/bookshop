@@ -127,6 +127,7 @@ public class OrdersServiceImpl  implements OrdersService{
     public boolean updateOrdersState(String id) {
         Orders orders = new Orders();
         orders.setId(id);
+        orders.setSerial(null);
         orders.setState(Orders.ORDERS_SEND);
         return ordersMapper.updateByPrimaryKeySelective(orders) == 1;
 

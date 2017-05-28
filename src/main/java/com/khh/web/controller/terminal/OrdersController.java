@@ -51,7 +51,7 @@ public class OrdersController extends BaseController{
             responseBean.setErrorResponse(message);
             return responseBean;
         }
-        responseBean.setSuccessResponse(message);
+        responseBean.setSuccessResponse("下单成功");
         return responseBean;
     }
 
