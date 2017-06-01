@@ -228,7 +228,7 @@
         <if test="orders.state != null">
             and o.state = #{orders.state}
         </if>
-        order by o.create_time ASC limit #{start},#{size}
+        order by o.create_time DESC limit #{start},#{size}
     </select>
 
 
