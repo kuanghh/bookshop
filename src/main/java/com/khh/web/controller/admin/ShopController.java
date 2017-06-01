@@ -136,13 +136,16 @@ public class ShopController extends BaseController {
      */
     @RequiresRoles(value = RoleSign.SHOP)
     @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
-    public String edit(@Valid ShopRegisterBean shopRegisterBean,BindingResult result) throws Exception{
-        if(result.hasErrors()){
-            return "redirect:/error.jsp";
-        }
+//    public String edit(@Valid ShopRegisterBean shopRegisterBean,BindingResult result) throws Exception{
+    public String edit( ShopRegisterBean shopRegisterBean,BindingResult result) throws Exception{
+         //TODO 这里还未解决，因为这里用ShopRegisterBean的话，验证会报错
+//        if(result.hasErrors()){
+//            System.out.println(result.getFieldError().getDefaultMessage());
+//            return "redirect:/error.jsp";
+//        }
 
         if(shopRegisterBean == null){
-            return "redircet:/error.jsp";
+            return "redirect:/error.jsp";
         }
         boolean success = shopService.updateShop(shopRegisterBean);
 

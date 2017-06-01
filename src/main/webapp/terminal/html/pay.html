@@ -194,7 +194,6 @@
 							url = projectUrl + "/terminal/orders/createOrders.action";
 							//解码
 							address = decodeURI(address);
-							alert(address);
 							data={"address":address};
 							$.post(url,data,function(databack){
 								alert(databack.message);

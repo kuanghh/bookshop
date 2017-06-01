@@ -160,7 +160,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value = "/edit" ,method = RequestMethod.POST)
     public String edit(@Valid GoodsBean goodsBean, BindingResult result, @RequestParam("files") MultipartFile[] files,HttpSession session) throws Exception{
         Person person = (Person) session.getAttribute(Const.LOGIN_USER);
-        if(result.hasErrors() || person == null){
+        if(result.hasErrors()){
             return "redircet:/error.jsp";
         }
 
@@ -168,7 +168,7 @@ public class GoodsController extends BaseController{
         goodsBean.setShopId(person.getId());
 
         boolean success = goodsService.update(goodsBean,files);
-
+        System.out.println(success);
         return success ? "redirect:/admin/jsps/listBook.html" : "redircet:/error.jsp";
     }
 

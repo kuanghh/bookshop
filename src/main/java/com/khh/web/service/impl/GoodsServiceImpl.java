@@ -123,6 +123,7 @@ public class GoodsServiceImpl implements GoodsService{
         good.setPictures(pictures);
 
         int update = goodsMapper.updateByPrimaryKeySelective(good);
+        System.out.println("update count == " + update);
         return update == 1;
     }
 

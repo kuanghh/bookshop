@@ -23,7 +23,7 @@ public class BaseController {
     public ResponseBean exception(Exception e) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setErrorResponse("系统繁忙");
-
+        e.printStackTrace();
         //对异常进行判断做相应的处理
         //没有权限的异常
         if(e instanceof AuthorizationException){
@@ -31,7 +31,6 @@ public class BaseController {
             responseBean.setErrorResponse("你没有权限");
             return responseBean;
         }
-        e.printStackTrace();
         return responseBean;
     }
 

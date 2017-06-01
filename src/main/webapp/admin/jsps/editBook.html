@@ -106,7 +106,7 @@ form{
 					$("input[name='num']").val(goods.num);
 					$("input[name='postfree']").val(goods.postfree);
 					$("textarea[name='description']").val(goods.description);
-					$("input[name='createTime']").val(strToDate(goods.createTime));
+					$("input[name='ct']").val(strToDate(goods.createTime));
 					var state = goods.state;
 					var $a = null;
 					var $stateDiv = $("#state");
@@ -202,7 +202,7 @@ form{
 		</tr>
 		<tr>
 			<td bgcolor="#FFFFFF" class="STYLE19">创建时间：</td>
-			<td><input type="text" name="createTime" readonly="readonly" style="width:300px" ></td>
+			<td><input type="text" name="ct" readonly="readonly" style="width:300px" ></td>
 		</tr>
 		<tr>
 			<td bgcolor="#FFFFFF" class="STYLE19">状态：</td>
