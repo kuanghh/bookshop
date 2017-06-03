@@ -50,4 +50,14 @@ public interface PersonService {
      * @return
      */
     int findByIdAndPassword(String id, String password);
+
+    /**
+     * 检测注册时帐号，邮箱，电话重复的问题
+     * @param account
+     * @param email
+     * @param phone
+     * @return  返回验证信息，当返回null的时候，证明没有重复
+     */
+    String findForCheckRegisterRepeatInfo(String account,String email,String phone);
+
 }

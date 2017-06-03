@@ -47,4 +47,25 @@ public class PersonServiceImpl implements PersonService{
         return personMapper.findByIdAndPassword(id,password);
     }
 
+    @Override
+    public String findForCheckRegisterRepeatInfo(String account, String email, String phone) {
+
+        Person person = personMapper.findByAccount(account);
+        if(person != null){
+            return " 用户名已经有人使用";
+        }
+
+        person = personMapper.findByEmail(email);
+        if(person != null){
+            return " 邮箱已经有人使用";
+        }
+
+        person = personMapper.findByPhone(phone);
+        if(person != null){
+            return " 电话号码已经有人使用";
+        }
+
+        return null;
+    }
+
 }

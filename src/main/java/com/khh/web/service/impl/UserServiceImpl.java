@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int insert(UserRegisterBean registerBean) {
+
         //bean转domain
         Person person = (Person) BeanUtilEx.copyProperties2(new Person(), registerBean);
         User user = (User) BeanUtilEx.copyProperties2(new User(), registerBean);
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService{
         if(first == 1 && secound == 1 && third == 1){
             return 1;
         }
-        return 0;
+        throw new RuntimeException();
     }
 
     @Override

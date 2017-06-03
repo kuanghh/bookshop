@@ -3,6 +3,7 @@ package com.khh.web.controller.terminal;
 import com.khh.common.base.BaseController;
 import com.khh.common.bean.ResponseBean;
 import com.khh.common.bean.ShopRegisterBean;
+import com.khh.web.service.interface_.PersonService;
 import com.khh.web.service.interface_.ShopService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,9 @@ public class ShopController extends BaseController{
 
     @Resource
     private ShopService shopService;
+
+    @Resource
+    private PersonService personService;
 
     /**
      * 登录UI
@@ -50,12 +54,20 @@ public class ShopController extends BaseController{
             responseBean.setErrorResponse(result.getFieldError().getDefaultMessage());
             return responseBean;
         }
-        int i = shopService.insert(shopRegisterBean);
-        if(i == 0){
-            responseBean.setErrorResponse("注册失败");
+
+        String message = personService.findForCheckRegisterRepeatInfo(shopRegisterBean.getAccount(), shopRegisterBean.getEmail(), shopRegisterBean.getPhone());
+        if(message != null){
+            responseBean.setErrorResponse(message);
             return responseBean;
         }
-        responseBean.setSuccessResponse("注册成功,请等待管理员进行认证");
+
+        int i = shopService.insert(shopRegisterBean);
+        if(i == 0){
+            responseBean.setSuccessResponse("注册成功,请等待管理员进行认证");
+            return responseBean;
+        }
+
+        responseBean.setErrorResponse("注册失败");
         return responseBean;
     }
 }

@@ -62,7 +62,7 @@ public class ShopServiceImpl implements ShopService{
         if(first == 1 && secound == 1 && third == 1){
             return 1;
         }
-        return 0;
+        throw new RuntimeException();
     }
 
 

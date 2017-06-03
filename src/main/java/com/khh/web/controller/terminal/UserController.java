@@ -74,12 +74,20 @@ public class UserController extends BaseController{
             responseBean.setErrorResponse(result.getFieldError().getDefaultMessage());
             return responseBean;
         }
-        int i = userService.insert(registerBean);
-        if(i == 0){
-            responseBean.setErrorResponse("注册失败");
+
+        //TODO 这里还需验证用户名，邮箱，电话是否重复
+        String message = personService.findForCheckRegisterRepeatInfo(registerBean.getAccount(), registerBean.getEmail(), registerBean.getPhone());
+        if(message != null){
+            responseBean.setErrorResponse(message);
             return responseBean;
         }
-        responseBean.setSuccessResponse("注册成功");
+
+        int i = userService.insert(registerBean);
+        if(i == 1){
+            responseBean.setSuccessResponse("注册成功");
+            return responseBean;
+        }
+        responseBean.setErrorResponse("注册失败");
         return responseBean;
     }
 

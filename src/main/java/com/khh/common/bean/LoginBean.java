@@ -63,10 +63,14 @@ public class LoginBean implements Serializable{
         return true;
     }
 
+    /**
+     * 获取当前用户登录的时候提交上来的账户，或者邮箱，或者密码
+     * @return
+     */
     public String getValidInfoToLogin(){
         if(account != null) return account;
-        if(email != null) return account;
-        if(phone != null) return account;
+        if(email != null) return email;
+        if(phone != null) return phone;
         return null;
     }
 }

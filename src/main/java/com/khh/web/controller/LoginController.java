@@ -45,6 +45,7 @@ public class LoginController extends BaseController{
     @ResponseBody
     public ResponseBean login(@Valid LoginBean loginBean, BindingResult result, HttpSession session) throws Exception{
         ResponseBean responseBean = new ResponseBean();
+
         Subject subject = SecurityUtils.getSubject();
         //不能同时登录两个账号
         if(subject.isAuthenticated()){
